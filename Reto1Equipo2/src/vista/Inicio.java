@@ -5,25 +5,30 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import modelo.Usuario;
+import modelo.Workouts;
 
 import java.awt.Color;
-import javax.swing.JButton;
+
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.ArrayList;
+
 import javax.swing.JProgressBar;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 public class Inicio extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable tablaWorkouts;
-
+	private JTable table;
+	private ArrayList<Workouts> workouts = new ArrayList<Workouts>();
 	/**
 	 * Launch the application.
 	 */
@@ -53,7 +58,7 @@ public class Inicio extends JFrame {
 		
 		JPanel PanelEjercicios = new JPanel();
 		PanelEjercicios.setBackground(Color.GRAY);
-		PanelEjercicios.setBounds(316, 160, 1038, 601);
+		PanelEjercicios.setBounds(317, 160, 1038, 601);
 		contentPane.add(PanelEjercicios);
 		PanelEjercicios.setLayout(null);
 		
@@ -73,20 +78,23 @@ public class Inicio extends JFrame {
 		NivelCB.setBounds(65, 83, 182, 22);
 		PanelWorkouts.add(NivelCB);
 		
-		tablaWorkouts = new JTable();
-		tablaWorkouts.setBounds(0, 158, 317, 603);
-		PanelWorkouts.add(tablaWorkouts);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 158, 316, 603);
+		PanelWorkouts.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 		
 		JPanel PanelUsuario = new JPanel();
 		PanelUsuario.setBackground(Color.DARK_GRAY);
-		PanelUsuario.setBounds(316, 0, 1038, 161);
+		PanelUsuario.setBounds(317, 0, 1038, 161);
 		contentPane.add(PanelUsuario);
 		PanelUsuario.setLayout(null);
 		
-		JLabel lblUsuario = new JLabel("Nombre Usuario");
+		JLabel lblUsuario = new JLabel("");
 		lblUsuario.setForeground(new Color(255, 255, 255));
 		lblUsuario.setFont(new Font("Arial Black", Font.PLAIN, 20));
-		lblUsuario.setBounds(858, 63, 104, 29);
+		lblUsuario.setBounds(814, 58, 190, 29);
 		PanelUsuario.add(lblUsuario);
 		setResizable(false);
 		
@@ -94,11 +102,29 @@ public class Inicio extends JFrame {
 		lblUsuario.setText(usuario.getNombre());
 		
 		JProgressBar nivelWorkout = new JProgressBar();
-		nivelWorkout.setBounds(858, 103, 146, 14);
+		nivelWorkout.setValue(50);
+		nivelWorkout.setForeground(new Color(69, 217, 26));
+		nivelWorkout.setBounds(814, 103, 190, 20);
 		PanelUsuario.add(nivelWorkout);
 
+		table.setVisible(true); 
 		
+		scrollPane.setViewportView(table);
+
+        		DefaultTableModel modelo = new DefaultTableModel(
+        			    new String[] { "Workouts" }, 0
+        			);
+        		 for (Workouts workout : workouts) {
+			            Object[] fila = {
+			            		workout.getNombre(),
+			            	
+			            };
+			            modelo.addRow(fila);
+        table.setModel(modelo);
+        
+        
 		
 
 	}
+}
 }
