@@ -5,9 +5,12 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -44,19 +47,62 @@ public class Vista extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		txtUsuario = new JTextField();
+		txtUsuario = new JTextField("Usuario"); // ← Establece el texto inicial
 		txtUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		txtUsuario.setBounds(49, 52, 199, 38);
-		panel.add(txtUsuario);
 		txtUsuario.setBackground(new Color(192, 192, 192));
 		txtUsuario.setColumns(10);
+		txtUsuario.setForeground(Color.GRAY); // ← Color gris para el placeholder
+		panel.add(txtUsuario);
+
+		// Lógica del placeholder
+		txtUsuario.addFocusListener(new FocusAdapter() {
+		    @Override
+		    public void focusGained(FocusEvent e) {
+		        if (txtUsuario.getText().equals("Usuario")) {
+		            txtUsuario.setText("");
+		            txtUsuario.setForeground(Color.BLACK); // ← Color normal al escribir
+		        }
+		    }
+
+		    @Override
+		    public void focusLost(FocusEvent e) {
+		        if (txtUsuario.getText().isEmpty()) {
+		            txtUsuario.setText("Usuario");
+		            txtUsuario.setForeground(Color.GRAY); // ← Vuelve al color gris
+		        }
+		    }
+		});
+
 		
-		txtContraseña = new JTextField();
+		
+		txtContraseña = new JTextField("Contraseña"); // ← Texto inicial
 		txtContraseña.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		txtContraseña.setBounds(49, 138, 199, 38);
-		panel.add(txtContraseña);
-		txtContraseña.setColumns(10);
 		txtContraseña.setBackground(Color.LIGHT_GRAY);
+		txtContraseña.setColumns(10);
+		txtContraseña.setForeground(Color.GRAY); // ← Color gris para el placeholder
+		panel.add(txtContraseña);
+
+		// Lógica del placeholder
+		txtContraseña.addFocusListener(new FocusAdapter() {
+		    @Override
+		    public void focusGained(FocusEvent e) {
+		        if (txtContraseña.getText().equals("Contraseña")) {
+		            txtContraseña.setText("");
+		            txtContraseña.setForeground(Color.BLACK); // ← Color normal al escribir
+		        }
+		    }
+
+		    @Override
+		    public void focusLost(FocusEvent e) {
+		        if (txtContraseña.getText().isEmpty()) {
+		            txtContraseña.setText("Contraseña");
+		            txtContraseña.setForeground(Color.GRAY); // ← Vuelve al color gris
+		        }
+		    }
+		});
+
 		
 		JButton btnNewButton = new JButton("INGRESAR");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -76,6 +122,20 @@ public class Vista extends JFrame {
 		lblCrearCuenta.setBounds(98, 296, 102, 14);
 		panel.add(lblCrearCuenta);
 		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(64, 46, 497, 584);
+		contentPane.add(panel_1);
+		// Cargar la imagen desde archivo local
+		ImageIcon icono = new ImageIcon("lib/logo.png"); // ← Cambia esta ruta
+
+		// Crear un JLabel con la imagen
+		JLabel etiquetaImagen = new JLabel(icono);
+
+		// Ajustar el tamaño y posición dentro del panel
+		etiquetaImagen.setBounds(0, 0, icono.getIconWidth(), icono.getIconHeight());
+		panel_1.setLayout(null); // ← Permite posicionamiento manual
+		panel_1.add(etiquetaImagen);
+
 		
 		lblCrearCuenta.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
