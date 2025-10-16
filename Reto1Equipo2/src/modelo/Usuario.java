@@ -4,6 +4,7 @@ import com.google.api.client.util.DateTime;
 
 public class Usuario {
 	
+	private static int id;
 	private String nombre;
 	private String apellidos;
 	private String contraseña;
@@ -11,6 +12,10 @@ public class Usuario {
 	private DateTime fechaNacimiento;
 	
 	
+	
+	public int getId() {
+		return id;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -42,13 +47,23 @@ public class Usuario {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	public Usuario(String nombre, String apellidos, String contraseña, String email, DateTime fechaNacimiento) {
-		super();
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.contraseña = contraseña;
-		this.email = email;
-		this.fechaNacimiento = fechaNacimiento;
-	}
+        this.id = id++;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.contraseña = contraseña;
+        this.email = email;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    // Constructor vacío
+    public Usuario() {
+        this.id = id++;
+        this.nombre = "";
+        this.apellidos = "";
+        this.contraseña = "";
+        this.email = "";
+        this.fechaNacimiento = null;
+    }
 	@Override
 	public String toString() {
 		return "Usuario [nombre=" + nombre + ", apellidos=" + apellidos + ", contraseña=" + contraseña + ", email="
