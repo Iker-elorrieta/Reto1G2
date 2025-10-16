@@ -1,9 +1,12 @@
 package vista;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -58,6 +61,7 @@ public class Vista extends JFrame {
 		JButton btnNewButton = new JButton("INGRESAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		btnNewButton.setForeground(new Color(0, 0, 0));
@@ -66,10 +70,18 @@ public class Vista extends JFrame {
 		btnNewButton.setBounds(90, 223, 122, 38);
 		panel.add(btnNewButton);
 		
-		JLabel lblNewLabel_1 = new JLabel("Crear cuenta");
-		lblNewLabel_1.setFont(new Font("Arial Black", Font.BOLD, 13));
-		lblNewLabel_1.setBounds(104, 297, 102, 14);
-		panel.add(lblNewLabel_1);
+		JLabel lblCrearCuenta = new JLabel("Crear cuenta");
+		lblCrearCuenta.setFont(new Font("Arial Black", Font.BOLD, 13));
+		lblCrearCuenta.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		lblCrearCuenta.setBounds(98, 296, 102, 14);
+		panel.add(lblCrearCuenta);
+		
+		
+		lblCrearCuenta.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
 
 	}
 }
