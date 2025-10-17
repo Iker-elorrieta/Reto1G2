@@ -11,7 +11,7 @@ import com.google.cloud.firestore.FirestoreOptions;
 
 public class Conexion {
 	
-    private static String projectID = "gimnasioretobd";
+    private static String projectID = "reto1grupo2";
     private static String nombreJSON = "lib/gimnasio.json";
     
     public static Firestore conectar() throws IOException {

@@ -151,11 +151,16 @@ public class Inicio extends JFrame {
         		     QuerySnapshot documentos = future.get(); // puede lanzar InterruptedException y ExecutionException
 
         		     for (QueryDocumentSnapshot doc : documentos) {
-        		         Workouts w = doc.toObject(Workouts.class);
-        		         listaWorkouts.add(w);
-        		         System.out.println(w); 
-        		     }
+        		    	    String nombre = doc.getString("NOMBRE");
+        		    	    int nivelInt = doc.getLong("NIVEL").intValue();
+        		    	    String video = doc.getString("VIDEO");
 
+        		    	    Workouts w = new Workouts(0,nivelInt,nombre,video);
+        		    	   
+
+        		    	    listaWorkouts.add(w);
+        		    	  
+        		     }
         		     // Cerrar la conexión
         		     try {
         		         db.close();
