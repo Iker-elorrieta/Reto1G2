@@ -38,12 +38,12 @@ public class Login extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 999, 689);
 		contentPane.add(panel_1);
-		// Cargar la imagen desde archivo local
+		
 		ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
 		Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
 		ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
 		ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
-		panel_1.setLayout(null); // ← Permite posicionamiento manual
+		panel_1.setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(353, 145, 293, 361);
@@ -51,12 +51,12 @@ public class Login extends JFrame {
 		panel.setBackground(new Color(128, 128, 128));
 		panel.setLayout(null);
 
-		txtUsuario = new JTextField("Usuario"); // ← Establece el texto inicial
+		txtUsuario = new JTextField("Usuario");
 		txtUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		txtUsuario.setBounds(49, 52, 199, 38);
 		txtUsuario.setBackground(new Color(192, 192, 192));
 		txtUsuario.setColumns(10);
-		txtUsuario.setForeground(Color.GRAY); // ← Color gris para el placeholder
+		txtUsuario.setForeground(Color.GRAY);
 		panel.add(txtUsuario);
 
 		// Lógica del placeholder
@@ -65,7 +65,7 @@ public class Login extends JFrame {
 			public void focusGained(FocusEvent e) {
 				if (txtUsuario.getText().equals("Usuario")) {
 					txtUsuario.setText("");
-					txtUsuario.setForeground(Color.BLACK); // ← Color normal al escribir
+					txtUsuario.setForeground(Color.BLACK);
 				}
 			}
 
@@ -73,17 +73,17 @@ public class Login extends JFrame {
 			public void focusLost(FocusEvent e) {
 				if (txtUsuario.getText().isEmpty()) {
 					txtUsuario.setText("Usuario");
-					txtUsuario.setForeground(Color.GRAY); // ← Vuelve al color gris
+					txtUsuario.setForeground(Color.GRAY);
 				}
 			}
 		});
 
-		txtContraseña = new JTextField("Contraseña"); // ← Texto inicial
+		txtContraseña = new JTextField("Contraseña");
 		txtContraseña.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		txtContraseña.setBounds(49, 138, 199, 38);
 		txtContraseña.setBackground(Color.LIGHT_GRAY);
 		txtContraseña.setColumns(10);
-		txtContraseña.setForeground(Color.GRAY); // ← Color gris para el placeholder
+		txtContraseña.setForeground(Color.GRAY);
 		panel.add(txtContraseña);
 
 		// Lógica del placeholder
@@ -92,7 +92,7 @@ public class Login extends JFrame {
 			public void focusGained(FocusEvent e) {
 				if (txtContraseña.getText().equals("Contraseña")) {
 					txtContraseña.setText("");
-					txtContraseña.setForeground(Color.BLACK); // ← Color normal al escribir
+					txtContraseña.setForeground(Color.BLACK);
 				}
 			}
 
@@ -100,7 +100,7 @@ public class Login extends JFrame {
 			public void focusLost(FocusEvent e) {
 				if (txtContraseña.getText().isEmpty()) {
 					txtContraseña.setText("Contraseña");
-					txtContraseña.setForeground(Color.GRAY); // ← Vuelve al color gris
+					txtContraseña.setForeground(Color.GRAY);
 				}
 			}
 		});
@@ -133,7 +133,9 @@ public class Login extends JFrame {
 
 		lblCrearCuenta.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-
+				Registro frame = new Registro();
+				frame.setVisible(true);
+				dispose();
 			}
 		});
 
