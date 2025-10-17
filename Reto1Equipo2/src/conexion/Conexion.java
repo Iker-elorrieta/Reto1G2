@@ -20,7 +20,6 @@ public class Conexion {
 
         FileInputStream serviceAccount;
         Firestore firestore;
-
         try {
             serviceAccount = new FileInputStream(nombreJSON);
 
