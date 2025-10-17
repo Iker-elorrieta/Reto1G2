@@ -197,6 +197,7 @@ public class Inicio extends JFrame {
         	            lblVideo.setForeground(Color.BLUE);
         	            PanelEjercicios.add(lblVideo);
 
+        	            
         	            y += 70; // espacio entre cada workout
         	        }
 }
