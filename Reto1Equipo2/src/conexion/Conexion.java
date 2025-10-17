@@ -14,6 +14,7 @@ public class Conexion {
     private static String projectID = "reto1grupo2";
     private static String nombreJSON = "lib/gimnasio.json";
     
+    
     public static Firestore conectar() throws IOException {
 
 

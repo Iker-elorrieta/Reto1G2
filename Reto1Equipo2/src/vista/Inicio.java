@@ -161,6 +161,7 @@ public class Inicio extends JFrame {
         		    	    listaWorkouts.add(w);
         		    	  
         		     }
+        		     
         		     // Cerrar la conexión
         		     try {
         		         db.close();
