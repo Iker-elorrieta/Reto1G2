@@ -150,13 +150,17 @@ public class Registro extends JFrame {
             	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
             	String fechaStr = txtFecha_nac.getText();
             	Date fechaNac = null;
+            	String nombre = txtNombre.getText();
+            	String apellidos = txtApellidos.getText();
+            	String clave = txtContra.getText();
+            	
 				try {
 					fechaNac = sdf.parse(fechaStr);
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-            	Controlador.RegistrarUsuario(txtNombre.getText(), txtApellidos.getText(), txtContra.getText(), txtMail.getText(), fechaNac);
+            	//Controlador.RegistrarUsuario();
             	
             	JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
             	
