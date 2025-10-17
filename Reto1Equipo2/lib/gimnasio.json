@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "gimnasioretobd",
+  "private_key_id": "902548f36fc510a87a5fa82a73e4c3a3aa0e1747",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC3uIUtBbl56iud\n6EahnSBj0EJGGzAluJ8GdJZetKYZH2VS1xAhTYmVvPHEr8NUuU9ABLEILmsxfSvZ\nVlEYWaOdVEeusCWoKLChhUlYiM4VVv09vuJK8RdEgqPTqw2MeZmxzaneXWQgrCov\nbyky69i/j/yGpC9/uUc6T4V+pA9inxomXihBpNkn4HrBL4xW5aAQ+bB35Xx/kFW1\nL90jUnX8YVEyPwfInqRr/EJwwwxBj2oS5G+EmRTLXftdfTfNtDaqb6vOBad/lfCS\nd/pri61npDGfacE5IsRrL2waULZFRAsFKJfCfEkaOC3bMBtbNxVINj4UJVJ3Sjz8\ngiCW78EBAgMBAAECggEAF4pVG3Ji/vQPp/6zI3zL7FOAVRX2vV6X7G5+i0lVCbMJ\ne0Et7UEkzULrLOs4eV/6f5bE+D9lDMT1HAwAqBYUQ3x2aDO5yiosjQWpuDu57Dy7\n23Ax9AL1mu8CVC9+tO5/0FXXMN7WjY6Bzpd3t/FFpzCpMrdRlBQGxGScE6CsjVON\nlBHhhHLXGoCUzBfPaK+gMiF+E+GKCqAS1/kw+keJTMikYsBfGTqBaxct+945Ll/s\n4oU2eH4V3J5r9QegIK4Y2wl4jb5FEai+Ghs2wzTBrndbsFV1zBAYFGwTMb7gyW10\n548xeUxdEv/C+pxPmL3CMWXME4hMD+GMXah+trvzYQKBgQD0he9y+hTWaZEJ5GrE\nydo2ORHxmZiWQ9TFdd3DM8tIWnbrWl0nlQrZml+OvvW8gS08rnaIcGakJVpg8aSI\nbYJS1YZI2Go9Ctz9zT0NIA4hSNHw8U8mo3a8Yb/jIM3qE0ah79+IrGyk3ACsPJy2\nMVHzkPGxGDlePyHLxArQFDAFowKBgQDAWAO3HnTpip2rK+Q3J532bmnP8HDlNk18\nKnehgyUwbWu0G9zxD+vBN8hTL1tX/BohnHWYdGS7HTm6glZfnYvBkldFJdntgbcV\n90Sn6qQtJm5v7Bj0IEOaUAlG3c6mi8s4el+gq/R1B5nvikYEBh/RqleR0j8M7YUn\nBZbi8pyhCwKBgC7kYH8UJlrX89CJ1U/XxdkQKLjEU9a9O1iCufxtOlatwpBvy92D\nX4lLaXfedxGnVB2G94RCyexAnYxpyru/BHcOK6pclkMOikLB0StrMkp/xIMIQ72N\nK4AE3t+XsuVovOrhLWTwbAVRi298UDFAVA75hOAJXTcNtFV3SvuMY4kxAoGBAIKt\nCVEmyw1D1JzPhAwIyWP8Xb0dQMYpH3mFLKO5gtGk9XB3IaNRSr2J1XrWiLt9Fo/R\nSX+bTDhnwam6FU5+rc2ES/A5qBaZczbkOGvQmVvnaU522/k31lYHnFXeKiCyhw3G\n7iMt0DaWRHoeujTPqFx822PBsH5q/HSncnybkdhDAoGAB0/SNO9ai+sWyEQWx3B5\n0KjwmaTo2NbTbpLaEwi2DOD/fXqlhw+8zs19Z2Bl62p4AAcJgaJahyF10NE+vs9h\nyUnrFOfeh3N1WTTw5MADfOrNrBzzKpcEvT+rOgWJMNAjuUNU6IwgErpGojSrMvMa\ns2jOiXnIUQts2Du2OoCZfQY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@gimnasioretobd.iam.gserviceaccount.com",
+  "client_id": "108556261037926648116",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40gimnasioretobd.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
