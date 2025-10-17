@@ -10,6 +10,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,6 +22,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import com.google.api.client.util.DateTime;
+
+import controlador.Controlador;
+
 public class Registro extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -27,7 +34,7 @@ public class Registro extends JFrame {
     private JTextField txtApellidos;
     private JTextField txtContra;
     private JTextField txtMail;
-    private JTextField txtFech_nac;
+    private JTextField txtFecha_nac;
 
 
     public Registro() {
@@ -74,18 +81,6 @@ public class Registro extends JFrame {
         txtApellidos.setForeground(Color.GRAY); // ← Color gris para el placeholder
         panel.add(txtApellidos);
             
-
-        JButton btnNewButton = new JButton("REGISTRAR");
-        btnNewButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        btnNewButton.setForeground(new Color(0, 0, 0));
-        btnNewButton.setFont(new Font("Arial Black", Font.BOLD, 13));
-        btnNewButton.setBackground(new Color(192, 57, 43));
-        btnNewButton.setBounds(89, 393, 122, 38);
-        panel.add(btnNewButton);
         
         txtContra = new JTextField();
         txtContra.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -131,12 +126,12 @@ public class Registro extends JFrame {
         lblFehcaDeNacimiento.setBounds(49, 304, 222, 22);
         panel.add(lblFehcaDeNacimiento);
         
-        txtFech_nac = new JTextField();
-        txtFech_nac.setFont(new Font("Arial Black", Font.PLAIN, 14));
-        txtFech_nac.setColumns(10);
-        txtFech_nac.setBackground(new Color(176, 176, 176));
-        txtFech_nac.setBounds(49, 337, 199, 22);
-        panel.add(txtFech_nac);
+        txtFecha_nac = new JTextField();
+        txtFecha_nac.setFont(new Font("Arial Black", Font.PLAIN, 14));
+        txtFecha_nac.setColumns(10);
+        txtFecha_nac.setBackground(new Color(176, 176, 176));
+        txtFecha_nac.setBounds(49, 337, 199, 22);
+        panel.add(txtFecha_nac);
 
         JLabel etiquetaImagen = new JLabel(iconoEscalado);
         etiquetaImagen.setBounds(611, 28, 254, 203);
@@ -146,5 +141,30 @@ public class Registro extends JFrame {
         etiquetaFondo.setBounds(0, 0, 1354, 761);
         panel_1.add(etiquetaFondo);
 
+        
+        
+        JButton btnNewButton = new JButton("REGISTRAR");
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+            	String fechaStr = txtFecha_nac.getText();
+            	Date fechaNac = null;
+				try {
+					fechaNac = sdf.parse(fechaStr);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            	Controlador.RegistrarUsuario(txtNombre.getText(), txtApellidos.getText(), txtContra.getText(), txtMail.getText(), fechaNac);
+            }
+
+			
+        });
+        btnNewButton.setForeground(new Color(0, 0, 0));
+        btnNewButton.setFont(new Font("Arial Black", Font.BOLD, 13));
+        btnNewButton.setBackground(new Color(192, 57, 43));
+        btnNewButton.setBounds(89, 393, 122, 38);
+        panel.add(btnNewButton);
+        
     }
 }

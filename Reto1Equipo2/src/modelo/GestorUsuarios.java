@@ -1,8 +1,11 @@
 package modelo;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.api.client.util.DateTime;
+;
 
 public class GestorUsuarios {
 	
@@ -26,6 +29,18 @@ public class GestorUsuarios {
 		Usuario usu = new Usuario(nombre, apellidos, contraseña, email, fechaNacimiento);
 		listaUsuarios.add(usu);
 		return true;
+	}
+
+	public static void RegistrarUsuarios(String nombre, String apellidos, String contrasena, String email, Date fechaNac) {
+		// TODO Auto-generated method stub
+		try {
+			
+			FileInputStream serviceAccount = new FileInputStream("lib/gimnasio.json");
+			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
