@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -59,7 +60,7 @@ public class Registro extends JFrame {
         panel_1.setLayout(null); // ← Permite posicionamiento manual
 
         JPanel panel = new JPanel();
-        panel.setBounds(592, 271, 293, 465);
+        panel.setBounds(592, 271, 293, 479);
         panel_1.add(panel);
         panel.setBackground(new Color(110, 44, 44));
         panel.setLayout(null);
@@ -120,17 +121,17 @@ public class Registro extends JFrame {
         txtMail.setBounds(49, 271, 199, 22);
         panel.add(txtMail);
         
-        JLabel lblFehcaDeNacimiento = new JLabel("FECHA DE NACIMIENTO");
+        JLabel lblFehcaDeNacimiento = new JLabel("FECHA DE NACIMIENTO ");
         lblFehcaDeNacimiento.setForeground(Color.WHITE);
         lblFehcaDeNacimiento.setFont(new Font("Arial Black", Font.BOLD, 15));
-        lblFehcaDeNacimiento.setBounds(49, 304, 222, 22);
+        lblFehcaDeNacimiento.setBounds(49, 304, 222, 38);
         panel.add(lblFehcaDeNacimiento);
         
         txtFecha_nac = new JTextField();
         txtFecha_nac.setFont(new Font("Arial Black", Font.PLAIN, 14));
         txtFecha_nac.setColumns(10);
         txtFecha_nac.setBackground(new Color(176, 176, 176));
-        txtFecha_nac.setBounds(49, 337, 199, 22);
+        txtFecha_nac.setBounds(49, 368, 199, 22);
         panel.add(txtFecha_nac);
 
         JLabel etiquetaImagen = new JLabel(iconoEscalado);
@@ -156,15 +157,28 @@ public class Registro extends JFrame {
 					e1.printStackTrace();
 				}
             	Controlador.RegistrarUsuario(txtNombre.getText(), txtApellidos.getText(), txtContra.getText(), txtMail.getText(), fechaNac);
+            	
+            	JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
+            	
+            	Login frame = new Login();
+            	frame.setVisible(true);
+            	dispose();
+            	
             }
-
+            
 			
         });
         btnNewButton.setForeground(new Color(0, 0, 0));
         btnNewButton.setFont(new Font("Arial Black", Font.BOLD, 13));
         btnNewButton.setBackground(new Color(192, 57, 43));
-        btnNewButton.setBounds(89, 393, 122, 38);
+        btnNewButton.setBounds(89, 412, 122, 38);
         panel.add(btnNewButton);
+        
+        JLabel lblNewLabel_1 = new JLabel("(yyyy-mm-dd)");
+        lblNewLabel_1.setForeground(new Color(255, 255, 255));
+        lblNewLabel_1.setFont(new Font("Arial Black", Font.PLAIN, 14));
+        lblNewLabel_1.setBounds(49, 335, 122, 22);
+        panel.add(lblNewLabel_1);
         
     }
 }
