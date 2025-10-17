@@ -55,7 +55,6 @@ public class Usuario {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    // Constructor vacío
     public Usuario() {
         this.id = id++;
         this.nombre = "";

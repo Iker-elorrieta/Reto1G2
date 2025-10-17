@@ -3,7 +3,7 @@ package modelo;
 public class Temporizador extends Thread{
 
 	private boolean corriendo = false;
-	private int segundos;
+	private int segundos = 0;
 	
 	@Override
 	public void run() {
