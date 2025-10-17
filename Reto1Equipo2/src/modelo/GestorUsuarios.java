@@ -3,8 +3,15 @@ package modelo;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.api.client.util.DateTime;
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.Firestore;
+
+import conexion.Conexion;
 ;
 
 public class GestorUsuarios {
@@ -35,8 +42,19 @@ public class GestorUsuarios {
 		// TODO Auto-generated method stub
 		try {
 			
-			FileInputStream serviceAccount = new FileInputStream("lib/gimnasio.json");
+			Firestore db = Conexion.conectar();
+			CollectionReference users = db.collection("USERS");
+			DocumentReference nuevoId = users.document();
 			
+			Map<String, Object> usuarioNuevo = new HashMap<>();
+			usuarioNuevo.put("APELLIDO", apellidos);
+			usuarioNuevo.put("NOMBRE", nombre);
+			usuarioNuevo.put("EMAIL", email);
+			usuarioNuevo.put("CLAVE", contrasena);
+			usuarioNuevo.put("NACIMINETO", fechaNac);
+			
+			nuevoId.set(usuarioNuevo);
+			db.close();
 			
 		} catch(Exception e) {
 			e.printStackTrace();
