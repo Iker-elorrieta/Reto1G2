@@ -28,7 +28,7 @@ public class Login extends JFrame {
 
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1015, 728);
+		setBounds(100, 100, 1370, 800);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(93, 93, 93));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -36,24 +36,26 @@ public class Login extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 0, 999, 689);
-		contentPane.add(panel_1);
-		
-		ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
-		Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
-		ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
-		ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
-		panel_1.setLayout(null);
+        panel_1.setBounds(0, 0, 1354, 761);
+        contentPane.add(panel_1);
+        // Cargar la imagen desde archivo local
+        ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
+        Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+        ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
+        Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
+        panel_1.setLayout(null); // ← Permite posicionamiento manual
 
 		JPanel panel = new JPanel();
-		panel.setBounds(353, 145, 293, 361);
+		panel.setBounds(531, 270, 293, 361);
 		panel_1.add(panel);
-		panel.setBackground(new Color(128, 128, 128));
+		panel.setBackground(new Color(110, 44, 44));
 		panel.setLayout(null);
 
 		txtUsuario = new JTextField("Usuario");
 		txtUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		txtUsuario.setBounds(49, 52, 199, 38);
+		txtUsuario.setBounds(47, 52, 199, 38);
 		txtUsuario.setBackground(new Color(192, 192, 192));
 		txtUsuario.setColumns(10);
 		txtUsuario.setForeground(Color.GRAY);
@@ -80,7 +82,7 @@ public class Login extends JFrame {
 
 		txtContraseña = new JTextField("Contraseña");
 		txtContraseña.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		txtContraseña.setBounds(49, 138, 199, 38);
+		txtContraseña.setBounds(47, 138, 199, 38);
 		txtContraseña.setBackground(Color.LIGHT_GRAY);
 		txtContraseña.setColumns(10);
 		txtContraseña.setForeground(Color.GRAY);
@@ -114,22 +116,24 @@ public class Login extends JFrame {
 		btnNewButton.setForeground(new Color(0, 0, 0));
 		btnNewButton.setFont(new Font("Arial Black", Font.BOLD, 13));
 		btnNewButton.setBackground(new Color(192, 192, 192));
-		btnNewButton.setBounds(90, 223, 122, 38);
+		btnNewButton.setBounds(85, 221, 122, 38);
 		panel.add(btnNewButton);
 
 		JLabel lblCrearCuenta = new JLabel("Crear cuenta");
+		lblCrearCuenta.setForeground(new Color(192, 192, 192));
+		lblCrearCuenta.setBackground(new Color(192, 192, 192));
 		lblCrearCuenta.setFont(new Font("Arial Black", Font.BOLD, 13));
 		lblCrearCuenta.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lblCrearCuenta.setBounds(98, 296, 102, 14);
+		lblCrearCuenta.setBounds(95, 270, 102, 14);
 		panel.add(lblCrearCuenta);
 
-		JLabel etiquetaImagen = new JLabel(iconoEscalado);
-		etiquetaImagen.setBounds(29, 43, 254, 203);
-		panel_1.add(etiquetaImagen);
-		
-		JLabel etiquetaFondo = new JLabel(iconoFondo);
-		etiquetaFondo.setBounds(0, 0, 999, 689);
-		panel_1.add(etiquetaFondo);
+		 JLabel etiquetaImagen = new JLabel(iconoEscalado);
+	     etiquetaImagen.setBounds(550, 26, 254, 203);
+	     panel_1.add(etiquetaImagen);
+	        
+	     JLabel etiquetaFondo = new JLabel(iconoEscalado2);
+	     etiquetaFondo.setBounds(0, 0, 1354, 761);
+	     panel_1.add(etiquetaFondo);
 
 		lblCrearCuenta.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {

@@ -26,6 +26,7 @@ import javax.swing.border.EmptyBorder;
 import com.google.api.client.util.DateTime;
 
 import controlador.Controlador;
+import modelo.Usuario;
 
 public class Registro extends JFrame {
 
@@ -60,16 +61,17 @@ public class Registro extends JFrame {
         panel_1.setLayout(null); // ← Permite posicionamiento manual
 
         JPanel panel = new JPanel();
-        panel.setBounds(592, 271, 293, 479);
+        panel.setBounds(530, 237, 293, 479);
         panel_1.add(panel);
         panel.setBackground(new Color(110, 44, 44));
         panel.setLayout(null);
 
 
         txtNombre = new JTextField(); // ← Establece el texto inicial
+        txtNombre.setForeground(new Color(128, 128, 128));
         txtNombre.setFont(new Font("Arial Black", Font.PLAIN, 14));
         txtNombre.setBounds(49, 73, 199, 22);
-        txtNombre.setBackground(new Color(242, 242, 242));
+        txtNombre.setBackground(new Color(176, 176, 176));
         txtNombre.setColumns(10);
         panel.add(txtNombre);
 
@@ -135,7 +137,7 @@ public class Registro extends JFrame {
         panel.add(txtFecha_nac);
 
         JLabel etiquetaImagen = new JLabel(iconoEscalado);
-        etiquetaImagen.setBounds(611, 28, 254, 203);
+        etiquetaImagen.setBounds(550, 26, 254, 203);
         panel_1.add(etiquetaImagen);
         
         JLabel etiquetaFondo = new JLabel(iconoEscalado2);
@@ -148,25 +150,39 @@ public class Registro extends JFrame {
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+            	
+            	
+            	
             	String fechaStr = txtFecha_nac.getText();
             	Date fechaNac = null;
             	String nombre = txtNombre.getText();
             	String apellidos = txtApellidos.getText();
             	String clave = txtContra.getText();
+            	String email = txtMail.getText();
+				
+				
+				if(nombre.equals("") || apellidos.equals("") || clave.equals("") || email.equals("") || fechaStr .equals("")){
+            		JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", null, JOptionPane.WARNING_MESSAGE);
+            	} else {
+            		
+            		try {
+    					fechaNac = sdf.parse(fechaStr);
+    				} catch (ParseException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				}
+            		Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaNac);
+                	Controlador.RegistrarUsuarioBDControlador(usuario);
+                	JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
+                	Login frame = new Login();
+                	frame.setVisible(true);
+                	dispose();
+            	}
             	
-				try {
-					fechaNac = sdf.parse(fechaStr);
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-            	//Controlador.RegistrarUsuario();
+				
             	
-            	JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
             	
-            	Login frame = new Login();
-            	frame.setVisible(true);
-            	dispose();
+            	
             	
             }
             

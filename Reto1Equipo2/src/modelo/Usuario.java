@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.Date;
+
 import com.google.api.client.util.DateTime;
 
 public class Usuario {
@@ -9,7 +11,7 @@ public class Usuario {
 	private String apellidos;
 	private String contraseña;
 	private String email;
-	private DateTime fechaNacimiento;
+	private Date fechaNacimiento;
 	
 	
 	
@@ -40,13 +42,13 @@ public class Usuario {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public DateTime getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(DateTime fechaNacimiento) {
+	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-	public Usuario(String nombre, String apellidos, String contraseña, String email, DateTime fechaNacimiento) {
+	public Usuario(String nombre, String apellidos, String contraseña, String email, Date fechaNacimiento) {
         this.id = id++;
         this.nombre = nombre;
         this.apellidos = apellidos;

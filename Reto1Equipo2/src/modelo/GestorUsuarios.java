@@ -31,7 +31,7 @@ public class GestorUsuarios {
 	}
 
 	public boolean crearUsuario(String nombre, String apellidos, String contraseña, String email,
-			DateTime fechaNacimiento) {
+			Date fechaNacimiento) {
 		for (Usuario usu : listaUsuarios) {
 			if (usu.getEmail().equals(email)) {
 				return false;
@@ -42,27 +42,7 @@ public class GestorUsuarios {
 		return true;
 	}
 
-	public void RegistrarUsuarios(String nombre, String apellidos, String contrasena, String email, Date fechaNac) {
-		try {
-
-			Firestore db = Conexion.conectar();
-			CollectionReference users = db.collection("USERS");
-			DocumentReference nuevoId = users.document();
-
-			Map<String, Object> usuarioNuevo = new HashMap<>();
-			usuarioNuevo.put("APELLIDO", apellidos);
-			usuarioNuevo.put("NOMBRE", nombre);
-			usuarioNuevo.put("EMAIL", email);
-			usuarioNuevo.put("CLAVE", contrasena);
-			usuarioNuevo.put("NACIMINETO", fechaNac);
-
-			nuevoId.set(usuarioNuevo);
-			db.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 	public boolean login(String nombre, String contraseña) {
 
@@ -94,6 +74,29 @@ public class GestorUsuarios {
 		}
 
 		return false;
+	}
+
+	public static void RegistrarUsuarioBD(Usuario usuario) {
+		// TODO Auto-generated method stub
+		try {
+
+			Firestore db = Conexion.conectar();
+			CollectionReference users = db.collection("USERS");
+			DocumentReference nuevoId = users.document();
+
+			Map<String, Object> usuarioNuevo = new HashMap<>();
+			usuarioNuevo.put("APELLIDO", usuario.getApellidos());
+			usuarioNuevo.put("NOMBRE", usuario.getNombre());
+			usuarioNuevo.put("EMAIL", usuario.getEmail());
+			usuarioNuevo.put("CLAVE", usuario.getContraseña());
+			usuarioNuevo.put("NACIMINETO", usuario.getFechaNacimiento());
+
+			nuevoId.set(usuarioNuevo);
+			db.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
