@@ -7,6 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+
+import conexion.Conexion;
 import modelo.Usuario;
 import modelo.Workouts;
 
@@ -15,7 +21,10 @@ import java.awt.Color;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JProgressBar;
 import javax.swing.JComboBox;
@@ -29,6 +38,7 @@ public class Inicio extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private ArrayList<Workouts> workouts = new ArrayList<Workouts>();
+	private Conexion conexion = new Conexion();
 	/**
 	 * Launch the application.
 	 */
@@ -126,5 +136,65 @@ public class Inicio extends JFrame {
 		
 
 	}
+        		 
+        		 List<Workouts> listaWorkouts = new ArrayList<>();
+        		 try {
+        		     Firestore db = conexion.conectar();
+
+        		     // Nombre de la colección
+        		     String nombreColeccion = "WORKOUTS";
+
+        		     // Obtener todos los documentos
+        		     ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
+
+        		     // Capturamos todas las excepciones necesarias
+        		     QuerySnapshot documentos = future.get(); // puede lanzar InterruptedException y ExecutionException
+
+        		     for (QueryDocumentSnapshot doc : documentos) {
+        		         Workouts w = doc.toObject(Workouts.class);
+        		         listaWorkouts.add(w);
+        		         System.out.println(w); 
+        		     }
+
+        		     // Cerrar la conexión
+        		     try {
+        		         db.close();
+        		     } catch (Exception e) {
+        		         e.printStackTrace();
+        		     }
+
+        		 } catch (IOException e) {
+        		     e.printStackTrace();
+        		 } catch (InterruptedException e) {
+        		     e.printStackTrace();
+        		 } catch (ExecutionException e) {
+        		     e.printStackTrace();
+        		 }
+        	        
+
+        	       
+        	        int y = 60;
+
+        	        for (Workouts w : listaWorkouts) {
+        	            JLabel lblNombre = new JLabel("Nombre: " + w.getNombre());
+        	            System.out.println("Nombre: " + w.getNombre()+"mantec");
+        	            lblNombre.setBounds(20, y, 300, 20);
+        	            PanelEjercicios.add(lblNombre);
+
+        	            JLabel lblNivel = new JLabel("Nivel: " + w.getNivel());
+        	            lblNivel.setBounds(40, y + 20, 200, 20);
+        	            lblNivel.setForeground(Color.GRAY);
+        	            PanelEjercicios.add(lblNivel);
+
+        	            JLabel lblVideo = new JLabel("Video: " + w.getVideoURL());
+        	            lblVideo.setBounds(40, y + 40, 300, 20);
+        	            lblVideo.setForeground(Color.BLUE);
+        	            PanelEjercicios.add(lblVideo);
+
+        	            y += 70; // espacio entre cada workout
+        	        }
 }
+	
+	
+	
 }

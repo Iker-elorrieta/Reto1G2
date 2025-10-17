@@ -15,19 +15,32 @@ public class Conexion {
     private static String nombreJSON = "lib/gimnasio.json";
     
     public static Firestore conectar() throws IOException {
+
+
         FileInputStream serviceAccount;
-        Firestore fs = null;
+        Firestore firestore;
+
         try {
             serviceAccount = new FileInputStream(nombreJSON);
-        
-        FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
-                .setProjectId(projectID).setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
-        fs = firestoreOptions.getService();
+
+            FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
+                .setProjectId(projectID)
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .build();
+
+            firestore = firestoreOptions.getService();
+
+            if (firestore == null) {
+                throw new IOException("No se pudo obtener una instancia de Firestore.");
+            }
+
+            return firestore;
+
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new IOException("Archivo de credenciales no encontrado: " + nombreJSON, e);
+        } catch (IOException e) {
+            throw new IOException("Error al cargar credenciales o conectar con Firestore.", e);
         }
-        
-        return  fs;
     }
 
 }
