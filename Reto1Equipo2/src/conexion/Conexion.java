@@ -20,7 +20,6 @@ public class Conexion {
         try {
             serviceAccount = new FileInputStream(nombreJSON);
         
-
         FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
                 .setProjectId(projectID).setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
         fs = firestoreOptions.getService();
