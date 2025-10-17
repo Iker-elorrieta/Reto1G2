@@ -13,6 +13,7 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 
 import conexion.Conexion;
+import controlador.Controlador;
 import modelo.Usuario;
 import modelo.Workouts;
 
@@ -38,6 +39,7 @@ public class Inicio extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private ArrayList<Workouts> workouts = new ArrayList<Workouts>();
+	private Controlador controlador = new Controlador();
 	private Conexion conexion = new Conexion();
 	/**
 	 * Launch the application.
@@ -138,50 +140,16 @@ public class Inicio extends JFrame {
 	}
         		 
         		 List<Workouts> listaWorkouts = new ArrayList<>();
-        		 try {
-        		     Firestore db = conexion.conectar();
-
-        		     // Nombre de la colección
-        		     String nombreColeccion = "WORKOUTS";
-
-        		     // Obtener todos los documentos
-        		     ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
-
-        		     // Capturamos todas las excepciones necesarias
-        		     QuerySnapshot documentos = future.get(); // puede lanzar InterruptedException y ExecutionException
-
-        		     for (QueryDocumentSnapshot doc : documentos) {
-        		    	    String nombre = doc.getString("NOMBRE");
-        		    	    int nivelInt = doc.getLong("NIVEL").intValue();
-        		    	    String video = doc.getString("VIDEO");
-
-        		    	    Workouts w = new Workouts(0,nivelInt,nombre,video);
-        		    	   
-
-        		    	    listaWorkouts.add(w);
-        		    	  
-        		     }
-        		     
-        		     // Cerrar la conexión
-        		     try {
-        		         db.close();
-        		     } catch (Exception e) {
-        		         e.printStackTrace();
-        		     }
-
-        		 } catch (IOException e) {
-        		     e.printStackTrace();
-        		 } catch (InterruptedException e) {
-        		     e.printStackTrace();
-        		 } catch (ExecutionException e) {
-        		     e.printStackTrace();
-        		 }
-        	        
+        		 
+        		 listaWorkouts = controlador.DevolverWorkouts();
 
         	       
         	        int y = 60;
 
+        	        System.out.println(listaWorkouts.size());
+        	        
         	        for (Workouts w : listaWorkouts) {
+        	        	/*
         	            JLabel lblNombre = new JLabel("Nombre: " + w.getNombre());
         	            System.out.println("Nombre: " + w.getNombre()+"mantec");
         	            lblNombre.setBounds(20, y, 300, 20);
@@ -199,6 +167,7 @@ public class Inicio extends JFrame {
 
         	            
         	            y += 70; // espacio entre cada workout
+        	            */
         	        }
 }
 	
