@@ -24,8 +24,8 @@ public class Controlador {
 		gestorUsuarios.RegistrarUsuarioBD(usuario);
 	}
 	
-	public void LoginUsuarios(String nombre, String contrase) {
-		gestorUsuarios.login(nombre, contrase);
+	public boolean LoginUsuarios(String nombre, String contrase) {
+		return gestorUsuarios.login(nombre, contrase);
 	}
 	
 }

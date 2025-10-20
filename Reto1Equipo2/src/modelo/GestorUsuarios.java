@@ -46,6 +46,7 @@ public class GestorUsuarios {
 			for (QueryDocumentSnapshot doc : documentos) {
 
 				if (doc.getString("NOMBRE").equals(nombre) && doc.getString("CLAVE").equals(contraseña)) {
+					System.out.println("Login correcto con nombre "+ nombre + " y contraseña " + contraseña);
 					return true;
 				}
 			}

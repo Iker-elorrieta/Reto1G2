@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -112,7 +113,14 @@ public class Login extends JFrame {
 		JButton btnNewButton = new JButton("INGRESAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				boolean login = ctr.LoginUsuarios(txtUsuario.getText(), txtContraseña.getText());
+				if (login) {
+					Inicio frame = new Inicio(ctr);
+					dispose();
+					frame.setVisible(true);
+				}else {
+					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnNewButton.setForeground(new Color(0, 0, 0));

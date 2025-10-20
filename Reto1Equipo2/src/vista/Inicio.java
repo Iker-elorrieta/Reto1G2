@@ -1,39 +1,22 @@
 package vista;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
-import com.google.firestore.v1.Cursor;
-
-import conexion.Conexion;
 import controlador.Controlador;
 import modelo.Usuario;
 import modelo.Workouts;
-
 import java.awt.Color;
 import java.awt.Desktop;
-
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
 import javax.swing.JProgressBar;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -46,29 +29,11 @@ public class Inicio extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private ArrayList<Workouts> workouts = new ArrayList<Workouts>();
-	private Controlador controlador = new Controlador();
-	private Conexion conexion = new Conexion();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Inicio frame = new Inicio();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
+	 * @param ctr 
 	 */
-	public Inicio() {
+	public Inicio(Controlador ctr) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1370, 800);
 		contentPane = new JPanel();
@@ -132,7 +97,7 @@ public class Inicio extends JFrame {
 		scrollPane.setViewportView(table);
 
 
-		workouts = controlador.DevolverWorkouts();
+		workouts = ctr.DevolverWorkouts();
 		
 		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Workouts" }, 0);
 		for (Workouts workout : workouts) {
@@ -158,10 +123,6 @@ public class Inicio extends JFrame {
 		        }
 		    }
 		});
-
-		
-
-		System.out.println(workouts.size());
 
 		
 	}
@@ -200,7 +161,7 @@ public class Inicio extends JFrame {
 
 	    
 	    JLabel lblDescripcion= new JLabel("Descripcion: " + seleccionado.getDescripcion());
-	    lblDescripcion.setBounds(40, y + 60, 300, 20);
+	    lblDescripcion.setBounds(40, 120, 574, 20);
 	    lblDescripcion.setForeground(Color.WHITE);
 	    PanelEjercicios.add(lblDescripcion);
 
