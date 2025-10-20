@@ -13,6 +13,7 @@ public class Workouts implements Serializable {
 	private String descripcion;
 	private List<Ejercicios> ejercicios;
 
+	
 	public List<Ejercicios> getEjercicios() {
 		return ejercicios;
 	}
