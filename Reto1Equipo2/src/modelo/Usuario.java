@@ -1,12 +1,12 @@
 package modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import com.google.api.client.util.DateTime;
-
-public class Usuario {
+public class Usuario implements Serializable {
 	
-	private static int id;
+	private static final long serialVersionUID = 1L;
+	private String id;
 	private String nombre;
 	private String apellidos;
 	private String contraseña;
@@ -15,8 +15,11 @@ public class Usuario {
 	
 	
 	
-	public int getId() {
+	public String getId() {
 		return id;
+	}
+	public void setId(String id) {
+		this.id=id;
 	}
 	public String getNombre() {
 		return nombre;
@@ -49,26 +52,31 @@ public class Usuario {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	public Usuario(String nombre, String apellidos, String contraseña, String email, Date fechaNacimiento) {
-        this.id = id++;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.contraseña = contraseña;
-        this.email = email;
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public Usuario() {
-        this.id = id++;
-        this.nombre = "";
-        this.apellidos = "";
-        this.contraseña = "";
-        this.email = "";
-        this.fechaNacimiento = null;
-    }
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.contraseña = contraseña;
+		this.email = email;
+		this.fechaNacimiento = fechaNacimiento;
+	}
+	public Usuario() {
+		this.id = "";
+		this.nombre = "";
+		this.apellidos = "";
+		this.contraseña = "";
+		this.email = "";
+		this.fechaNacimiento = null;
+	}
 	@Override
 	public String toString() {
-		return "Usuario [nombre=" + nombre + ", apellidos=" + apellidos + ", contraseña=" + contraseña + ", email="
-				+ email + ", fechaNacimiento=" + fechaNacimiento + "]";
+	    return "\n===== Usuario =====\n" +
+	           "ID:               " + id + "\n" +
+	           "Nombre:           " + nombre + "\n" +
+	           "Apellidos:        " + apellidos + "\n" +
+	           "Contraseña:       " + contraseña + "\n" +
+	           "Email:            " + email + "\n" +
+	           "Fecha nacimiento: " + fechaNacimiento + "\n";
 	}
+
+	
 	
 }

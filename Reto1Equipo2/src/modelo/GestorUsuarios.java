@@ -18,21 +18,6 @@ import com.google.cloud.firestore.QuerySnapshot;
 import conexion.Conexion;;
 
 public class GestorUsuarios {
-
-	ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-
-	public boolean crearUsuario(String nombre, String apellidos, String contraseña, String email,
-			Date fechaNacimiento) {
-		for (Usuario usu : listaUsuarios) {
-			if (usu.getEmail().equals(email)) {
-				return false;
-			}
-		}
-		Usuario usu = new Usuario(nombre, apellidos, contraseña, email, fechaNacimiento);
-		listaUsuarios.add(usu);
-		return true;
-	}
-
 	
 
 	public boolean login(String nombre, String contraseña) {
@@ -46,7 +31,15 @@ public class GestorUsuarios {
 			for (QueryDocumentSnapshot doc : documentos) {
 
 				if (doc.getString("NOMBRE").equals(nombre) && doc.getString("CLAVE").equals(contraseña)) {
-					System.out.println("Login correcto con nombre "+ nombre + " y contraseña " + contraseña);
+					Usuario usuario = new Usuario ();
+					usuario.setId(doc.getId());
+					usuario.setNombre(nombre);
+					usuario.setContraseña(contraseña);
+					usuario.setApellidos(doc.getString("APELLIDO"));
+					usuario.setEmail(doc.getString("EMAIL"));
+					usuario.setFechaNacimiento(doc.getDate("NACIMIENTO"));
+					System.out.println("Login correcto: ");
+					usuario.toString();
 					return true;
 				}
 			}
