@@ -6,8 +6,15 @@ public class Workouts {
 	private int nivel;
 	private String nombre;
 	private String videoURL;
+	private String descripcion;
 	
 	
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 	public int getId() {
 		return id;
 	}
@@ -33,12 +40,13 @@ public class Workouts {
 		this.videoURL = videoURL;
 	}
 	
-	public Workouts(int id, int nivel, String nombre, String videoURL) {
+	public Workouts(int id, int nivel, String nombre, String videoURL, String descripcion) {
 		super();
 		this.id = id;
 		this.nivel = nivel;
 		this.nombre = nombre;
 		this.videoURL = videoURL;
+		this.descripcion = descripcion;
 	}
 	@Override
 	public String toString() {

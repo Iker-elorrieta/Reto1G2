@@ -11,6 +11,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
+import com.google.firestore.v1.Cursor;
 
 import conexion.Conexion;
 import controlador.Controlador;
@@ -18,13 +19,17 @@ import modelo.Usuario;
 import modelo.Workouts;
 
 import java.awt.Color;
+import java.awt.Desktop;
 
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -173,13 +178,31 @@ public class Inicio extends JFrame {
 
 	    JLabel lblNivel = new JLabel("Nivel: " + seleccionado.getNivel());
 	    lblNivel.setBounds(40, y + 20, 200, 20);
-	    lblNivel.setForeground(Color.GRAY);
+	    lblNivel.setForeground(Color.WHITE);
 	    PanelEjercicios.add(lblNivel);
 
-	    JLabel lblVideo = new JLabel("Video: " + seleccionado.getVideoURL());
+	    JLabel lblVideo = new JLabel("<html><u>Ver video</u></html>");
 	    lblVideo.setBounds(40, y + 40, 300, 20);
 	    lblVideo.setForeground(Color.BLUE);
+	    lblVideo.addMouseListener(new MouseAdapter() {
+	        @Override
+	        public void mouseClicked(MouseEvent e) {
+	            try {
+	                Desktop.getDesktop().browse(new URI(seleccionado.getVideoURL()));
+	            } catch (Exception ex) {
+	                ex.printStackTrace();
+	                JOptionPane.showMessageDialog(null, "No se pudo abrir el enlace.");
+	            }
+	        }
+	    });
+
 	    PanelEjercicios.add(lblVideo);
+
+	    
+	    JLabel lblDescripcion= new JLabel("Descripcion: " + seleccionado.getDescripcion());
+	    lblDescripcion.setBounds(40, y + 60, 300, 20);
+	    lblDescripcion.setForeground(Color.WHITE);
+	    PanelEjercicios.add(lblDescripcion);
 
 	    PanelEjercicios.revalidate();
 	    PanelEjercicios.repaint();

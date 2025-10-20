@@ -29,7 +29,8 @@ public Conexion conexion = new Conexion();
 		    	    String nombre = doc.getString("NOMBRE");
 		    	    int nivelInt = doc.getLong("NIVEL").intValue();
 		    	    String video = doc.getString("VIDEO");
-		    	    Workouts w = new Workouts(0,nivelInt,nombre,video);
+		    	    String descripcion = doc.getString("DESCRIPCION");
+		    	    Workouts w = new Workouts(0,nivelInt,nombre,video,descripcion);
 		    	    listaWorkouts.add(w);
 		     }
 		     
