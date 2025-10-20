@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import com.google.api.client.util.DateTime;
+
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
@@ -20,15 +20,6 @@ import conexion.Conexion;;
 public class GestorUsuarios {
 
 	ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-
-	public boolean loginUsuario(String usuario, String contraseña) {
-		for (Usuario usu : listaUsuarios) {
-			if (usu.getNombre().equals(usuario) && usu.getContraseña().equals(contraseña)) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 	public boolean crearUsuario(String nombre, String apellidos, String contraseña, String email,
 			Date fechaNacimiento) {
@@ -76,8 +67,7 @@ public class GestorUsuarios {
 		return false;
 	}
 
-	public static void RegistrarUsuarioBD(Usuario usuario) {
-		// TODO Auto-generated method stub
+	public void RegistrarUsuarioBD(Usuario usuario) {
 		try {
 
 			Firestore db = Conexion.conectar();

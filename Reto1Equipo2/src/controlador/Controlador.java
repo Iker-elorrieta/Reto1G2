@@ -1,7 +1,6 @@
 package controlador;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import modelo.GestorUsuarios;
 import modelo.GestorWorkout;
@@ -11,6 +10,7 @@ import modelo.Workouts;
 public class Controlador {
 
 	public GestorWorkout gestorWorkout = new GestorWorkout();
+	public GestorUsuarios gestorUsuarios = new GestorUsuarios();
 	public ArrayList<Workouts> listaWorkout = new ArrayList<Workouts>();
 	
 	
@@ -20,9 +20,12 @@ public class Controlador {
 		return listaWorkout;
 	}
 
-	public static void RegistrarUsuarioBDControlador(Usuario usuario) {
-		// TODO Auto-generated method stub
-		GestorUsuarios.RegistrarUsuarioBD(usuario);
+	public void RegistrarUsuarioBDControlador(Usuario usuario) {
+		gestorUsuarios.RegistrarUsuarioBD(usuario);
+	}
+	
+	public void LoginUsuarios(String nombre, String contrase) {
+		gestorUsuarios.login(nombre, contrase);
 	}
 	
 }

@@ -39,7 +39,8 @@ public class Registro extends JFrame {
     private JTextField txtFecha_nac;
 
 
-    public Registro() {
+    public Registro(Controlador ctr) {
+    	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1370, 800);
         contentPane = new JPanel();
@@ -172,9 +173,9 @@ public class Registro extends JFrame {
     					e1.printStackTrace();
     				}
             		Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaNac);
-                	Controlador.RegistrarUsuarioBDControlador(usuario);
+                	ctr.RegistrarUsuarioBDControlador(usuario);
                 	JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
-                	Login frame = new Login();
+                	Login frame = new Login(ctr);
                 	frame.setVisible(true);
                 	dispose();
             	}

@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controlador.Controlador;
+
 public class Login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -26,7 +28,7 @@ public class Login extends JFrame {
 	private JTextField txtUsuario;
 	private JTextField txtContraseña;
 
-	public Login() {
+	public Login(Controlador ctr) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1370, 800);
 		contentPane = new JPanel();
@@ -137,7 +139,7 @@ public class Login extends JFrame {
 
 		lblCrearCuenta.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				Registro frame = new Registro();
+				Registro frame = new Registro(ctr);
 				frame.setVisible(true);
 				dispose();
 			}
