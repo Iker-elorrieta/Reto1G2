@@ -34,11 +34,11 @@ public class Inicio extends JFrame {
 	DefaultTableModel modelo;
 
 	public Inicio(Controlador ctr) {
-		
+
 		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Workouts" }, 0) {
-		    public boolean isCellEditable(int row, int column) {
-		        return false;
-		    }
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
 		};
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1370, 800);
@@ -68,22 +68,22 @@ public class Inicio extends JFrame {
 		NivelCB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nivelSeleccionado = NivelCB.getSelectedItem().toString();
-				if(nivelSeleccionado.equals("Nivel 0")) {
-					
-					actualizarWorkout(modelo,0);
-					
+				if (nivelSeleccionado.equals("Nivel 0")) {
+
+					actualizarWorkout(modelo, 0);
+
 				}
-				if(nivelSeleccionado.equals("Nivel 1")) {
-					
-					actualizarWorkout(modelo,1);
-					
+				if (nivelSeleccionado.equals("Nivel 1")) {
+
+					actualizarWorkout(modelo, 1);
+
 				}
-				if(nivelSeleccionado.equals("Nivel 2")) {
-					
-					actualizarWorkout(modelo,2);
-					
+				if (nivelSeleccionado.equals("Nivel 2")) {
+
+					actualizarWorkout(modelo, 2);
+
 				}
-				
+
 			}
 		});
 		NivelCB.setModel(new DefaultComboBoxModel(new String[] { "Nivel 0", "Nivel 1", "Nivel 2", "Nivel 3" }));
@@ -123,93 +123,85 @@ public class Inicio extends JFrame {
 
 		scrollPane.setViewportView(table);
 
-
 		workouts = ctr.DevolverWorkouts();
-		
-	
+
 		for (Workouts workout : workouts) {
-			Object[] fila = { workout.getNombre()};
+			Object[] fila = { workout.getNombre() };
 			modelo.addRow(fila);
 			table.setModel(modelo);
 		}
 
 		table.getSelectionModel().addListSelectionListener(e -> {
-		    if (!e.getValueIsAdjusting()) {
-		        int filaSeleccionada = table.getSelectedRow();
-		        if (filaSeleccionada >= 0) {
-		            String nombreWorkout = (String) table.getValueAt(filaSeleccionada, 0);
+			if (!e.getValueIsAdjusting()) {
+				int filaSeleccionada = table.getSelectedRow();
+				if (filaSeleccionada >= 0) {
+					String nombreWorkout = (String) table.getValueAt(filaSeleccionada, 0);
 
-		            Workouts seleccionado = workouts.stream()
-		                .filter(w -> w.getNombre().equals(nombreWorkout))
-		                .findFirst()
-		                .orElse(null);
+					Workouts seleccionado = workouts.stream().filter(w -> w.getNombre().equals(nombreWorkout))
+							.findFirst().orElse(null);
 
-		            if (seleccionado != null) {
-		                actualizarEjercicios(PanelEjercicios,seleccionado);
-		            }
-		        }
-		    }
+					if (seleccionado != null) {
+						actualizarEjercicios(PanelEjercicios, seleccionado);
+					}
+				}
+			}
 		});
-		
+
 	}
-	
+
 	public void actualizarWorkout(DefaultTableModel modelo, int nivel) {
-		   modelo.setRowCount(0);
-		
+		modelo.setRowCount(0);
+
 		for (Workouts workout : workouts) {
-			
-			if(workout.getNivel() == nivel) {
-			Object[] fila = { workout.getNombre()};
-			modelo.addRow(fila);
-			table.setModel(modelo);
+
+			if (workout.getNivel() == nivel) {
+				Object[] fila = { workout.getNombre() };
+				modelo.addRow(fila);
+				table.setModel(modelo);
 			}
 		}
-		
-		
+
 	}
-	
-	
+
 	public void actualizarEjercicios(JPanel PanelEjercicios, Workouts seleccionado) {
-	    PanelEjercicios.removeAll();
-	    PanelEjercicios.setLayout(null);
+		PanelEjercicios.removeAll();
+		PanelEjercicios.setLayout(null);
 
-	    int y = 60;
+		int y = 60;
 
-	    JLabel lblNombre = new JLabel("Nombre: " + seleccionado.getNombre());
-	    lblNombre.setBounds(20, y, 300, 20);
-	    PanelEjercicios.add(lblNombre);
+		JLabel lblNombre = new JLabel("Nombre: " + seleccionado.getNombre());
+		lblNombre.setBounds(20, y, 300, 20);
+		PanelEjercicios.add(lblNombre);
 
-	    JLabel lblNivel = new JLabel("Nivel: " + seleccionado.getNivel());
-	    lblNivel.setBounds(40, y + 20, 200, 20);
-	    lblNivel.setForeground(Color.WHITE);
-	    PanelEjercicios.add(lblNivel);
+		JLabel lblNivel = new JLabel("Nivel: " + seleccionado.getNivel());
+		lblNivel.setBounds(40, y + 20, 200, 20);
+		lblNivel.setForeground(Color.WHITE);
+		PanelEjercicios.add(lblNivel);
 
-	    JLabel lblVideo = new JLabel("<html><u>Ver video</u></html>");
-	    lblVideo.setBounds(40, y + 40, 300, 20);
-	    lblVideo.setForeground(Color.BLUE);
-	    lblVideo.addMouseListener(new MouseAdapter() {
-	        @Override
-	        public void mouseClicked(MouseEvent e) {
-	            try {
-	                Desktop.getDesktop().browse(new URI(seleccionado.getVideoURL()));
-	            } catch (Exception ex) {
-	                ex.printStackTrace();
-	                JOptionPane.showMessageDialog(null, "No se pudo abrir el enlace.");
-	            }
-	        }
-	    });
+		JLabel lblVideo = new JLabel("<html><u>Ver video</u></html>");
+		lblVideo.setBounds(40, y + 40, 300, 20);
+		lblVideo.setForeground(Color.BLUE);
+		lblVideo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI(seleccionado.getVideoURL()));
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, "No se pudo abrir el enlace.");
+				}
+			}
+		});
 
-	    PanelEjercicios.add(lblVideo);
+		PanelEjercicios.add(lblVideo);
 
-	    
-	    JLabel lblDescripcion= new JLabel("Descripcion: " + seleccionado.getDescripcion());
-	    lblDescripcion.setBounds(40, y + 60, 300, 20);
-	    lblDescripcion.setForeground(Color.WHITE);
-	    PanelEjercicios.add(lblDescripcion);
+		JLabel lblDescripcion = new JLabel("Descripcion: " + seleccionado.getDescripcion());
+		lblDescripcion.setBounds(40, y + 60, 300, 20);
+		lblDescripcion.setForeground(Color.WHITE);
+		PanelEjercicios.add(lblDescripcion);
 
-	    PanelEjercicios.revalidate();
-	    PanelEjercicios.repaint();
+		PanelEjercicios.revalidate();
+		PanelEjercicios.repaint();
 	}
-
 
 }

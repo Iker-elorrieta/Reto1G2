@@ -8,11 +8,14 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
 
+import modelo.Backups;
+
 
 public class Conexion {
 	
     private static String projectID = "reto1grupo2";
     private static String nombreJSON = "lib/gimnasio.json";
+    Backups backup = new Backups();
     
     
     public static Firestore conectar() throws IOException {
@@ -39,6 +42,7 @@ public class Conexion {
         } catch (FileNotFoundException e) {
             throw new IOException("Archivo de credenciales no encontrado: " + nombreJSON, e);
         } catch (IOException e) {
+        	/*Llamar a los backups*/
             throw new IOException("Error al cargar credenciales o conectar con Firestore.", e);
         }
     }
