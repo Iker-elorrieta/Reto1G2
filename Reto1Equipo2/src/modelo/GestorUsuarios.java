@@ -38,7 +38,7 @@ public class GestorUsuarios {
 					usuario.setApellidos(doc.getString("APELLIDO"));
 					usuario.setEmail(doc.getString("EMAIL"));
 					usuario.setFechaNacimiento(doc.getDate("NACIMIENTO"));
-					System.out.println("Login correcto: ");
+					System.out.println("Login correcto: " + usuario.toString());
 					usuario.toString();
 					return true;
 				}

@@ -1,13 +1,18 @@
 package modelo;
 
-public class Ejercicios extends Workouts{
+import java.util.ArrayList;
 
-	private int id;
+public class Ejercicios {
+
+	private String id;
 	private String nombre;
-	public int getId() {
+	private String descripcion;
+	private ArrayList<Series> series;
+	
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
@@ -18,10 +23,23 @@ public class Ejercicios extends Workouts{
 		this.nombre = nombre;
 	}
 	
-	public Ejercicios(int id, int nivel, String nombre, String videoURL, int id2, String descripcion, String nombre2) {
-		super(id, nivel, nombre, videoURL, descripcion);
-		id = id2;
-		nombre = nombre2;
+	public Ejercicios(String id, String nombre,String descripcion) {
+		
+		this.id = id;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	public ArrayList<Series> getSeries() {
+		return series;
+	}
+	public void setSeries(ArrayList<Series> series) {
+		this.series = series;
 	}
 	@Override
 	public String toString() {
@@ -29,3 +47,4 @@ public class Ejercicios extends Workouts{
 	}
 
 }
+

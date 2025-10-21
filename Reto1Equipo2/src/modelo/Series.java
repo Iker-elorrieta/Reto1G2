@@ -1,6 +1,6 @@
 package modelo;
 
-public class Series extends Ejercicios{
+public class Series{
 	
 	private int id;
 	private int descanso;
@@ -39,7 +39,7 @@ public class Series extends Ejercicios{
 	}
 	public Series(int id, int nivel, String nombre, String videoURL, int id2, String descripcion, String nombre2,
 			int id3, int descanso, int duracion, int repeticiones, String imagen) {
-		super(id, nivel, nombre, videoURL, id2, descripcion, nombre2);
+		
 		id = id3;
 		this.descanso = descanso;
 		this.duracion = duracion;

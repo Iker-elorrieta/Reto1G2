@@ -22,6 +22,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Inicio extends JFrame {
 
@@ -29,11 +31,15 @@ public class Inicio extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private ArrayList<Workouts> workouts = new ArrayList<Workouts>();
-	/**
-	 * Create the frame.
-	 * @param ctr 
-	 */
+	DefaultTableModel modelo;
+
 	public Inicio(Controlador ctr) {
+		
+		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Workouts" }, 0) {
+		    public boolean isCellEditable(int row, int column) {
+		        return false;
+		    }
+		};
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1370, 800);
 		contentPane = new JPanel();
@@ -59,6 +65,27 @@ public class Inicio extends JFrame {
 		PanelWorkouts.add(separator);
 
 		JComboBox NivelCB = new JComboBox();
+		NivelCB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nivelSeleccionado = NivelCB.getSelectedItem().toString();
+				if(nivelSeleccionado.equals("Nivel 0")) {
+					
+					actualizarWorkout(modelo,0);
+					
+				}
+				if(nivelSeleccionado.equals("Nivel 1")) {
+					
+					actualizarWorkout(modelo,1);
+					
+				}
+				if(nivelSeleccionado.equals("Nivel 2")) {
+					
+					actualizarWorkout(modelo,2);
+					
+				}
+				
+			}
+		});
 		NivelCB.setModel(new DefaultComboBoxModel(new String[] { "Nivel 0", "Nivel 1", "Nivel 2", "Nivel 3" }));
 		NivelCB.setBounds(65, 83, 182, 22);
 		PanelWorkouts.add(NivelCB);
@@ -99,7 +126,7 @@ public class Inicio extends JFrame {
 
 		workouts = ctr.DevolverWorkouts();
 		
-		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Workouts" }, 0);
+	
 		for (Workouts workout : workouts) {
 			Object[] fila = { workout.getNombre()};
 			modelo.addRow(fila);
@@ -123,9 +150,24 @@ public class Inicio extends JFrame {
 		        }
 		    }
 		});
-
 		
 	}
+	
+	public void actualizarWorkout(DefaultTableModel modelo, int nivel) {
+		   modelo.setRowCount(0);
+		
+		for (Workouts workout : workouts) {
+			
+			if(workout.getNivel() == nivel) {
+			Object[] fila = { workout.getNombre()};
+			modelo.addRow(fila);
+			table.setModel(modelo);
+			}
+		}
+		
+		
+	}
+	
 	
 	public void actualizarEjercicios(JPanel PanelEjercicios, Workouts seleccionado) {
 	    PanelEjercicios.removeAll();
@@ -161,7 +203,7 @@ public class Inicio extends JFrame {
 
 	    
 	    JLabel lblDescripcion= new JLabel("Descripcion: " + seleccionado.getDescripcion());
-	    lblDescripcion.setBounds(40, 120, 574, 20);
+	    lblDescripcion.setBounds(40, y + 60, 300, 20);
 	    lblDescripcion.setForeground(Color.WHITE);
 	    PanelEjercicios.add(lblDescripcion);
 

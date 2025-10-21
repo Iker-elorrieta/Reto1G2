@@ -23,14 +23,24 @@ public Conexion conexion = new Conexion();
 		     String nombreColeccion = "WORKOUT";
 		     ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 		     QuerySnapshot documentos = future.get(); 
-
+		     
 		     for (QueryDocumentSnapshot doc : documentos) {
+		    	 ArrayList<Ejercicios> ejercicios = new ArrayList<Ejercicios>();
 		    	 
 		    	    String nombre = doc.getString("NOMBRE");
 		    	    int nivelInt = doc.getLong("NIVEL").intValue();
 		    	    String video = doc.getString("VIDEO");
 		    	    String descripcion = doc.getString("DESCRIPCION");
-		    	    Workouts w = new Workouts(0,nivelInt,nombre,video,descripcion);
+		    	    nombreColeccion = "EJERCICIO";
+		    	    for (QueryDocumentSnapshot docs : documentos) {
+		    	    	String nombreEjer = docs.getString("NOMBRE");
+		    	    	String descripcionEjer = docs.getString("DESCRIPCION");
+		    	    	
+		    	    	Ejercicios ejer = new Ejercicios("",nombreEjer,descripcionEjer);
+		    	    	ejercicios.add(ejer);
+		    	    }
+		    	    
+		    	    Workouts w = new Workouts(0,nivelInt,nombre,video,descripcion,ejercicios);
 		    	    listaWorkouts.add(w);
 		     }
 		     
@@ -52,3 +62,4 @@ public Conexion conexion = new Conexion();
 	}
 	
 }
+
