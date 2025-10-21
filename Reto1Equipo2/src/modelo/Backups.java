@@ -88,5 +88,30 @@ public class Backups {
 		}
 	}
 	
+	public void guardarHistorial(List<Historico> historial) {
+	    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("historial.dat"))) {
+	        oos.writeObject(historial);
+	        System.out.println("Historial guardado correctamente en historial.dat");
+	    } catch (IOException e) {
+	        System.err.println("Error al guardar el historial: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	}
+
+	public List<Historico> cargarHistorial() {
+	    File archivo = new File("historial.dat");
+	    if (!archivo.exists()) {
+	        return new ArrayList<>();
+	    }
+
+	    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
+	        return (List<Historico>) ois.readObject();
+	    } catch (IOException | ClassNotFoundException e) {
+	        System.err.println("Error al cargar historial: " + e.getMessage());
+	        e.printStackTrace();
+	        return new ArrayList<>();
+	    }
+	}
+
 
 }
