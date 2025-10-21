@@ -12,9 +12,16 @@ public class Usuario implements Serializable {
 	private String contraseña;
 	private String email;
 	private Date fechaNacimiento;
+	private int nivel;
 	
 	
 	
+	public int getNivel() {
+		return nivel;
+	}
+	public void setNivel(int nivel) {
+		this.nivel = nivel;
+	}
 	public String getId() {
 		return id;
 	}
@@ -51,12 +58,13 @@ public class Usuario implements Serializable {
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-	public Usuario(String nombre, String apellidos, String contraseña, String email, Date fechaNacimiento) {
+	public Usuario(String nombre, String apellidos, String contraseña, String email, Date fechaNacimiento, int nivel) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.contraseña = contraseña;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
+		this.nivel = nivel;
 	}
 	public Usuario() {
 		this.id = "";
@@ -65,6 +73,7 @@ public class Usuario implements Serializable {
 		this.contraseña = "";
 		this.email = "";
 		this.fechaNacimiento = null;
+		this.nivel = 0;
 	}
 	@Override
 	public String toString() {

@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controlador.Controlador;
+import modelo.Usuario;
 
 public class Login extends JFrame {
 
@@ -115,7 +116,9 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean login = ctr.LoginUsuarios(txtUsuario.getText(), txtContraseña.getText());
 				if (login) {
-					Inicio frame = new Inicio(ctr);
+					Usuario usuario = new Usuario();
+					usuario.setNombre(txtUsuario.getText());
+					Inicio frame = new Inicio(ctr,usuario);
 					dispose();
 					frame.setVisible(true);
 				}else {

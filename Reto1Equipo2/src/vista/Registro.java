@@ -172,7 +172,7 @@ public class Registro extends JFrame {
     					// TODO Auto-generated catch block
     					e1.printStackTrace();
     				}
-            		Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaNac);
+            		Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaNac,0);
                 	ctr.RegistrarUsuarioBDControlador(usuario);
                 	JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
                 	Login frame = new Login(ctr);

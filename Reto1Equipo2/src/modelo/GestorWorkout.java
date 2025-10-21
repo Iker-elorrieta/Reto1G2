@@ -2,9 +2,11 @@ package modelo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -32,7 +34,9 @@ public Conexion conexion = new Conexion();
 		    	    String video = doc.getString("VIDEO");
 		    	    String descripcion = doc.getString("DESCRIPCION");
 		    	    nombreColeccion = "EJERCICIO";
-		    	    for (QueryDocumentSnapshot docs : documentos) {
+		    	    DocumentReference ref = doc.getReference();
+	                List<QueryDocumentSnapshot> ejerciciosRef = ref.collection("EJERCICIO").get().get().getDocuments();
+		    	    for (QueryDocumentSnapshot docs : ejerciciosRef) {
 		    	    	String nombreEjer = docs.getString("NOMBRE");
 		    	    	String descripcionEjer = docs.getString("DESCRIPCION");
 		    	    	
