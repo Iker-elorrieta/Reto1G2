@@ -155,7 +155,6 @@ public class Registro extends JFrame {
             	
             	
             	String fechaStr = txtFecha_nac.getText();
-            	Date fechaNac = null;
             	String nombre = txtNombre.getText();
             	String apellidos = txtApellidos.getText();
             	String clave = txtContra.getText();
@@ -165,14 +164,7 @@ public class Registro extends JFrame {
 				if(nombre.equals("") || apellidos.equals("") || clave.equals("") || email.equals("") || fechaStr .equals("")){
             		JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", null, JOptionPane.WARNING_MESSAGE);
             	} else {
-            		
-            		try {
-    					fechaNac = sdf.parse(fechaStr);
-    				} catch (ParseException e1) {
-    					// TODO Auto-generated catch block
-    					e1.printStackTrace();
-    				}
-            		Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaNac,0);
+            		Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaStr,0);
                 	ctr.RegistrarUsuarioBDControlador(usuario);
                 	JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
                 	Login frame = new Login(ctr);

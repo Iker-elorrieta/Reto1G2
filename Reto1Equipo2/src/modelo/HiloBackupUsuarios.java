@@ -14,8 +14,9 @@ public class HiloBackupUsuarios implements Runnable {
     }
 
     private void guardarUsuarios(List<Usuario> usuarios) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("usuarios.dat"))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("lib/usuarios.dat"))) {
             oos.writeObject(usuarios);
+            System.out.println(usuarios);
             System.out.println("Lista de usuarios guardada correctamente.");
         } catch (IOException e) {
             System.out.println("Error al guardar usuarios: " + e.getMessage());

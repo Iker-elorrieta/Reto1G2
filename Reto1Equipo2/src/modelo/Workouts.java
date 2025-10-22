@@ -62,8 +62,14 @@ public class Workouts implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Workouts [id=" + id + ", nivel=" + nivel + ", nombre=" + nombre + ", videoURL=" + videoURL + "]";
+	    return "\n===== Workout =====\n" +
+	           "Nivel:        " + nivel + "\n" +
+	           "Nombre:       " + nombre + "\n" +
+	           "Video URL:    " + videoURL + "\n" +
+	           "Descripción:  " + descripcion + "\n" +
+	           "Ejercicios:   " + (ejercicios != null ? ejercicios.size() : 0) + " ejercicios\n";
 	}
+
 	
 	
 

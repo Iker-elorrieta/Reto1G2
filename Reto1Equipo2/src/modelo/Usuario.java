@@ -11,7 +11,7 @@ public class Usuario implements Serializable {
 	private String apellidos;
 	private String contraseña;
 	private String email;
-	private Date fechaNacimiento;
+	private String fechaNacimiento;
 	private int nivel;
 	
 	
@@ -52,13 +52,13 @@ public class Usuario implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-	public Usuario(String nombre, String apellidos, String contraseña, String email, Date fechaNacimiento, int nivel) {
+	public Usuario(String nombre, String apellidos, String contraseña, String email, String fechaNacimiento, int nivel) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.contraseña = contraseña;
@@ -78,7 +78,6 @@ public class Usuario implements Serializable {
 	@Override
 	public String toString() {
 	    return "\n===== Usuario =====\n" +
-	           "ID:               " + id + "\n" +
 	           "Nombre:           " + nombre + "\n" +
 	           "Apellidos:        " + apellidos + "\n" +
 	           "Contraseña:       " + contraseña + "\n" +

@@ -1,7 +1,7 @@
 package modelo;
 
 import java.io.File;
-import java.util.List;
+import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,13 +16,13 @@ import org.w3c.dom.Element;
 
 public class HiloBackupHistorico implements Runnable {
 
-    private List<Historico> historial;
+    private ArrayList<Historico> historial;
 
-    public HiloBackupHistorico(List<Historico> historial) {
+    public HiloBackupHistorico(ArrayList<Historico> historial) {
         this.historial = historial;
     }
 
-    private void guardarHistorialComoXML(List<Historico> historial) {
+    private void guardarHistorialComoXML(ArrayList<Historico> historial) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -75,7 +75,7 @@ public class HiloBackupHistorico implements Runnable {
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("historial.xml"));
+            StreamResult result = new StreamResult(new File("lib/historial.xml"));
             transformer.transform(source, result);
 
             System.out.println("Historial guardado correctamente en historial.xml");

@@ -2,12 +2,11 @@ package modelo;
 
 import java.io.Serializable;
 
-import com.google.cloud.Date;
 
 public class Historico implements Serializable {
 	
     private static final long serialVersionUID = 1L;
-	private Date fecha;
+	private String fecha;
 	private int nivel;
 	private int ratiocompletacion;
 	private int tiempo;
@@ -16,10 +15,10 @@ public class Historico implements Serializable {
 	private String workoutID;
 	private String workoutNombre;
 	
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 	public int getNivel() {
@@ -64,7 +63,7 @@ public class Historico implements Serializable {
 	public void setWorkoutNombre(String workoutNombre) {
 		this.workoutNombre = workoutNombre;
 	}
-	public Historico(Date fecha, int nivel, int ratiocompletacion, int tiempo, int tiempoesperado, String userID,
+	public Historico(String fecha, int nivel, int ratiocompletacion, int tiempo, int tiempoesperado, String userID,
 			String workoutID, String workoutNombre) {
 		this.fecha = fecha;
 		this.nivel = nivel;

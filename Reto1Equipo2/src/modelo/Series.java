@@ -1,7 +1,10 @@
 package modelo;
 
-public class Series{
-	
+import java.io.Serializable;
+
+public class Series implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private int descanso;
 	private int duracion;

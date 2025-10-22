@@ -14,8 +14,9 @@ public class HiloBackupWorkouts implements Runnable {
     }
 
     private void guardarWorkouts(ArrayList<Workouts> workouts) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("workouts.dat"))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("lib/workouts.dat"))) {
             oos.writeObject(workouts);
+            System.out.println(workouts);
             System.out.println("Workouts guardados correctamente en workouts.dat");
         } catch (IOException e) {
             System.out.println("Error al guardar los workouts: " + e.getMessage());

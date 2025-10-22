@@ -38,7 +38,7 @@ public class GestorUsuarios {
 					usuario.setContraseña(contraseña);
 					usuario.setApellidos(doc.getString("APELLIDO"));
 					usuario.setEmail(doc.getString("EMAIL"));
-					usuario.setFechaNacimiento(doc.getDate("NACIMIENTO"));
+					usuario.setFechaNacimiento(doc.getString("NACIMIENTO"));
 					System.out.println("Login correcto: " + usuario.toString());
 					usuario.toString();
 					return true;
@@ -96,9 +96,10 @@ public class GestorUsuarios {
 		    	    String nombre = doc.getString("NOMBRE");
 		    	    String clave = doc.getString("CLAVE");
 		    	    String email = doc.getString("EMAIL");
-		    	    String apellido = doc.getString("APELLIDO");
-		    	    Date nacimiento = doc.getDate("NACIMIENTO");
+		    	    String apellido = doc.getString("APELLIDOS");
+		    	    String nacimiento = doc.getString("NACIMIENTO");
 		    	    int nivel = doc.getLong("NIVEL").intValue();
+		    	    
 		    	    
 		    	    Usuario usu = new Usuario(nombre, apellido, clave, email, nacimiento, nivel);
 		    	    listaUsuarios.add(usu);
