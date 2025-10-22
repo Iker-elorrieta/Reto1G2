@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -81,6 +82,43 @@ public class GestorUsuarios {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public ArrayList<Usuario> obtenerUsuarios(ArrayList<Usuario> listaUsuarios) {
+		try {
+		     Firestore db = Conexion.conectar();
+		     String nombreColeccion = "USERS";
+		     ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
+		     QuerySnapshot documentos = future.get(); 
+		     
+		     for (QueryDocumentSnapshot doc : documentos) {
+		    	 
+		    	    String nombre = doc.getString("NOMBRE");
+		    	    String clave = doc.getString("CLAVE");
+		    	    String email = doc.getString("EMAIL");
+		    	    String apellido = doc.getString("APELLIDO");
+		    	    Date nacimiento = doc.getDate("NACIMIENTO");
+		    	    int nivel = doc.getLong("NIVEL").intValue();
+		    	    
+		    	    Usuario usu = new Usuario(nombre, apellido, clave, email, nacimiento, nivel);
+		    	    listaUsuarios.add(usu);
+		     }
+		     
+		     try {
+		         db.close();
+		     } catch (Exception e) {
+		         e.printStackTrace();
+		     }
+
+		 } catch (IOException e) {
+		     e.printStackTrace();
+		 } catch (InterruptedException e) {
+		     e.printStackTrace();
+		 } catch (ExecutionException e) {
+		     e.printStackTrace();
+		 }
+		
+		return listaUsuarios;
 	}
 
 }

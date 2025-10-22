@@ -12,8 +12,13 @@ public class Controlador {
 	public GestorWorkout gestorWorkout = new GestorWorkout();
 	public GestorUsuarios gestorUsuarios = new GestorUsuarios();
 	public ArrayList<Workouts> listaWorkout = new ArrayList<Workouts>();
+	public ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 	
 	
+	public ArrayList<Usuario> DevolverUsuarios(){
+		listaUsuarios = gestorUsuarios.obtenerUsuarios(listaUsuarios);
+		return listaUsuarios;
+	}
 	
 	public ArrayList<Workouts> DevolverWorkouts(){
 		listaWorkout = gestorWorkout.obtenerWorkouts(listaWorkout);
