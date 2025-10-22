@@ -80,6 +80,7 @@ public class Usuario implements Serializable {
 	    return "\n===== Usuario =====\n" +
 	           "Nombre:           " + nombre + "\n" +
 	           "Apellidos:        " + apellidos + "\n" +
+	           "Nivel:        	  " + nivel + "\n" +
 	           "Contraseña:       " + contraseña + "\n" +
 	           "Email:            " + email + "\n" +
 	           "Fecha nacimiento: " + fechaNacimiento + "\n";

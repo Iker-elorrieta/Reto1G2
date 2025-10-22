@@ -54,17 +54,18 @@ public class HiloBackupHistorico implements Runnable {
                 tiempo.appendChild(doc.createTextNode(String.valueOf(h.getTiempo())));
                 registro.appendChild(tiempo);
                 
-                Element tiempoEsperado = doc.createElement("nivel");
-                tiempoEsperado.appendChild(doc.createTextNode(String.valueOf(h.getTiempo())));
+                Element tiempoEsperado = doc.createElement("tiempo_esperado");
+                tiempoEsperado.appendChild(doc.createTextNode(String.valueOf(h.getTiempoesperado())));
                 registro.appendChild(tiempoEsperado);
                 
                 Element workoutId = doc.createElement("workout_id");
-                workoutId.appendChild(doc.createTextNode(h.getWorkoutID().toString()));
+                workoutId.appendChild(doc.createTextNode(h.getWorkoutID()));
                 registro.appendChild(workoutId);
-                
+
                 Element workoutNombre = doc.createElement("workout_nombre");
-                workoutNombre.appendChild(doc.createTextNode(h.getUserID().toString()));
+                workoutNombre.appendChild(doc.createTextNode(h.getWorkoutNombre()));
                 registro.appendChild(workoutNombre);
+
 
                 rootElement.appendChild(registro);
             }
