@@ -62,7 +62,7 @@ public class Registro extends JFrame {
         panel_1.setLayout(null); // ← Permite posicionamiento manual
 
         JPanel panel = new JPanel();
-        panel.setBounds(530, 237, 293, 479);
+        panel.setBounds(531, 202, 293, 513);
         panel_1.add(panel);
         panel.setBackground(new Color(110, 44, 44));
         panel.setLayout(null);
@@ -138,7 +138,7 @@ public class Registro extends JFrame {
         panel.add(txtFecha_nac);
 
         JLabel etiquetaImagen = new JLabel(iconoEscalado);
-        etiquetaImagen.setBounds(550, 26, 254, 203);
+        etiquetaImagen.setBounds(550, 11, 254, 175);
         panel_1.add(etiquetaImagen);
         
         JLabel etiquetaFondo = new JLabel(iconoEscalado2);
@@ -191,8 +191,8 @@ public class Registro extends JFrame {
         });
         btnNewButton.setForeground(new Color(0, 0, 0));
         btnNewButton.setFont(new Font("Arial Black", Font.BOLD, 13));
-        btnNewButton.setBackground(new Color(192, 57, 43));
-        btnNewButton.setBounds(89, 412, 122, 38);
+        btnNewButton.setBackground(new Color(192, 192, 192));
+        btnNewButton.setBounds(85, 412, 122, 38);
         panel.add(btnNewButton);
         
         JLabel lblNewLabel_1 = new JLabel("(yyyy-mm-dd)");
@@ -200,6 +200,22 @@ public class Registro extends JFrame {
         lblNewLabel_1.setFont(new Font("Arial Black", Font.PLAIN, 14));
         lblNewLabel_1.setBounds(49, 335, 122, 22);
         panel.add(lblNewLabel_1);
+        
+        JLabel lblVolver = new JLabel("Volver al login");
+		lblVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        lblVolver.setBackground(new Color(192, 192, 192));
+        lblVolver.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		Login frame = new Login(ctr);
+        		frame.setVisible(true);
+        		dispose();
+        	}
+        });
+        lblVolver.setForeground(new Color(192, 192, 192));
+        lblVolver.setFont(new Font("Arial Black", Font.BOLD, 13));
+        lblVolver.setBounds(89, 460, 115, 22);
+        panel.add(lblVolver);
         
     }
 }
