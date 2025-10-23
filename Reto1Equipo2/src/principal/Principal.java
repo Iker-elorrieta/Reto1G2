@@ -1,27 +1,36 @@
 package principal;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import controlador.Controlador;
-import modelo.HiloBackupHistorico;
-import modelo.HiloBackupUsuarios;
-import modelo.HiloBackupWorkouts;
 
 public class Principal {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Controlador ctr = new Controlador();
-		ctr.DevolverUsuarios();
-		ctr.DevolverWorkouts();
-		ctr.DevolverHistorico();
-		vista.Login frame = new vista.Login(ctr);
-		frame.setVisible(true);
-		HiloBackupWorkouts hilo1 = new HiloBackupWorkouts(ctr.listaWorkout);
-		HiloBackupUsuarios hilo2 = new HiloBackupUsuarios(ctr.listaUsuarios);
-		HiloBackupHistorico hilo3 = new HiloBackupHistorico(ctr.listaHistoricos);
-		
-		hilo1.run();
-		hilo2.run();
-		hilo3.run();
-	}
+    public static void main(String[] args) {
+        Controlador ctr = new Controlador();
+        vista.Login frame = new vista.Login(ctr);
+        frame.setVisible(true);
 
+        try {
+            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "lib/Backup.jar");
+            pb.redirectErrorStream(true);
+            Process proceso = pb.start();
+
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
+                String linea;
+                while ((linea = br.readLine()) != null) {
+                    System.out.println("[BACKUP] " + linea);
+                }
+            }
+
+            int codigoSalida = proceso.waitFor();
+            System.out.println("El proceso de backup terminó con código: " + codigoSalida);
+
+        } catch (Exception e) {
+            System.out.println("Error al iniciar el proceso de backup: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
+	

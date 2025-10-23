@@ -1,61 +1,152 @@
 package backupProceso;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
-import modelo.Historico;
-import modelo.Usuario;
-import modelo.Workouts;
+import com.google.api.core.ApiFuture;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.FirestoreOptions;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+
 
 public class Backups {
+	
+	private static String projectID = "reto1grupo2";
+    private static String nombreJSON = "lib/gimnasio.json";
+
+	public static Firestore conectar() throws IOException {
 
 
-	public ArrayList<Usuario> cargarUsuarios() {
-	    File archivo = new File("usuarios.dat");
+        FileInputStream serviceAccount;
+        Firestore firestore;
+        try {
+            serviceAccount = new FileInputStream(nombreJSON);
 
-	    if (!archivo.exists()) {
-	        System.out.println("No hay usuarios guardados.");
-	        return new ArrayList<>(); // devuelve lista vacía
-	    }
+            FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
+                .setProjectId(projectID)
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .build();
 
-	    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
-	        ArrayList<Usuario> listaUsuarios = (ArrayList<Usuario>) ois.readObject();
-	        System.out.println("Usuarios cargados: " + listaUsuarios.size());
-	        return listaUsuarios;
-	    } catch (IOException | ClassNotFoundException e) {
-	        System.out.println("Error al cargar los usuarios: " + e.getMessage());
+            firestore = firestoreOptions.getService();
+
+            if (firestore == null) {
+                throw new IOException("No se pudo obtener una instancia de Firestore.");
+            }
+
+            return firestore;
+
+        } catch (FileNotFoundException e) {
+            throw new IOException("Archivo de credenciales no encontrado: " + nombreJSON, e);
+        } catch (IOException e) {
+        	/*Llamar a los backups*/
+            throw new IOException("Error al cargar credenciales o conectar con Firestore.", e);
+        }
+    }
+
+	public List<Map<String, Object>> obtenerUsuarios() {
+	    List<Map<String, Object>> listaUsuarios = new ArrayList<>();
+	    try {
+	        Firestore db = conectar();
+	        String nombreColeccion = "USERS";
+	        ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
+	        QuerySnapshot documentos = future.get();
+
+	        for (QueryDocumentSnapshot doc : documentos) {
+	            Map<String, Object> usuario = new HashMap<>();
+	            usuario.put("NOMBRE", doc.getString("NOMBRE"));
+	            usuario.put("CLAVE", doc.getString("CLAVE"));
+	            usuario.put("EMAIL", doc.getString("EMAIL"));
+	            usuario.put("APELLIDOS", doc.getString("APELLIDOS"));
+	            usuario.put("NACIMIENTO", doc.getString("NACIMIENTO"));
+	            usuario.put("NIVEL", doc.getLong("NIVEL"));
+	            listaUsuarios.add(usuario);
+	        }
+
+	        db.close();
+	    } catch (IOException | InterruptedException | ExecutionException e) {
 	        e.printStackTrace();
-	        return new ArrayList<>();
-	    }
-	}
-
-	public ArrayList<Workouts> cargarWorkouts() {
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("workouts.dat"))) {
-			return (ArrayList<Workouts>) ois.readObject();
-		} catch (IOException | ClassNotFoundException e) {
-			System.out.println("Error al cargar workouts: " + e.getMessage());
+	    } catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return new ArrayList<>();
 		}
+	    return listaUsuarios;
 	}
 
-	public ArrayList<Historico> cargarHistorial() {
-	    File archivo = new File("historial.dat");
-	    if (!archivo.exists()) {
-	        return new ArrayList<>();
-	    }
 
-	    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
-	        return (ArrayList<Historico>) ois.readObject();
-	    } catch (IOException | ClassNotFoundException e) {
-	        System.out.println("Error al cargar historial: " + e.getMessage());
+	public List<Map<String, Object>> obtenerWorkouts() {
+	    List<Map<String, Object>> listaWorkouts = new ArrayList<>();
+	    try {
+	        Firestore db = conectar();
+	        String nombreColeccion = "WORKOUT";
+	        ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
+	        QuerySnapshot documentos = future.get();
+
+	        for (QueryDocumentSnapshot doc : documentos) {
+	            Map<String, Object> workout = new HashMap<>();
+	            workout.put("NOMBRE", doc.getString("NOMBRE"));
+	            workout.put("NIVEL", doc.getLong("NIVEL"));
+	            workout.put("VIDEO", doc.getString("VIDEO"));
+	            workout.put("DESCRIPCION", doc.getString("DESCRIPCION"));
+
+	            List<Map<String, String>> ejercicios = new ArrayList<>();
+	            List<QueryDocumentSnapshot> ejerciciosRef = doc.getReference()
+	                .collection("EJERCICIO").get().get().getDocuments();
+
+	            for (QueryDocumentSnapshot ej : ejerciciosRef) {
+	                Map<String, String> ejercicio = new HashMap<>();
+	                ejercicio.put("NOMBRE", ej.getString("NOMBRE"));
+	                ejercicio.put("DESCRIPCION", ej.getString("DESCRIPCION"));
+	                ejercicios.add(ejercicio);
+	            }
+
+	            workout.put("EJERCICIOS", ejercicios);
+	            listaWorkouts.add(workout);
+	        }
+
+	        db.close();
+	    } catch (IOException | InterruptedException | ExecutionException e) {
 	        e.printStackTrace();
-	        return new ArrayList<>();
-	    }
+	    } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    return listaWorkouts;
 	}
 
+	public List<Map<String, Object>> obtenerHistorico() {
+	    List<Map<String, Object>> listaHistorico = new ArrayList<>();
+	    try {
+	        Firestore db = conectar();
+	        String nombreColeccion = "HISTORICO";
+	        ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
+	        QuerySnapshot documentos = future.get();
+
+	        for (QueryDocumentSnapshot doc : documentos) {
+	            Map<String, Object> historico = new HashMap<>();
+	            historico.put("FECHA", doc.getString("FECHA"));
+	            historico.put("NIVEL", doc.getLong("NIVEL"));
+	            historico.put("RATIOCOMPLETACION", doc.getLong("RATIOCOMPLETACION"));
+	            historico.put("TIEMPO", doc.getLong("TIEMPO"));
+	            historico.put("TIEMPOESPERADO", doc.getLong("TIEMPOESPERADO"));
+	            historico.put("USERID", doc.getString("USERID"));
+	            historico.put("WORKOUTID", doc.getString("WORKOUTID"));
+	            historico.put("WORKOUTNOMBRE", doc.getString("WORKOUTNOMBRE"));
+	            listaHistorico.add(historico);
+	        }
+
+	        db.close();
+	    } catch (IOException | InterruptedException | ExecutionException e) {
+	        e.printStackTrace();
+	    } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    return listaHistorico;
+	}
 
 }
