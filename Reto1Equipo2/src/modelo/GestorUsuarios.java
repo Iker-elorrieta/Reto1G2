@@ -2,9 +2,7 @@ package modelo;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -21,7 +19,7 @@ import conexion.Conexion;;
 public class GestorUsuarios {
 	
 
-	public boolean login(String nombre, String contraseña) {
+	public boolean login(String email, String contraseña) {
 
 		try {
 			Firestore db = Conexion.conectar();
@@ -31,13 +29,13 @@ public class GestorUsuarios {
 
 			for (QueryDocumentSnapshot doc : documentos) {
 
-				if (doc.getString("NOMBRE").equals(nombre) && doc.getString("CLAVE").equals(contraseña)) {
+				if (doc.getString("EMAIL").equals(email) && doc.getString("CLAVE").equals(contraseña)) {
 					Usuario usuario = new Usuario ();
 					usuario.setId(doc.getId());
-					usuario.setNombre(nombre);
+					usuario.setNombre(doc.getString("NOMBRE"));
 					usuario.setContraseña(contraseña);
 					usuario.setApellidos(doc.getString("APELLIDO"));
-					usuario.setEmail(doc.getString("EMAIL"));
+					usuario.setEmail(email);
 					usuario.setFechaNacimiento(doc.getString("NACIMIENTO"));
 					System.out.println("Login correcto: " + usuario.toString());
 					usuario.toString();

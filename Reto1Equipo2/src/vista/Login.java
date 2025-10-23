@@ -27,7 +27,7 @@ public class Login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtUsuario;
+	private JTextField txtEmail;
 	private JTextField txtContraseña;
 
 	public Login(Controlador ctr) {
@@ -57,29 +57,29 @@ public class Login extends JFrame {
 		panel.setBackground(new Color(110, 44, 44));
 		panel.setLayout(null);
 
-		txtUsuario = new JTextField("Usuario");
-		txtUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		txtUsuario.setBounds(47, 52, 199, 38);
-		txtUsuario.setBackground(new Color(192, 192, 192));
-		txtUsuario.setColumns(10);
-		txtUsuario.setForeground(Color.GRAY);
-		panel.add(txtUsuario);
+		txtEmail = new JTextField("Email");
+		txtEmail.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		txtEmail.setBounds(47, 52, 199, 38);
+		txtEmail.setBackground(new Color(192, 192, 192));
+		txtEmail.setColumns(10);
+		txtEmail.setForeground(Color.GRAY);
+		panel.add(txtEmail);
 
 		// Lógica del placeholder
-		txtUsuario.addFocusListener(new FocusAdapter() {
+		txtEmail.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (txtUsuario.getText().equals("Usuario")) {
-					txtUsuario.setText("");
-					txtUsuario.setForeground(Color.BLACK);
+				if (txtEmail.getText().equals("Email")) {
+					txtEmail.setText("");
+					txtEmail.setForeground(Color.BLACK);
 				}
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (txtUsuario.getText().isEmpty()) {
-					txtUsuario.setText("Usuario");
-					txtUsuario.setForeground(Color.GRAY);
+				if (txtEmail.getText().isEmpty()) {
+					txtEmail.setText("Email");
+					txtEmail.setForeground(Color.GRAY);
 				}
 			}
 		});
@@ -114,10 +114,10 @@ public class Login extends JFrame {
 		JButton btnNewButton = new JButton("INGRESAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean login = ctr.LoginUsuarios(txtUsuario.getText(), txtContraseña.getText());
+				boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getText());
 				if (login) {
 					Usuario usuario = new Usuario();
-					usuario.setNombre(txtUsuario.getText());
+					usuario.setEmail(txtEmail.getText());
 					Inicio frame = new Inicio(ctr,usuario);
 					dispose();
 					frame.setVisible(true);
