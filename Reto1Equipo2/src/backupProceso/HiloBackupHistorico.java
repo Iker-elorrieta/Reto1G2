@@ -80,6 +80,7 @@ public class HiloBackupHistorico implements Runnable {
             StreamResult result = new StreamResult(new File("lib/historial.xml"));
             transformer.transform(source, result);
 
+            
             System.out.println("Historial guardado correctamente en historial.xml");
 
         } catch (ParserConfigurationException | javax.xml.transform.TransformerException e) {

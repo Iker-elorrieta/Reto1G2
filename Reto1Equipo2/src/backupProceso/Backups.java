@@ -122,20 +122,17 @@ public class Backups {
 	    List<Map<String, Object>> listaHistorico = new ArrayList<>();
 	    try {
 	        Firestore db = conectar();
-	        String nombreColeccion = "HISTORICO";
+	        String nombreColeccion = "HISTORIAL";
 	        ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 	        QuerySnapshot documentos = future.get();
 
 	        for (QueryDocumentSnapshot doc : documentos) {
 	            Map<String, Object> historico = new HashMap<>();
-	            historico.put("FECHA", doc.getString("FECHA"));
-	            historico.put("NIVEL", doc.getLong("NIVEL"));
-	            historico.put("RATIOCOMPLETACION", doc.getLong("RATIOCOMPLETACION"));
+	            historico.put("FECHA", doc.getTimestamp("FECHA"));
+	            historico.put("INTENTOS", doc.getLong("INTENTOS"));
+	            historico.put("RATIOPORCENTAJE", doc.getLong("RATIOPORCENTAJE"));
 	            historico.put("TIEMPO", doc.getLong("TIEMPO"));
 	            historico.put("TIEMPOESPERADO", doc.getLong("TIEMPOESPERADO"));
-	            historico.put("USERID", doc.getString("USERID"));
-	            historico.put("WORKOUTID", doc.getString("WORKOUTID"));
-	            historico.put("WORKOUTNOMBRE", doc.getString("WORKOUTNOMBRE"));
 	            listaHistorico.add(historico);
 	        }
 
@@ -148,5 +145,6 @@ public class Backups {
 		}
 	    return listaHistorico;
 	}
+
 
 }

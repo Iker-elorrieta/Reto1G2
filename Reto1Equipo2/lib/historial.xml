@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<historico/>
+<historico>
+    <registro>
+        <id_usuario>null</id_usuario>
+        <fecha>2025-10-16T22:00:00.765000000Z</fecha>
+        <nivel>null</nivel>
+        <ratio_complecion>null</ratio_complecion>
+        <tiempo>1200</tiempo>
+        <tiempo_esperado>1100</tiempo_esperado>
+        <workout_id>null</workout_id>
+        <workout_nombre>null</workout_nombre>
+    </registro>
+</historico>
