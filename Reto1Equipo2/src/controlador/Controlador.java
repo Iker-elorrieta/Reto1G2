@@ -42,4 +42,17 @@ public class Controlador {
 		return gestorUsuarios.login(nombre, contrase);
 	}
 	
+	public Usuario UsuarioIniciado(String email) {
+		DevolverUsuarios();
+		for(Usuario usu : listaUsuarios ) {
+			
+			if(usu.getEmail().equals(email)){
+				return usu;
+
+			}
+			
+		}
+		return null;
+	}
+	
 }

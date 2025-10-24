@@ -67,7 +67,9 @@ public class Inicio extends JFrame {
 		separator.setBackground(new Color(0, 0, 0));
 		PanelWorkouts.add(separator);
 		
-		actualizarWorkout(modelo, usuarioActual.getNivel());
+	
+		
+		System.out.println(usuarioActual.getNivel()+"");
 		
 		JComboBox NivelCB = new JComboBox();
 		NivelCB.addActionListener(new ActionListener() {
@@ -144,12 +146,6 @@ public class Inicio extends JFrame {
 
 		workouts = ctr.DevolverWorkouts();
 
-		for (Workouts workout : workouts) {
-			Object[] fila = { workout.getNombre() };
-			modelo.addRow(fila);
-			table.setModel(modelo);
-		}
-
 		table.getSelectionModel().addListSelectionListener(e -> {
 			if (!e.getValueIsAdjusting()) {
 				int filaSeleccionada = table.getSelectedRow();
@@ -208,7 +204,7 @@ public class Inicio extends JFrame {
 	    PanelEjercicios.add(lblDescripcion);
 
 	    JLabel lblVideo = new JLabel("<html><u>Ver video</u></html>");
-	    lblVideo.setBounds(20, y + 70, 300, 20);
+	    lblVideo.setBounds(20, y + 95, 300, 20);
 	    lblVideo.setForeground(Color.CYAN);
 	    lblVideo.addMouseListener(new MouseAdapter() {
 	        @Override
@@ -222,8 +218,13 @@ public class Inicio extends JFrame {
 	        }
 	    });
 	    PanelEjercicios.add(lblVideo);
+	    
+	    JLabel lblNEjer = new JLabel("Numero de ejercicios: " + seleccionado.getEjercicios().size());
+	    lblNEjer.setBounds(20, y + 70, 600, 20);
+	    lblNEjer.setForeground(Color.WHITE);
+	    PanelEjercicios.add(lblNEjer);
 
-	    y += 110;
+	    y += 140;
 
 	    // Paneles por cada ejercicio
 	    for (Ejercicios ejercicio : seleccionado.getEjercicios()) {

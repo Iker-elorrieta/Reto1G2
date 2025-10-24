@@ -114,13 +114,15 @@ public class Login extends JFrame {
 		JButton btnNewButton = new JButton("INGRESAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getText());
-				if (login) {
-					Usuario usuario = new Usuario();
-					usuario.setEmail(txtEmail.getText());
-					Inicio frame = new Inicio(ctr,usuario);
-					dispose();
-					frame.setVisible(true);
+				 boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getText());
+				
+				    if (login) {
+				    	
+				    	 System.out.println((txtEmail.getText().toString()));
+				        Usuario usuario = ctr.UsuarioIniciado(txtEmail.getText());
+				        Inicio frame = new Inicio(ctr, usuario);
+				        dispose();
+				        frame.setVisible(true);
 				}else {
 					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
 				}

@@ -34,9 +34,11 @@ public class GestorUsuarios {
 					usuario.setId(doc.getId());
 					usuario.setNombre(doc.getString("NOMBRE"));
 					usuario.setContraseña(contraseña);
-					usuario.setApellidos(doc.getString("APELLIDO"));
+					usuario.setApellidos(doc.getString("APELLIDOS"));
 					usuario.setEmail(email);
 					usuario.setFechaNacimiento(doc.getString("NACIMIENTO"));
+					Integer nivel = doc.getLong("NIVEL") != null ? doc.getLong("NIVEL").intValue() : 0;
+					usuario.setNivel(nivel);
 					System.out.println("Login correcto: " + usuario.toString());
 					usuario.toString();
 					return true;
@@ -73,6 +75,7 @@ public class GestorUsuarios {
 			usuarioNuevo.put("EMAIL", usuario.getEmail());
 			usuarioNuevo.put("CLAVE", usuario.getContraseña());
 			usuarioNuevo.put("NACIMINETO", usuario.getFechaNacimiento());
+			usuarioNuevo.put("NIVEL", 0);
 
 			nuevoId.set(usuarioNuevo);
 			db.close();
@@ -96,7 +99,9 @@ public class GestorUsuarios {
 		    	    String email = doc.getString("EMAIL");
 		    	    String apellido = doc.getString("APELLIDOS");
 		    	    String nacimiento = doc.getString("NACIMIENTO");
-		    	    int nivel = doc.getLong("NIVEL").intValue();
+		    	    Long nivelLong = doc.getLong("NIVEL");
+		    	    int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
+		    	   
 		    	    
 		    	    
 		    	    Usuario usu = new Usuario(nombre, apellido, clave, email, nacimiento, nivel);
