@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
@@ -127,24 +128,36 @@ public class Backups {
 	        QuerySnapshot documentos = future.get();
 
 	        for (QueryDocumentSnapshot doc : documentos) {
-	            Map<String, Object> historico = new HashMap<>();
-	            historico.put("FECHA", doc.getTimestamp("FECHA"));
-	            historico.put("INTENTOS", doc.getLong("INTENTOS"));
-	            historico.put("RATIOPORCENTAJE", doc.getLong("RATIOPORCENTAJE"));
-	            historico.put("TIEMPO", doc.getLong("TIEMPO"));
-	            historico.put("TIEMPOESPERADO", doc.getLong("TIEMPOESPERADO"));
+	        	Map<String, Object> historico = new HashMap<>();
+
+	            historico.put("ID", doc.getId());
+	            historico.put("FECHA", doc.get("FECHA"));
+	            historico.put("NIVEL", doc.get("NIVEL"));
+	            historico.put("RATIO_COMPLETACION", doc.getDouble("RATIOCOMPLETACION"));
+	            historico.put("TIEMPO", doc.get("TIEMPO"));
+	            historico.put("TIEMPO_ESPERADO", doc.get("TIEMPOESPERADO"));
+
+	            DocumentReference usuarioRef = (DocumentReference) doc.get("USERID");
+	            historico.put("USUARIO", usuarioRef);
+
+	            DocumentReference workoutRef = (DocumentReference) doc.get("WORKOUTID");
+	            historico.put("WORKOUT", workoutRef);
+
+	            DocumentReference workoutNombre = (DocumentReference) doc.get("WORKOUTNOMBRE");
+                historico.put("WORKOUTNOMBRE", workoutNombre);
+                
+	            
 	            listaHistorico.add(historico);
 	        }
 
-	        db.close();
 	    } catch (IOException | InterruptedException | ExecutionException e) {
 	        e.printStackTrace();
 	    } catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	        e.printStackTrace();
+	    }
 	    return listaHistorico;
 	}
+
 
 
 }

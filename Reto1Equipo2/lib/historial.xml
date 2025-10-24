@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <historico>
     <registro>
-        <id_usuario>null</id_usuario>
+        <id_documento>TP7RiFLuZgtK30GXVcGD</id_documento>
         <fecha>2025-10-16T22:00:00.765000000Z</fecha>
-        <nivel>null</nivel>
-        <ratio_complecion>null</ratio_complecion>
+        <nivel>0</nivel>
+        <ratio_complecion>80.0</ratio_complecion>
         <tiempo>1200</tiempo>
         <tiempo_esperado>1100</tiempo_esperado>
-        <workout_id>null</workout_id>
-        <workout_nombre>null</workout_nombre>
+        <id_usuario>gzsjfrGiuMn7pBRFKStb</id_usuario>
+        <workout_id>1HDUktpUTuoCY69ArSUS</workout_id>
+        <workout_nombre>Rutina espalda</workout_nombre>
     </registro>
 </historico>
