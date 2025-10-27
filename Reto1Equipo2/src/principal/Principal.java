@@ -9,9 +9,6 @@ public class Principal {
 
     public static void main(String[] args) {
         Controlador ctr = new Controlador();
-        vista.Login frame = new vista.Login(ctr);
-        frame.setVisible(true);
-
         try {
             ProcessBuilder pb = new ProcessBuilder("java", "-jar", "lib/Backup.jar");
             pb.redirectErrorStream(true);
@@ -31,6 +28,10 @@ public class Principal {
             System.out.println("Error al iniciar el proceso de backup: " + e.getMessage());
             e.printStackTrace();
         }
+        vista.Login frame = new vista.Login(ctr);
+        frame.setVisible(true);
+
+        
     }
 }
 	

@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -135,6 +138,7 @@ public class Registro extends JFrame {
 		panel_1.add(etiquetaFondo);
 
 		JButton btnNewButton = new JButton("REGISTRAR");
+
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -150,22 +154,39 @@ public class Registro extends JFrame {
 							JOptionPane.WARNING_MESSAGE);
 				} else {
 					boolean existe = ctr.verificarEmail(email);
-					if(existe == true) {
-						JOptionPane.showMessageDialog(null, "Este email ya está registrado", null, JOptionPane.WARNING_MESSAGE);
+					if (existe) {
+						JOptionPane.showMessageDialog(null, "Este email ya está registrado", null,
+								JOptionPane.WARNING_MESSAGE);
 						txtMail.setText("");
 					} else {
-						Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaStr, 0);
-						ctr.RegistrarUsuarioBDControlador(usuario);
-						JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
-						Login frame = new Login(ctr);
-						frame.setVisible(true);
-						dispose();
+						try {
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+							sdf.setLenient(false); // Comprueba si la fecha es valida
+							Date fechaNacimiento = sdf.parse(fechaStr);
+							SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
+						    int añoNacimiento = Integer.parseInt(sdfYear.format(fechaNacimiento));
+
+						    int añoActual = Integer.parseInt(sdfYear.format(new Date()));
+
+						    if (añoNacimiento > añoActual) {
+						        JOptionPane.showMessageDialog(null, "El año de nacimiento no puede ser mayor al actual", null,
+						                JOptionPane.ERROR_MESSAGE);
+						        return;
+						    }
+
+							Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaNacimiento, 0);
+							ctr.RegistrarUsuarioBDControlador(usuario);
+							JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
+							Login frame = new Login(ctr);
+							frame.setVisible(true);
+							dispose();
+						} catch (ParseException ex) {
+							JOptionPane.showMessageDialog(null, "Formato de fecha inválido. Usa yyyy/MM/dd", null,
+									JOptionPane.ERROR_MESSAGE);
+						}
 					}
-					
 				}
-
 			}
-
 		});
 		btnNewButton.setForeground(new Color(0, 0, 0));
 		btnNewButton.setFont(new Font("Arial Black", Font.BOLD, 13));
@@ -173,7 +194,7 @@ public class Registro extends JFrame {
 		btnNewButton.setBounds(85, 412, 122, 38);
 		panel.add(btnNewButton);
 
-		JLabel lblNewLabel_1 = new JLabel("(yyyy-mm-dd)");
+		JLabel lblNewLabel_1 = new JLabel("(yyyy/MM/dd)");
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		lblNewLabel_1.setBounds(49, 335, 122, 22);

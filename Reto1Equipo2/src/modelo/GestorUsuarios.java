@@ -2,6 +2,7 @@ package modelo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -37,7 +38,7 @@ public class GestorUsuarios {
 					usuario.setContraseña(contraseña);
 					usuario.setApellidos(doc.getString("APELLIDOS"));
 					usuario.setEmail(email);
-					usuario.setFechaNacimiento(doc.getString("NACIMIENTO"));
+					usuario.setFechaNacimiento(doc.getDate("NACIMIENTO"));
 					Integer nivel = doc.getLong("NIVEL") != null ? doc.getLong("NIVEL").intValue() : 0;
 					usuario.setNivel(nivel);
 					System.out.println("Login correcto: " + usuario.toString());
@@ -99,7 +100,7 @@ public class GestorUsuarios {
 		    	    String clave = doc.getString("CLAVE");
 		    	    String email = doc.getString("EMAIL");
 		    	    String apellido = doc.getString("APELLIDOS");
-		    	    String nacimiento = doc.getString("NACIMIENTO");
+		    	    Date nacimiento = doc.getDate("NACIMIENTO");
 		    	    Long nivelLong = doc.getLong("NIVEL");
 		    	    int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
 		    	   

@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Usuario implements Serializable {
 	
@@ -10,7 +11,7 @@ public class Usuario implements Serializable {
 	private String apellidos;
 	private String contraseña;
 	private String email;
-	private String fechaNacimiento;
+	private Date fechaNacimiento;
 	private int nivel;
 	
 	
@@ -51,13 +52,13 @@ public class Usuario implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(String fechaNacimiento) {
+	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-	public Usuario(String nombre, String apellidos, String contraseña, String email, String fechaNacimiento, int nivel) {
+	public Usuario(String nombre, String apellidos, String contraseña, String email, Date fechaNacimiento, int nivel) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.contraseña = contraseña;
