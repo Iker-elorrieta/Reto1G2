@@ -54,5 +54,10 @@ public class Controlador {
 		}
 		return null;
 	}
+
+	public boolean verificarEmail(String email) {
+		boolean existe = gestorUsuarios.verificarEmail(email);
+		return existe;
+	}
 	
 }

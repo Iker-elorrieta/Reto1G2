@@ -17,7 +17,7 @@ public class Conexion {
     private static String nombreJSON = "lib/gimnasio.json";
     
     
-    public static Firestore conectar() throws IOException {
+    public Firestore conectar() throws IOException {
 
 
         FileInputStream serviceAccount;

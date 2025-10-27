@@ -18,11 +18,12 @@ import conexion.Conexion;;
 
 public class GestorUsuarios {
 	
+	public Conexion conexion = new Conexion();	
 
 	public boolean login(String email, String contraseña) {
 
 		try {
-			Firestore db = Conexion.conectar();
+			Firestore db = conexion.conectar();
 			String nombreColeccion = "USERS";
 			ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 			QuerySnapshot documentos = future.get();
@@ -65,7 +66,7 @@ public class GestorUsuarios {
 	public void RegistrarUsuarioBD(Usuario usuario) {
 		try {
 
-			Firestore db = Conexion.conectar();
+			Firestore db = conexion.conectar();
 			CollectionReference users = db.collection("USERS");
 			DocumentReference nuevoId = users.document();
 
@@ -87,7 +88,7 @@ public class GestorUsuarios {
 
 	public ArrayList<Usuario> obtenerUsuarios(ArrayList<Usuario> listaUsuarios) {
 		try {
-		     Firestore db = Conexion.conectar();
+		     Firestore db = conexion.conectar();
 		     String nombreColeccion = "USERS";
 		     ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 		     QuerySnapshot documentos = future.get(); 
@@ -123,6 +124,33 @@ public class GestorUsuarios {
 		 }
 		
 		return listaUsuarios;
+	}
+
+	public boolean verificarEmail(String email) {
+		try {
+			Firestore db = conexion.conectar();
+			String nombreColeccion = "USERS";
+		    ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
+			QuerySnapshot documentos = future.get(); 
+			String emailVerificar = null;
+			for (QueryDocumentSnapshot doc: documentos) {
+				 emailVerificar = doc.getString("EMAIL");
+				 if (email.equals(emailVerificar)) {
+						return true;
+				 }
+			}
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

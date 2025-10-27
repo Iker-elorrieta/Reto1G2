@@ -12,11 +12,13 @@ import com.google.cloud.firestore.QuerySnapshot;
 import conexion.Conexion;
 
 public class GestorHistorico {
+	
+	public Conexion conexion = new Conexion();	
 
 	public ArrayList<Historico> obtenerHistorico(ArrayList<Historico> listaHistorico) {
 
 	    try {
-	        Firestore db = Conexion.conectar();
+	        Firestore db = conexion.conectar();
 	        String nombreColeccion = "HISTORICO";
 	        ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 	        QuerySnapshot documentos = future.get();
