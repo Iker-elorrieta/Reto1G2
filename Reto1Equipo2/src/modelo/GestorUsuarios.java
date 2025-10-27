@@ -21,47 +21,48 @@ public class GestorUsuarios {
 	
 	public Conexion conexion = new Conexion();	
 
-	public boolean login(String email, String contraseña) {
+	public boolean login(String email, char[] cs) {
+	    Firestore db = null;
+	    try {
+	        db = conexion.conectar();
+	        String nombreColeccion = "USERS";
+	        String claveIngresada = new String(cs);
+	        ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion)
+	                                            .whereEqualTo("EMAIL", email)
+	                                            .get();
+	        QuerySnapshot documentos = future.get();
 
-		try {
-			Firestore db = conexion.conectar();
-			String nombreColeccion = "USERS";
-			ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
-			QuerySnapshot documentos = future.get();
+	        for (QueryDocumentSnapshot doc : documentos) {
+	            String claveGuardada = doc.getString("CLAVE");
+	            if (claveGuardada != null && claveGuardada.equals(claveIngresada)) {
+	                Usuario usuario = new Usuario();
+	                usuario.setId(doc.getId());
+	                usuario.setNombre(doc.getString("NOMBRE"));
+	                usuario.setContraseña(doc.getString("CLAVE"));
+	                usuario.setApellidos(doc.getString("APELLIDOS"));
+	                usuario.setEmail(email);
+	                usuario.setFechaNacimiento(doc.getDate("NACIMIENTO"));
+	                Integer nivel = doc.getLong("NIVEL") != null ? doc.getLong("NIVEL").intValue() : 0;
+	                usuario.setNivel(nivel);
 
-			for (QueryDocumentSnapshot doc : documentos) {
+	                System.out.println("Login correcto: " + usuario.toString());
+	                return true;
+	            }
+	        }
 
-				if (doc.getString("EMAIL").equals(email) && doc.getString("CLAVE").equals(contraseña)) {
-					Usuario usuario = new Usuario ();
-					usuario.setId(doc.getId());
-					usuario.setNombre(doc.getString("NOMBRE"));
-					usuario.setContraseña(contraseña);
-					usuario.setApellidos(doc.getString("APELLIDOS"));
-					usuario.setEmail(email);
-					usuario.setFechaNacimiento(doc.getDate("NACIMIENTO"));
-					Integer nivel = doc.getLong("NIVEL") != null ? doc.getLong("NIVEL").intValue() : 0;
-					usuario.setNivel(nivel);
-					System.out.println("Login correcto: " + usuario.toString());
-					usuario.toString();
-					return true;
-				}
-			}
+	    } catch (IOException | InterruptedException | ExecutionException e) {
+	        e.printStackTrace();
+	    } finally {
+	        if (db != null) {
+	            try {
+	                db.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 
-			try {
-				db.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-
-		return false;
+	    return false;
 	}
 
 	public void RegistrarUsuarioBD(Usuario usuario) {

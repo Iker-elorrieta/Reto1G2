@@ -22,13 +22,14 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.Controlador;
 import modelo.Usuario;
+import javax.swing.JPasswordField;
 
 public class Login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtEmail;
-	private JTextField txtContraseña;
+	private JPasswordField txtContraseña;
 
 	public Login(Controlador ctr) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,36 +86,10 @@ public class Login extends JFrame {
 			}
 		});
 
-		txtContraseña = new JTextField("Contraseña");
-		txtContraseña.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		txtContraseña.setBounds(47, 138, 199, 38);
-		txtContraseña.setBackground(Color.LIGHT_GRAY);
-		txtContraseña.setColumns(10);
-		txtContraseña.setForeground(Color.GRAY);
-		panel.add(txtContraseña);
-
-		txtContraseña.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				if (txtContraseña.getText().equals("Contraseña")) {
-					txtContraseña.setText("");
-					txtContraseña.setForeground(Color.BLACK);
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (txtContraseña.getText().isEmpty()) {
-					txtContraseña.setText("Contraseña");
-					txtContraseña.setForeground(Color.GRAY);
-				}
-			}
-		});
-
 		JButton btnNewButton = new JButton("INGRESAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getText());
+				 boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getPassword());
 				
 				    if (login) {
 				    	
@@ -141,6 +116,10 @@ public class Login extends JFrame {
 		lblCrearCuenta.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblCrearCuenta.setBounds(95, 270, 102, 14);
 		panel.add(lblCrearCuenta);
+		
+		txtContraseña = new JPasswordField();
+		txtContraseña.setBounds(47, 141, 199, 38);
+		panel.add(txtContraseña);
 
 		 JLabel etiquetaImagen = new JLabel(iconoEscalado);
 	     etiquetaImagen.setBounds(550, 26, 254, 203);
