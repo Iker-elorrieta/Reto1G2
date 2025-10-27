@@ -25,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JButton;
 
 public class Inicio extends JFrame {
 
@@ -37,6 +38,11 @@ public class Inicio extends JFrame {
 	public Inicio(Controlador ctr, Usuario usuarioActual) {
 
 		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Workouts" }, 0) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
@@ -71,30 +77,20 @@ public class Inicio extends JFrame {
 		
 		System.out.println(usuarioActual.getNivel()+"");
 		
-		JComboBox NivelCB = new JComboBox();
+		JComboBox<String> NivelCB = new JComboBox<String>();
 		NivelCB.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nivelSeleccionado = NivelCB.getSelectedItem().toString();
-				if (nivelSeleccionado.equals("Nivel 0")) {
-
-					actualizarWorkout(modelo, 0);
-
-				}
-				if (nivelSeleccionado.equals("Nivel 1")) {
-
-					actualizarWorkout(modelo, 1);
-
-				}
-				if (nivelSeleccionado.equals("Nivel 2")) {
-
-					actualizarWorkout(modelo, 2);
-
-				}
-
-			}
+		    public void actionPerformed(ActionEvent e) {
+		        String nivelSeleccionado = (String) NivelCB.getSelectedItem();
+		        if (nivelSeleccionado != null && nivelSeleccionado.startsWith("Nivel ")) {
+		            try {
+		                int nivel = Integer.parseInt(nivelSeleccionado.replace("Nivel ", ""));
+		                actualizarWorkout(modelo, nivel);
+		            } catch (NumberFormatException ex) {
+		                ex.printStackTrace(); 
+		            }
+		        }
+		    }
 		});
-
-		
 		String[] niveles = new String[usuarioActual.getNivel() + 1];
 		for (int i = 0; i <= usuarioActual.getNivel() ; i++) {
 		    niveles[i] = "Nivel " + i;
@@ -102,6 +98,7 @@ public class Inicio extends JFrame {
 
 		NivelCB.setModel(new DefaultComboBoxModel<>(niveles));
 		NivelCB.setBounds(65, 83, 182, 22);
+		NivelCB.setSelectedIndex(-1);
 		PanelWorkouts.add(NivelCB);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -140,6 +137,20 @@ public class Inicio extends JFrame {
 
 		lblNivel.setText("Nivel: "+usuarioActual.getNivel());
 		
+		JButton btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion.setForeground(new Color(255, 255, 255));
+		btnCerrarSesion.setFont(new Font("Arial", Font.BOLD, 10));
+		btnCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 Login frame = new Login(ctr);
+			     dispose();
+			     frame.setVisible(true);
+			}
+		});
+		btnCerrarSesion.setBounds(10, 11, 104, 36);
+		btnCerrarSesion.setBackground(Color.RED);
+		PanelUsuario.add(btnCerrarSesion);
+		
 		table.setVisible(true);
 
 		scrollPane.setViewportView(table);
@@ -168,9 +179,6 @@ public class Inicio extends JFrame {
 		modelo.setRowCount(0);
 
 		for (Workouts workout : workouts) {
-
-			
-			
 			if (workout.getNivel() == nivel) {
 				Object[] fila = { workout.getNombre() };
 				modelo.addRow(fila);
@@ -186,7 +194,7 @@ public class Inicio extends JFrame {
 
 	    int y = 20;
 
-	    // Info general del workout
+
 	    JLabel lblNombre = new JLabel("Workout: " + seleccionado.getNombre());
 	    lblNombre.setBounds(20, y, 400, 20);
 	    lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
@@ -226,7 +234,6 @@ public class Inicio extends JFrame {
 
 	    y += 140;
 
-	    // Paneles por cada ejercicio
 	    for (Ejercicios ejercicio : seleccionado.getEjercicios()) {
 	        JPanel panelEjer = new JPanel();
 	        panelEjer.setLayout(null);

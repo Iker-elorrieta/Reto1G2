@@ -42,14 +42,15 @@ public class Login extends JFrame {
 		JPanel panel_1 = new JPanel();
         panel_1.setBounds(0, 0, 1354, 761);
         contentPane.add(panel_1);
-        // Cargar la imagen desde archivo local
+
+        
         ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
         Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
         ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
         ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
         Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
         ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
-        panel_1.setLayout(null); // ← Permite posicionamiento manual
+        panel_1.setLayout(null); 
 
 		JPanel panel = new JPanel();
 		panel.setBounds(531, 270, 293, 361);
@@ -65,7 +66,7 @@ public class Login extends JFrame {
 		txtEmail.setForeground(Color.GRAY);
 		panel.add(txtEmail);
 
-		// Lógica del placeholder
+
 		txtEmail.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -92,7 +93,6 @@ public class Login extends JFrame {
 		txtContraseña.setForeground(Color.GRAY);
 		panel.add(txtContraseña);
 
-		// Lógica del placeholder
 		txtContraseña.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
