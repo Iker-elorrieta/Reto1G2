@@ -131,7 +131,7 @@ public class Registro extends JFrame {
 					JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", null,
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-					final boolean existe = ctr.verificarEmail(email);
+					boolean existe = ctr.verificarEmail(email);
 					if (existe) {
 						JOptionPane.showMessageDialog(null, "Este email ya está registrado", null,
 								JOptionPane.WARNING_MESSAGE);

@@ -124,6 +124,7 @@ public class Inicio extends JFrame {
 		btnCerrarSesion.setBounds(10, 11, 104, 36);
 		btnCerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				workouts.clear();
 				Login frame = new Login(ctr);
 				dispose();
 				frame.setVisible(true);
@@ -149,7 +150,7 @@ public class Inicio extends JFrame {
 		});
 	}
 
-	public void actualizarWorkout(final DefaultTableModel modelo, final int nivel) {
+	public void actualizarWorkout(DefaultTableModel modelo, int nivel) {
 		modelo.setRowCount(0);
 
 		for (final Workouts workout : workouts) {
@@ -161,7 +162,7 @@ public class Inicio extends JFrame {
 		}
 	}
 
-	public void actualizarEjercicios(final JPanel PanelEjercicios, final Workouts seleccionado) {
+	public void actualizarEjercicios(JPanel PanelEjercicios, Workouts seleccionado) {
 		PanelEjercicios.removeAll();
 		PanelEjercicios.setLayout(null);
 
@@ -206,7 +207,7 @@ public class Inicio extends JFrame {
 
 		y += 140;
 
-		for (final Ejercicios ejercicio : seleccionado.getEjercicios()) {
+		for (Ejercicios ejercicio : seleccionado.getEjercicios()) {
 			JPanel panelEjer = new JPanel();
 			panelEjer.setLayout(null);
 			panelEjer.setBackground(new Color(60, 60, 60));
