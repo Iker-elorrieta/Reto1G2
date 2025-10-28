@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.Controlador;
 import modelo.Usuario;
+import javax.swing.JPasswordField;
 
 public class Registro extends JFrame {
 
@@ -30,9 +31,9 @@ public class Registro extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtNombre;
 	private JTextField txtApellidos;
-	private JTextField txtContra;
 	private JTextField txtMail;
 	private JTextField txtFecha_nac;
+	private JPasswordField txtContra;
 
 	public Registro(Controlador ctr) {
 
@@ -77,13 +78,6 @@ public class Registro extends JFrame {
 		txtApellidos.setColumns(10);
 		txtApellidos.setForeground(new Color(55, 55, 55)); // ← Color gris para el placeholder
 		panel.add(txtApellidos);
-
-		txtContra = new JTextField();
-		txtContra.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		txtContra.setColumns(10);
-		txtContra.setBackground(new Color(176, 176, 176));
-		txtContra.setBounds(49, 205, 199, 22);
-		panel.add(txtContra);
 
 		JLabel lblNewLabel = new JLabel("NOMBRE");
 		lblNewLabel.setFont(new Font("Arial Black", Font.BOLD, 15));
@@ -145,7 +139,7 @@ public class Registro extends JFrame {
 				String fechaStr = txtFecha_nac.getText();
 				String nombre = txtNombre.getText();
 				String apellidos = txtApellidos.getText();
-				String clave = txtContra.getText();
+				String clave = new String(txtContra.getPassword());
 				String email = txtMail.getText();
 
 				if (nombre.equals("") || apellidos.equals("") || clave.equals("") || email.equals("")
@@ -164,15 +158,15 @@ public class Registro extends JFrame {
 							sdf.setLenient(false); // Comprueba si la fecha es valida
 							Date fechaNacimiento = sdf.parse(fechaStr);
 							SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
-						    int añoNacimiento = Integer.parseInt(sdfYear.format(fechaNacimiento));
+							int añoNacimiento = Integer.parseInt(sdfYear.format(fechaNacimiento));
 
-						    int añoActual = Integer.parseInt(sdfYear.format(new Date()));
+							int añoActual = Integer.parseInt(sdfYear.format(new Date()));
 
-						    if (añoNacimiento > añoActual) {
-						        JOptionPane.showMessageDialog(null, "El año de nacimiento no puede ser mayor al actual", null,
-						                JOptionPane.ERROR_MESSAGE);
-						        return;
-						    }
+							if (añoNacimiento > añoActual) {
+								JOptionPane.showMessageDialog(null, "El año de nacimiento no puede ser mayor al actual",
+										null, JOptionPane.ERROR_MESSAGE);
+								return;
+							}
 
 							Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaNacimiento, 0);
 							ctr.RegistrarUsuarioBDControlador(usuario);
@@ -215,6 +209,10 @@ public class Registro extends JFrame {
 		lblVolver.setFont(new Font("Arial Black", Font.BOLD, 13));
 		lblVolver.setBounds(89, 460, 115, 22);
 		panel.add(lblVolver);
+
+		txtContra = new JPasswordField();
+		txtContra.setBounds(49, 205, 199, 20);
+		panel.add(txtContra);
 
 	}
 }

@@ -10,6 +10,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -41,17 +43,16 @@ public class Login extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel panel_1 = new JPanel();
-        panel_1.setBounds(0, 0, 1354, 761);
-        contentPane.add(panel_1);
+		panel_1.setBounds(0, 0, 1354, 761);
+		contentPane.add(panel_1);
 
-        
-        ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
-        Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
-        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
-        ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
-        Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
-        ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
-        panel_1.setLayout(null); 
+		ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
+		Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
+		ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+		ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
+		Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
+		ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
+		panel_1.setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(531, 270, 293, 361);
@@ -66,7 +67,6 @@ public class Login extends JFrame {
 		txtEmail.setColumns(10);
 		txtEmail.setForeground(Color.GRAY);
 		panel.add(txtEmail);
-
 
 		txtEmail.addFocusListener(new FocusAdapter() {
 			@Override
@@ -89,18 +89,41 @@ public class Login extends JFrame {
 		JButton btnNewButton = new JButton("INGRESAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getPassword());
-				
-				    if (login) {
-				    	
-				    	 System.out.println((txtEmail.getText().toString()));
-				        Usuario usuario = ctr.UsuarioIniciado(txtEmail.getText());
-				        Inicio frame = new Inicio(ctr, usuario);
-				        dispose();
-				        frame.setVisible(true);
-				}else {
-					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+				boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getPassword());
+
+				if (login) {
+					iniciarBackups();
+					Usuario usuario = ctr.UsuarioIniciado(txtEmail.getText());
+					Inicio frame = new Inicio(ctr, usuario);
+					dispose();
+					frame.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
+			}
+
+			private void iniciarBackups() {
+				try {
+		            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "lib/Backup.jar");
+		            pb.redirectErrorStream(true);
+		            Process proceso = pb.start();
+
+		            try (BufferedReader br = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
+		                String linea;
+		                while ((linea = br.readLine()) != null) {
+		                    System.out.println("[BACKUP] " + linea);
+		                }
+		            }
+
+		            int codigoSalida = proceso.waitFor();
+		            System.out.println("El proceso de backup terminó con código: " + codigoSalida);
+
+		        } catch (Exception e) {
+		            System.out.println("Error al iniciar el proceso de backup: " + e.getMessage());
+		            e.printStackTrace();
+		        }
+				
 			}
 		});
 		btnNewButton.setForeground(new Color(0, 0, 0));
@@ -116,18 +139,18 @@ public class Login extends JFrame {
 		lblCrearCuenta.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblCrearCuenta.setBounds(95, 270, 102, 14);
 		panel.add(lblCrearCuenta);
-		
+
 		txtContraseña = new JPasswordField();
 		txtContraseña.setBounds(47, 141, 199, 38);
 		panel.add(txtContraseña);
 
-		 JLabel etiquetaImagen = new JLabel(iconoEscalado);
-	     etiquetaImagen.setBounds(550, 26, 254, 203);
-	     panel_1.add(etiquetaImagen);
-	        
-	     JLabel etiquetaFondo = new JLabel(iconoEscalado2);
-	     etiquetaFondo.setBounds(0, 0, 1354, 761);
-	     panel_1.add(etiquetaFondo);
+		JLabel etiquetaImagen = new JLabel(iconoEscalado);
+		etiquetaImagen.setBounds(550, 26, 254, 203);
+		panel_1.add(etiquetaImagen);
+
+		JLabel etiquetaFondo = new JLabel(iconoEscalado2);
+		etiquetaFondo.setBounds(0, 0, 1354, 761);
+		panel_1.add(etiquetaFondo);
 
 		lblCrearCuenta.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
