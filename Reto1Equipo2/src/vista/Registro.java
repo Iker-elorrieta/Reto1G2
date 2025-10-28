@@ -1,29 +1,14 @@
 package vista;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import controlador.Controlador;
 import modelo.Usuario;
-import javax.swing.JPasswordField;
 
 public class Registro extends JFrame {
 
@@ -35,7 +20,7 @@ public class Registro extends JFrame {
 	private JTextField txtFecha_nac;
 	private JPasswordField txtContra;
 
-	public Registro(Controlador ctr) {
+	public Registro(final Controlador ctr) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1370, 800);
@@ -45,25 +30,26 @@ public class Registro extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JPanel panel_1 = new JPanel();
+		final JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 1354, 761);
 		contentPane.add(panel_1);
-		// Cargar la imagen desde archivo local
-		ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
-		Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
-		ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
-		ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
-		Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
-		ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
-		panel_1.setLayout(null); // ← Permite posicionamiento manual
+		panel_1.setLayout(null);
 
-		JPanel panel = new JPanel();
+		final ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
+		final Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
+		final ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+
+		final ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
+		final Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
+		final ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
+
+		final JPanel panel = new JPanel();
 		panel.setBounds(531, 202, 293, 513);
 		panel_1.add(panel);
 		panel.setBackground(new Color(110, 44, 44));
 		panel.setLayout(null);
 
-		txtNombre = new JTextField(); // ← Establece el texto inicial
+		txtNombre = new JTextField();
 		txtNombre.setForeground(new Color(55, 55, 55));
 		txtNombre.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		txtNombre.setBounds(49, 73, 199, 22);
@@ -71,33 +57,33 @@ public class Registro extends JFrame {
 		txtNombre.setColumns(10);
 		panel.add(txtNombre);
 
-		txtApellidos = new JTextField(); // ← Texto inicial
+		txtApellidos = new JTextField();
 		txtApellidos.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		txtApellidos.setBounds(49, 139, 199, 22);
 		txtApellidos.setBackground(new Color(176, 176, 176));
 		txtApellidos.setColumns(10);
-		txtApellidos.setForeground(new Color(55, 55, 55)); // ← Color gris para el placeholder
+		txtApellidos.setForeground(new Color(55, 55, 55));
 		panel.add(txtApellidos);
 
-		JLabel lblNewLabel = new JLabel("NOMBRE");
+		final JLabel lblNewLabel = new JLabel("NOMBRE");
 		lblNewLabel.setFont(new Font("Arial Black", Font.BOLD, 15));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setBounds(49, 42, 162, 22);
 		panel.add(lblNewLabel);
 
-		JLabel lblApellidos = new JLabel("APELLIDOS");
+		final JLabel lblApellidos = new JLabel("APELLIDOS");
 		lblApellidos.setForeground(Color.WHITE);
 		lblApellidos.setFont(new Font("Arial Black", Font.BOLD, 15));
 		lblApellidos.setBounds(49, 106, 162, 22);
 		panel.add(lblApellidos);
 
-		JLabel lblContrasea = new JLabel("CONTRASEÑA");
+		final JLabel lblContrasea = new JLabel("CONTRASEÑA");
 		lblContrasea.setForeground(Color.WHITE);
 		lblContrasea.setFont(new Font("Arial Black", Font.BOLD, 15));
 		lblContrasea.setBounds(49, 172, 162, 22);
 		panel.add(lblContrasea);
 
-		JLabel lblEmail = new JLabel("EMAIL");
+		final JLabel lblEmail = new JLabel("EMAIL");
 		lblEmail.setForeground(Color.WHITE);
 		lblEmail.setFont(new Font("Arial Black", Font.BOLD, 15));
 		lblEmail.setBounds(49, 238, 162, 22);
@@ -110,7 +96,7 @@ public class Registro extends JFrame {
 		txtMail.setBounds(49, 271, 199, 22);
 		panel.add(txtMail);
 
-		JLabel lblFehcaDeNacimiento = new JLabel("FECHA DE NACIMIENTO ");
+		final JLabel lblFehcaDeNacimiento = new JLabel("FECHA DE NACIMIENTO ");
 		lblFehcaDeNacimiento.setForeground(Color.WHITE);
 		lblFehcaDeNacimiento.setFont(new Font("Arial Black", Font.BOLD, 15));
 		lblFehcaDeNacimiento.setBounds(49, 304, 222, 38);
@@ -123,44 +109,41 @@ public class Registro extends JFrame {
 		txtFecha_nac.setBounds(49, 368, 199, 22);
 		panel.add(txtFecha_nac);
 
-		JLabel etiquetaImagen = new JLabel(iconoEscalado);
+		final JLabel etiquetaImagen = new JLabel(iconoEscalado);
 		etiquetaImagen.setBounds(550, 11, 254, 175);
 		panel_1.add(etiquetaImagen);
 
-		JLabel etiquetaFondo = new JLabel(iconoEscalado2);
+		final JLabel etiquetaFondo = new JLabel(iconoEscalado2);
 		etiquetaFondo.setBounds(0, 0, 1354, 761);
 		panel_1.add(etiquetaFondo);
 
-		JButton btnNewButton = new JButton("REGISTRAR");
-
+		final JButton btnNewButton = new JButton("REGISTRAR");
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				String fechaStr = txtFecha_nac.getText();
-				String nombre = txtNombre.getText();
-				String apellidos = txtApellidos.getText();
-				String clave = new String(txtContra.getPassword());
-				String email = txtMail.getText();
+			public void actionPerformed(final ActionEvent e) {
+				final String fechaStr = txtFecha_nac.getText();
+				final String nombre = txtNombre.getText();
+				final String apellidos = txtApellidos.getText();
+				final String clave = new String(txtContra.getPassword());
+				final String email = txtMail.getText();
 
 				if (nombre.equals("") || apellidos.equals("") || clave.equals("") || email.equals("")
 						|| fechaStr.equals("")) {
 					JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", null,
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-					boolean existe = ctr.verificarEmail(email);
+					final boolean existe = ctr.verificarEmail(email);
 					if (existe) {
 						JOptionPane.showMessageDialog(null, "Este email ya está registrado", null,
 								JOptionPane.WARNING_MESSAGE);
 						txtMail.setText("");
 					} else {
 						try {
-							SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-							sdf.setLenient(false); // Comprueba si la fecha es valida
-							Date fechaNacimiento = sdf.parse(fechaStr);
-							SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
-							int añoNacimiento = Integer.parseInt(sdfYear.format(fechaNacimiento));
-
-							int añoActual = Integer.parseInt(sdfYear.format(new Date()));
+							final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+							sdf.setLenient(false);
+							final Date fechaNacimiento = sdf.parse(fechaStr);
+							final SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
+							final int añoNacimiento = Integer.parseInt(sdfYear.format(fechaNacimiento));
+							final int añoActual = Integer.parseInt(sdfYear.format(new Date()));
 
 							if (añoNacimiento > añoActual) {
 								JOptionPane.showMessageDialog(null, "El año de nacimiento no puede ser mayor al actual",
@@ -168,10 +151,10 @@ public class Registro extends JFrame {
 								return;
 							}
 
-							Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaNacimiento, 0);
+							final Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaNacimiento, 0);
 							ctr.RegistrarUsuarioBDControlador(usuario);
 							JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
-							Login frame = new Login(ctr);
+							final Login frame = new Login(ctr);
 							frame.setVisible(true);
 							dispose();
 						} catch (ParseException ex) {
@@ -182,37 +165,35 @@ public class Registro extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setForeground(new Color(0, 0, 0));
+		btnNewButton.setForeground(Color.BLACK);
 		btnNewButton.setFont(new Font("Arial Black", Font.BOLD, 13));
 		btnNewButton.setBackground(new Color(192, 192, 192));
 		btnNewButton.setBounds(85, 412, 122, 38);
 		panel.add(btnNewButton);
 
-		JLabel lblNewLabel_1 = new JLabel("(yyyy/MM/dd)");
-		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		final JLabel lblNewLabel_1 = new JLabel("(yyyy/MM/dd)");
+		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		lblNewLabel_1.setBounds(49, 335, 122, 22);
 		panel.add(lblNewLabel_1);
 
-		JLabel lblVolver = new JLabel("Volver al login");
+		final JLabel lblVolver = new JLabel("Volver al login");
 		lblVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
 		lblVolver.setBackground(new Color(192, 192, 192));
+		lblVolver.setForeground(new Color(192, 192, 192));
+		lblVolver.setFont(new Font("Arial Black", Font.BOLD, 13));
+		lblVolver.setBounds(89, 460, 115, 22);
 		lblVolver.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				Login frame = new Login(ctr);
+			public void mouseClicked(final MouseEvent e) {
+				final Login frame = new Login(ctr);
 				frame.setVisible(true);
 				dispose();
 			}
 		});
-		lblVolver.setForeground(new Color(192, 192, 192));
-		lblVolver.setFont(new Font("Arial Black", Font.BOLD, 13));
-		lblVolver.setBounds(89, 460, 115, 22);
 		panel.add(lblVolver);
 
 		txtContra = new JPasswordField();
 		txtContra.setBounds(49, 205, 199, 20);
 		panel.add(txtContra);
-
 	}
 }

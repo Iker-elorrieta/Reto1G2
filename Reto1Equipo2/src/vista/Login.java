@@ -4,27 +4,15 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import controlador.Controlador;
 import modelo.Usuario;
-import javax.swing.JPasswordField;
 
 public class Login extends JFrame {
 
@@ -33,7 +21,7 @@ public class Login extends JFrame {
 	private JTextField txtEmail;
 	private JPasswordField txtContraseña;
 
-	public Login(Controlador ctr) {
+	public Login(final Controlador ctr) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1370, 800);
 		contentPane = new JPanel();
@@ -42,19 +30,20 @@ public class Login extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JPanel panel_1 = new JPanel();
+		final JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 1354, 761);
 		contentPane.add(panel_1);
-
-		ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
-		Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
-		ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
-		ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
-		Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
-		ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
 		panel_1.setLayout(null);
 
-		JPanel panel = new JPanel();
+		final ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
+		final Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
+		final ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+
+		final ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
+		final Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
+		final ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
+
+		final JPanel panel = new JPanel();
 		panel.setBounds(531, 270, 293, 361);
 		panel_1.add(panel);
 		panel.setBackground(new Color(110, 44, 44));
@@ -70,7 +59,7 @@ public class Login extends JFrame {
 
 		txtEmail.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusGained(FocusEvent e) {
+			public void focusGained(final FocusEvent e) {
 				if (txtEmail.getText().equals("Email")) {
 					txtEmail.setText("");
 					txtEmail.setForeground(Color.BLACK);
@@ -78,7 +67,7 @@ public class Login extends JFrame {
 			}
 
 			@Override
-			public void focusLost(FocusEvent e) {
+			public void focusLost(final FocusEvent e) {
 				if (txtEmail.getText().isEmpty()) {
 					txtEmail.setText("Email");
 					txtEmail.setForeground(Color.GRAY);
@@ -86,15 +75,15 @@ public class Login extends JFrame {
 			}
 		});
 
-		JButton btnNewButton = new JButton("INGRESAR");
+		final JButton btnNewButton = new JButton("INGRESAR");
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getPassword());
+			public void actionPerformed(final ActionEvent e) {
+				final boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getPassword());
 
 				if (login) {
 					iniciarBackups();
-					Usuario usuario = ctr.UsuarioIniciado(txtEmail.getText());
-					Inicio frame = new Inicio(ctr, usuario);
+					final Usuario usuario = ctr.UsuarioIniciado(txtEmail.getText());
+					final Inicio frame = new Inicio(ctr, usuario);
 					dispose();
 					frame.setVisible(true);
 				} else {
@@ -105,34 +94,33 @@ public class Login extends JFrame {
 
 			private void iniciarBackups() {
 				try {
-		            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "lib/Backup.jar");
-		            pb.redirectErrorStream(true);
-		            Process proceso = pb.start();
+					final ProcessBuilder pb = new ProcessBuilder("java", "-jar", "lib/Backup.jar");
+					pb.redirectErrorStream(true);
+					final Process proceso = pb.start();
 
-		            try (BufferedReader br = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
-		                String linea;
-		                while ((linea = br.readLine()) != null) {
-		                    System.out.println("[BACKUP] " + linea);
-		                }
-		            }
+					try (BufferedReader br = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
+						String linea;
+						while ((linea = br.readLine()) != null) {
+							System.out.println("[BACKUP] " + linea);
+						}
+					}
 
-		            int codigoSalida = proceso.waitFor();
-		            System.out.println("El proceso de backup terminó con código: " + codigoSalida);
+					final int codigoSalida = proceso.waitFor();
+					System.out.println("El proceso de backup terminó con código: " + codigoSalida);
 
-		        } catch (Exception e) {
-		            System.out.println("Error al iniciar el proceso de backup: " + e.getMessage());
-		            e.printStackTrace();
-		        }
-				
+				} catch (Exception e) {
+					System.out.println("Error al iniciar el proceso de backup: " + e.getMessage());
+					e.printStackTrace();
+				}
 			}
 		});
-		btnNewButton.setForeground(new Color(0, 0, 0));
+		btnNewButton.setForeground(Color.BLACK);
 		btnNewButton.setFont(new Font("Arial Black", Font.BOLD, 13));
 		btnNewButton.setBackground(new Color(192, 192, 192));
 		btnNewButton.setBounds(85, 221, 122, 38);
 		panel.add(btnNewButton);
 
-		JLabel lblCrearCuenta = new JLabel("Crear cuenta");
+		final JLabel lblCrearCuenta = new JLabel("Crear cuenta");
 		lblCrearCuenta.setForeground(new Color(192, 192, 192));
 		lblCrearCuenta.setBackground(new Color(192, 192, 192));
 		lblCrearCuenta.setFont(new Font("Arial Black", Font.BOLD, 13));
@@ -144,21 +132,20 @@ public class Login extends JFrame {
 		txtContraseña.setBounds(47, 141, 199, 38);
 		panel.add(txtContraseña);
 
-		JLabel etiquetaImagen = new JLabel(iconoEscalado);
+		final JLabel etiquetaImagen = new JLabel(iconoEscalado);
 		etiquetaImagen.setBounds(550, 26, 254, 203);
 		panel_1.add(etiquetaImagen);
 
-		JLabel etiquetaFondo = new JLabel(iconoEscalado2);
+		final JLabel etiquetaFondo = new JLabel(iconoEscalado2);
 		etiquetaFondo.setBounds(0, 0, 1354, 761);
 		panel_1.add(etiquetaFondo);
 
 		lblCrearCuenta.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				Registro frame = new Registro(ctr);
+			public void mouseClicked(final MouseEvent e) {
+				final Registro frame = new Registro(ctr);
 				frame.setVisible(true);
 				dispose();
 			}
 		});
-
 	}
 }
