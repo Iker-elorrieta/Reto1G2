@@ -30,7 +30,7 @@ public class Login extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		final JPanel panel_1 = new JPanel();
+		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 1354, 761);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
@@ -43,7 +43,7 @@ public class Login extends JFrame {
 		final Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
 		final ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
 
-		final JPanel panel = new JPanel();
+		JPanel panel = new JPanel();
 		panel.setBounds(531, 270, 293, 361);
 		panel_1.add(panel);
 		panel.setBackground(new Color(110, 44, 44));
@@ -75,15 +75,15 @@ public class Login extends JFrame {
 			}
 		});
 
-		final JButton btnNewButton = new JButton("INGRESAR");
+		JButton btnNewButton = new JButton("INGRESAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent e) {
 				final boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getPassword());
 
 				if (login) {
 					iniciarBackups();
-					final Usuario usuario = ctr.UsuarioIniciado(txtEmail.getText());
-					final Inicio frame = new Inicio(ctr, usuario);
+					Usuario usuario = ctr.UsuarioIniciado(txtEmail.getText());
+					Inicio frame = new Inicio(ctr, usuario);
 					dispose();
 					frame.setVisible(true);
 				} else {
@@ -94,9 +94,9 @@ public class Login extends JFrame {
 
 			private void iniciarBackups() {
 				try {
-					final ProcessBuilder pb = new ProcessBuilder("java", "-jar", "lib/Backup.jar");
+					ProcessBuilder pb = new ProcessBuilder("java", "-jar", "lib/Backup.jar");
 					pb.redirectErrorStream(true);
-					final Process proceso = pb.start();
+					Process proceso = pb.start();
 
 					try (BufferedReader br = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
 						String linea;
@@ -105,7 +105,7 @@ public class Login extends JFrame {
 						}
 					}
 
-					final int codigoSalida = proceso.waitFor();
+					int codigoSalida = proceso.waitFor();
 					System.out.println("El proceso de backup terminó con código: " + codigoSalida);
 
 				} catch (Exception e) {
@@ -120,7 +120,7 @@ public class Login extends JFrame {
 		btnNewButton.setBounds(85, 221, 122, 38);
 		panel.add(btnNewButton);
 
-		final JLabel lblCrearCuenta = new JLabel("Crear cuenta");
+		JLabel lblCrearCuenta = new JLabel("Crear cuenta");
 		lblCrearCuenta.setForeground(new Color(192, 192, 192));
 		lblCrearCuenta.setBackground(new Color(192, 192, 192));
 		lblCrearCuenta.setFont(new Font("Arial Black", Font.BOLD, 13));
@@ -132,17 +132,17 @@ public class Login extends JFrame {
 		txtContraseña.setBounds(47, 141, 199, 38);
 		panel.add(txtContraseña);
 
-		final JLabel etiquetaImagen = new JLabel(iconoEscalado);
+		JLabel etiquetaImagen = new JLabel(iconoEscalado);
 		etiquetaImagen.setBounds(550, 26, 254, 203);
 		panel_1.add(etiquetaImagen);
 
-		final JLabel etiquetaFondo = new JLabel(iconoEscalado2);
+		JLabel etiquetaFondo = new JLabel(iconoEscalado2);
 		etiquetaFondo.setBounds(0, 0, 1354, 761);
 		panel_1.add(etiquetaFondo);
 
 		lblCrearCuenta.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(final MouseEvent e) {
-				final Registro frame = new Registro(ctr);
+				Registro frame = new Registro(ctr);
 				frame.setVisible(true);
 				dispose();
 			}

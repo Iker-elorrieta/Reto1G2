@@ -32,15 +32,12 @@ public class GestorUsuarios {
 			for (QueryDocumentSnapshot doc : documentos) {
 				final String claveGuardada = doc.getString("CLAVE");
 				if (claveGuardada != null && claveGuardada.equals(claveIngresada)) {
-					Usuario usuario = new Usuario();
-					usuario.setId(doc.getId());
-					usuario.setNombre(doc.getString("NOMBRE"));
-					usuario.setContraseña(doc.getString("CLAVE"));
-					usuario.setApellidos(doc.getString("APELLIDOS"));
-					usuario.setEmail(email);
-					usuario.setFechaNacimiento(doc.getDate("NACIMIENTO"));
-					final Integer nivel = doc.getLong("NIVEL") != null ? doc.getLong("NIVEL").intValue() : 0;
-					usuario.setNivel(nivel);
+					final String nombre = doc.getString("NOMBRE");
+					final String apellidos = doc.getString("APELLIDOS");
+					final Date nacimiento = doc.getDate("NACIMIENTO");
+					final Long nivelLong = doc.getLong("NIVEL");
+					final int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
+					final Usuario usuario = new Usuario(nombre, apellidos, claveGuardada, email, nacimiento, nivel);
 
 					System.out.println("Login correcto: " + usuario.toString());
 					return true;
@@ -68,12 +65,19 @@ public class GestorUsuarios {
 			CollectionReference users = db.collection("USERS");
 			DocumentReference nuevoId = users.document();
 
-			Map<String, Object> usuarioNuevo = new HashMap<>();
-			usuarioNuevo.put("APELLIDO", usuario.getApellidos());
-			usuarioNuevo.put("NOMBRE", usuario.getNombre());
-			usuarioNuevo.put("EMAIL", usuario.getEmail());
-			usuarioNuevo.put("CLAVE", usuario.getContraseña());
-			usuarioNuevo.put("NACIMINETO", usuario.getFechaNacimiento());
+			final Map<String, Object> usuarioNuevo = new HashMap<>();
+			
+			final String apellidos = usuario.getApellidos();
+			final String nombre = usuario.getNombre();
+			final String email = usuario.getEmail();
+			final String contraseña = usuario.getContraseña();
+			final Date fechaNacimiento = usuario.getFechaNacimiento();
+			
+			usuarioNuevo.put("APELLIDO", apellidos);
+			usuarioNuevo.put("NOMBRE", nombre);
+			usuarioNuevo.put("EMAIL", email);
+			usuarioNuevo.put("CLAVE", contraseña);
+			usuarioNuevo.put("NACIMINETO", fechaNacimiento);
 			usuarioNuevo.put("NIVEL", 0);
 
 			nuevoId.set(usuarioNuevo);

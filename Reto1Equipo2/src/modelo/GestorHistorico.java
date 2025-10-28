@@ -18,10 +18,10 @@ public class GestorHistorico {
 	public ArrayList<Historico> obtenerHistorico(final ArrayList<Historico> listaHistorico) {
 
 		try {
-			final Firestore db = conexion.conectar();
+			Firestore db = conexion.conectar();
 			final String nombreColeccion = "HISTORICO";
-			final ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
-			final QuerySnapshot documentos = future.get();
+			ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
+			QuerySnapshot documentos = future.get();
 
 			for (QueryDocumentSnapshot doc : documentos) {
 				final String fecha = doc.getString("FECHA");

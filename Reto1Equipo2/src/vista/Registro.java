@@ -30,20 +30,20 @@ public class Registro extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		final JPanel panel_1 = new JPanel();
+		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 1354, 761);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		final ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
-		final Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
-		final ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+		ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
+		Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
+		ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
 
-		final ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
-		final Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
-		final ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
+		ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
+		Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
+		ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
 
-		final JPanel panel = new JPanel();
+		JPanel panel = new JPanel();
 		panel.setBounds(531, 202, 293, 513);
 		panel_1.add(panel);
 		panel.setBackground(new Color(110, 44, 44));
@@ -65,25 +65,25 @@ public class Registro extends JFrame {
 		txtApellidos.setForeground(new Color(55, 55, 55));
 		panel.add(txtApellidos);
 
-		final JLabel lblNewLabel = new JLabel("NOMBRE");
+		JLabel lblNewLabel = new JLabel("NOMBRE");
 		lblNewLabel.setFont(new Font("Arial Black", Font.BOLD, 15));
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setBounds(49, 42, 162, 22);
 		panel.add(lblNewLabel);
 
-		final JLabel lblApellidos = new JLabel("APELLIDOS");
+		JLabel lblApellidos = new JLabel("APELLIDOS");
 		lblApellidos.setForeground(Color.WHITE);
 		lblApellidos.setFont(new Font("Arial Black", Font.BOLD, 15));
 		lblApellidos.setBounds(49, 106, 162, 22);
 		panel.add(lblApellidos);
 
-		final JLabel lblContrasea = new JLabel("CONTRASEÑA");
+		JLabel lblContrasea = new JLabel("CONTRASEÑA");
 		lblContrasea.setForeground(Color.WHITE);
 		lblContrasea.setFont(new Font("Arial Black", Font.BOLD, 15));
 		lblContrasea.setBounds(49, 172, 162, 22);
 		panel.add(lblContrasea);
 
-		final JLabel lblEmail = new JLabel("EMAIL");
+		JLabel lblEmail = new JLabel("EMAIL");
 		lblEmail.setForeground(Color.WHITE);
 		lblEmail.setFont(new Font("Arial Black", Font.BOLD, 15));
 		lblEmail.setBounds(49, 238, 162, 22);
@@ -96,7 +96,7 @@ public class Registro extends JFrame {
 		txtMail.setBounds(49, 271, 199, 22);
 		panel.add(txtMail);
 
-		final JLabel lblFehcaDeNacimiento = new JLabel("FECHA DE NACIMIENTO ");
+		JLabel lblFehcaDeNacimiento = new JLabel("FECHA DE NACIMIENTO ");
 		lblFehcaDeNacimiento.setForeground(Color.WHITE);
 		lblFehcaDeNacimiento.setFont(new Font("Arial Black", Font.BOLD, 15));
 		lblFehcaDeNacimiento.setBounds(49, 304, 222, 38);
@@ -109,15 +109,15 @@ public class Registro extends JFrame {
 		txtFecha_nac.setBounds(49, 368, 199, 22);
 		panel.add(txtFecha_nac);
 
-		final JLabel etiquetaImagen = new JLabel(iconoEscalado);
+		JLabel etiquetaImagen = new JLabel(iconoEscalado);
 		etiquetaImagen.setBounds(550, 11, 254, 175);
 		panel_1.add(etiquetaImagen);
 
-		final JLabel etiquetaFondo = new JLabel(iconoEscalado2);
+		JLabel etiquetaFondo = new JLabel(iconoEscalado2);
 		etiquetaFondo.setBounds(0, 0, 1354, 761);
 		panel_1.add(etiquetaFondo);
 
-		final JButton btnNewButton = new JButton("REGISTRAR");
+		JButton btnNewButton = new JButton("REGISTRAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent e) {
 				final String fechaStr = txtFecha_nac.getText();
@@ -154,7 +154,7 @@ public class Registro extends JFrame {
 							final Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaNacimiento, 0);
 							ctr.RegistrarUsuarioBDControlador(usuario);
 							JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
-							final Login frame = new Login(ctr);
+							Login frame = new Login(ctr);
 							frame.setVisible(true);
 							dispose();
 						} catch (ParseException ex) {
@@ -171,13 +171,13 @@ public class Registro extends JFrame {
 		btnNewButton.setBounds(85, 412, 122, 38);
 		panel.add(btnNewButton);
 
-		final JLabel lblNewLabel_1 = new JLabel("(yyyy/MM/dd)");
+		JLabel lblNewLabel_1 = new JLabel("(yyyy/MM/dd)");
 		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		lblNewLabel_1.setBounds(49, 335, 122, 22);
 		panel.add(lblNewLabel_1);
 
-		final JLabel lblVolver = new JLabel("Volver al login");
+		JLabel lblVolver = new JLabel("Volver al login");
 		lblVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblVolver.setBackground(new Color(192, 192, 192));
 		lblVolver.setForeground(new Color(192, 192, 192));
@@ -185,7 +185,7 @@ public class Registro extends JFrame {
 		lblVolver.setBounds(89, 460, 115, 22);
 		lblVolver.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(final MouseEvent e) {
-				final Login frame = new Login(ctr);
+				Login frame = new Login(ctr);
 				frame.setVisible(true);
 				dispose();
 			}

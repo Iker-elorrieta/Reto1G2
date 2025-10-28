@@ -33,7 +33,7 @@ public class GestorWorkout {
 				final String video = doc.getString("VIDEO");
 				final String descripcion = doc.getString("DESCRIPCION");
 
-				final DocumentReference ref = doc.getReference();
+				DocumentReference ref = doc.getReference();
 				final List<QueryDocumentSnapshot> ejerciciosRef = ref.collection("EJERCICIO").get().get()
 						.getDocuments();
 

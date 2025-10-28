@@ -37,32 +37,32 @@ public class Inicio extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		final JPanel PanelEjercicios = new JPanel();
+		JPanel PanelEjercicios = new JPanel();
 		PanelEjercicios.setBackground(Color.GRAY);
 		PanelEjercicios.setBounds(317, 160, 1038, 601);
 		contentPane.add(PanelEjercicios);
 		PanelEjercicios.setLayout(null);
 
-		final JPanel PanelWorkouts = new JPanel();
+		JPanel PanelWorkouts = new JPanel();
 		PanelWorkouts.setBackground(Color.LIGHT_GRAY);
 		PanelWorkouts.setBounds(0, 0, 317, 761);
 		contentPane.add(PanelWorkouts);
 		PanelWorkouts.setLayout(null);
 
-		final JSeparator separator = new JSeparator();
+		JSeparator separator = new JSeparator();
 		separator.setBounds(-28, 158, 345, 2);
 		separator.setBackground(Color.BLACK);
 		PanelWorkouts.add(separator);
 
 		System.out.println(usuarioActual.getNivel() + "");
 
-		final JComboBox<String> NivelCB = new JComboBox<>();
+		JComboBox<String> NivelCB = new JComboBox<>();
 		NivelCB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				final String nivelSeleccionado = (String) NivelCB.getSelectedItem();
+				String nivelSeleccionado = (String) NivelCB.getSelectedItem();
 				if (nivelSeleccionado != null && nivelSeleccionado.startsWith("Nivel ")) {
 					try {
-						final int nivel = Integer.parseInt(nivelSeleccionado.replace("Nivel ", ""));
+						int nivel = Integer.parseInt(nivelSeleccionado.replace("Nivel ", ""));
 						actualizarWorkout(modelo, nivel);
 					} catch (NumberFormatException ex) {
 						ex.printStackTrace();
@@ -71,7 +71,7 @@ public class Inicio extends JFrame {
 			}
 		});
 
-		final String[] niveles = new String[usuarioActual.getNivel() + 1];
+		String[] niveles = new String[usuarioActual.getNivel() + 1];
 		for (int i = 0; i <= usuarioActual.getNivel(); i++) {
 			niveles[i] = "Nivel " + i;
 		}
@@ -81,20 +81,20 @@ public class Inicio extends JFrame {
 		NivelCB.setSelectedIndex(-1);
 		PanelWorkouts.add(NivelCB);
 
-		final JScrollPane scrollPane = new JScrollPane();
+		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 158, 316, 603);
 		PanelWorkouts.add(scrollPane);
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
 
-		final JPanel PanelUsuario = new JPanel();
+		JPanel PanelUsuario = new JPanel();
 		PanelUsuario.setBackground(Color.DARK_GRAY);
 		PanelUsuario.setBounds(317, 0, 1038, 161);
 		contentPane.add(PanelUsuario);
 		PanelUsuario.setLayout(null);
 
-		final JLabel lblUsuario = new JLabel("");
+		JLabel lblUsuario = new JLabel("");
 		lblUsuario.setForeground(Color.WHITE);
 		lblUsuario.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		lblUsuario.setBounds(814, 30, 190, 29);
@@ -103,13 +103,13 @@ public class Inicio extends JFrame {
 
 		lblUsuario.setText(usuarioActual.getNombre());
 
-		final JProgressBar nivelWorkout = new JProgressBar();
+		JProgressBar nivelWorkout = new JProgressBar();
 		nivelWorkout.setValue(50);
 		nivelWorkout.setForeground(new Color(69, 217, 26));
 		nivelWorkout.setBounds(814, 103, 190, 20);
 		PanelUsuario.add(nivelWorkout);
 
-		final JLabel lblNivel = new JLabel("");
+		JLabel lblNivel = new JLabel("");
 		lblNivel.setForeground(Color.WHITE);
 		lblNivel.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		lblNivel.setBounds(814, 70, 190, 29);
@@ -117,14 +117,14 @@ public class Inicio extends JFrame {
 
 		lblNivel.setText("Nivel: " + usuarioActual.getNivel());
 
-		final JButton btnCerrarSesion = new JButton("Cerrar Sesión");
+		JButton btnCerrarSesion = new JButton("Cerrar Sesión");
 		btnCerrarSesion.setForeground(Color.WHITE);
 		btnCerrarSesion.setFont(new Font("Arial", Font.BOLD, 10));
 		btnCerrarSesion.setBackground(Color.RED);
 		btnCerrarSesion.setBounds(10, 11, 104, 36);
 		btnCerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				final Login frame = new Login(ctr);
+				Login frame = new Login(ctr);
 				dispose();
 				frame.setVisible(true);
 			}
@@ -135,10 +135,10 @@ public class Inicio extends JFrame {
 
 		table.getSelectionModel().addListSelectionListener(e -> {
 			if (!e.getValueIsAdjusting()) {
-				final int filaSeleccionada = table.getSelectedRow();
+				int filaSeleccionada = table.getSelectedRow();
 				if (filaSeleccionada >= 0) {
-					final String nombreWorkout = (String) table.getValueAt(filaSeleccionada, 0);
-					final Workouts seleccionado = workouts.stream().filter(w -> w.getNombre().equals(nombreWorkout))
+					String nombreWorkout = (String) table.getValueAt(filaSeleccionada, 0);
+					Workouts seleccionado = workouts.stream().filter(w -> w.getNombre().equals(nombreWorkout))
 							.findFirst().orElse(null);
 
 					if (seleccionado != null) {
@@ -167,23 +167,23 @@ public class Inicio extends JFrame {
 
 		int y = 20;
 
-		final JLabel lblNombre = new JLabel("Workout: " + seleccionado.getNombre());
+		JLabel lblNombre = new JLabel("Workout: " + seleccionado.getNombre());
 		lblNombre.setBounds(20, y, 400, 20);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setForeground(Color.WHITE);
 		PanelEjercicios.add(lblNombre);
 
-		final JLabel lblNivel = new JLabel("Nivel: " + seleccionado.getNivel());
+		JLabel lblNivel = new JLabel("Nivel: " + seleccionado.getNivel());
 		lblNivel.setBounds(20, y + 25, 200, 20);
 		lblNivel.setForeground(Color.WHITE);
 		PanelEjercicios.add(lblNivel);
 
-		final JLabel lblDescripcion = new JLabel("Descripción: " + seleccionado.getDescripcion());
+		JLabel lblDescripcion = new JLabel("Descripción: " + seleccionado.getDescripcion());
 		lblDescripcion.setBounds(20, y + 45, 600, 20);
 		lblDescripcion.setForeground(Color.WHITE);
 		PanelEjercicios.add(lblDescripcion);
 
-		final JLabel lblVideo = new JLabel("<html><u>Ver video</u></html>");
+		JLabel lblVideo = new JLabel("<html><u>Ver video</u></html>");
 		lblVideo.setBounds(20, y + 95, 300, 20);
 		lblVideo.setForeground(Color.CYAN);
 		lblVideo.addMouseListener(new MouseAdapter() {
@@ -199,7 +199,7 @@ public class Inicio extends JFrame {
 		});
 		PanelEjercicios.add(lblVideo);
 
-		final JLabel lblNEjer = new JLabel("Número de ejercicios: " + seleccionado.getEjercicios().size());
+		JLabel lblNEjer = new JLabel("Número de ejercicios: " + seleccionado.getEjercicios().size());
 		lblNEjer.setBounds(20, y + 70, 600, 20);
 		lblNEjer.setForeground(Color.WHITE);
 		PanelEjercicios.add(lblNEjer);
@@ -207,17 +207,17 @@ public class Inicio extends JFrame {
 		y += 140;
 
 		for (final Ejercicios ejercicio : seleccionado.getEjercicios()) {
-			final JPanel panelEjer = new JPanel();
+			JPanel panelEjer = new JPanel();
 			panelEjer.setLayout(null);
 			panelEjer.setBackground(new Color(60, 60, 60));
 			panelEjer.setBounds(20, y, 980, 60);
 
-			final JLabel lblEjerNombre = new JLabel("Ejercicio: " + ejercicio.getNombre());
+			JLabel lblEjerNombre = new JLabel("Ejercicio: " + ejercicio.getNombre());
 			lblEjerNombre.setBounds(10, 5, 400, 20);
 			lblEjerNombre.setForeground(Color.WHITE);
 			panelEjer.add(lblEjerNombre);
 
-			final JLabel lblEjerDesc = new JLabel("Descripción: " + ejercicio.getDescripcion());
+			JLabel lblEjerDesc = new JLabel("Descripción: " + ejercicio.getDescripcion());
 			lblEjerDesc.setBounds(10, 25, 900, 20);
 			lblEjerDesc.setForeground(Color.LIGHT_GRAY);
 			panelEjer.add(lblEjerDesc);

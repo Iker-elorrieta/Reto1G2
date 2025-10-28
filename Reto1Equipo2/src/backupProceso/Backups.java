@@ -1,58 +1,27 @@
 package backupProceso;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
-import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.FirestoreOptions;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 
 
 public class Backups {
-	
-	private static String projectID = "reto1grupo2";
-    private static String nombreJSON = "lib/gimnasio.json";
+    
+	private final Firestore db;
 
-	public static Firestore conectar() throws IOException {
-
-
-        FileInputStream serviceAccount;
-        Firestore firestore;
-        try {
-            serviceAccount = new FileInputStream(nombreJSON);
-
-            FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
-                .setProjectId(projectID)
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .build();
-
-            firestore = firestoreOptions.getService();
-
-            if (firestore == null) {
-                throw new IOException("No se pudo obtener una instancia de Firestore.");
-            }
-
-            return firestore;
-
-        } catch (FileNotFoundException e) {
-            throw new IOException("Archivo de credenciales no encontrado: " + nombreJSON, e);
-        } catch (IOException e) {
-        	/*Llamar a los backups*/
-            throw new IOException("Error al cargar credenciales o conectar con Firestore.", e);
-        }
+    public Backups(Firestore db) {
+        this.db = db;
     }
 
 	public List<Map<String, Object>> obtenerUsuarios() {
 	    List<Map<String, Object>> listaUsuarios = new ArrayList<>();
 	    try {
-	        Firestore db = conectar();
+	        Firestore db = this.db;
 	        String nombreColeccion = "USERS";
 	        ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 	        QuerySnapshot documentos = future.get();
@@ -68,8 +37,7 @@ public class Backups {
 	            listaUsuarios.add(usuario);
 	        }
 
-	        db.close();
-	    } catch (IOException | InterruptedException | ExecutionException e) {
+	    } catch (InterruptedException | ExecutionException e) {
 	        e.printStackTrace();
 	    } catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -82,7 +50,7 @@ public class Backups {
 	public List<Map<String, Object>> obtenerWorkouts() {
 	    List<Map<String, Object>> listaWorkouts = new ArrayList<>();
 	    try {
-	        Firestore db = conectar();
+	        Firestore db = this.db;
 	        String nombreColeccion = "WORKOUT";
 	        ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 	        QuerySnapshot documentos = future.get();
@@ -109,8 +77,7 @@ public class Backups {
 	            listaWorkouts.add(workout);
 	        }
 
-	        db.close();
-	    } catch (IOException | InterruptedException | ExecutionException e) {
+	    } catch (InterruptedException | ExecutionException e) {
 	        e.printStackTrace();
 	    } catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -121,8 +88,9 @@ public class Backups {
 
 	public List<Map<String, Object>> obtenerHistorico() {
 	    List<Map<String, Object>> listaHistorico = new ArrayList<>();
+	    Firestore db = null;
 	    try {
-	        Firestore db = conectar();
+	        db = this.db;
 	        String nombreColeccion = "HISTORIAL";
 	        ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 	        QuerySnapshot documentos = future.get();
@@ -150,11 +118,12 @@ public class Backups {
 	            listaHistorico.add(historico);
 	        }
 
-	    } catch (IOException | InterruptedException | ExecutionException e) {
+	    } catch (InterruptedException | ExecutionException e) {
 	        e.printStackTrace();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
+
 	    return listaHistorico;
 	}
 
