@@ -141,6 +141,7 @@ public class Registro extends JFrame {
 							final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 							sdf.setLenient(false);
 							final Date fechaNacimiento = sdf.parse(fechaStr);
+							com.google.cloud.Timestamp fechaTimestamp = com.google.cloud.Timestamp.of(fechaNacimiento);
 							final SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
 							final int añoNacimiento = Integer.parseInt(sdfYear.format(fechaNacimiento));
 							final int añoActual = Integer.parseInt(sdfYear.format(new Date()));
@@ -151,7 +152,7 @@ public class Registro extends JFrame {
 								return;
 							}
 
-							final Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaNacimiento, 0);
+							final Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaTimestamp, 0);
 							ctr.RegistrarUsuarioBDControlador(usuario);
 							JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
 							Login frame = new Login(ctr);

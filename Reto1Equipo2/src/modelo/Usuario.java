@@ -1,7 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import com.google.cloud.Timestamp;
 
 public class Usuario implements Serializable {
 	
@@ -11,7 +11,7 @@ public class Usuario implements Serializable {
 	private String apellidos;
 	private String contraseña;
 	private String email;
-	private Date fechaNacimiento;
+	private Timestamp fechaNacimiento;
 	private int nivel;
 	
 	
@@ -52,13 +52,13 @@ public class Usuario implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getFechaNacimiento() {
+	public Timestamp getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(Timestamp fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-	public Usuario(String nombre, String apellidos, String contraseña, String email, Date fechaNacimiento, int nivel) {
+	public Usuario(String nombre, String apellidos, String contraseña, String email, Timestamp fechaNacimiento, int nivel) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.contraseña = contraseña;

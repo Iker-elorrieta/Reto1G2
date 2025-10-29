@@ -2,12 +2,12 @@ package modelo;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
@@ -34,7 +34,7 @@ public class GestorUsuarios {
 				if (claveGuardada != null && claveGuardada.equals(claveIngresada)) {
 					final String nombre = doc.getString("NOMBRE");
 					final String apellidos = doc.getString("APELLIDOS");
-					final Date nacimiento = doc.getDate("NACIMIENTO");
+					final Timestamp nacimiento = doc.getTimestamp("NACIMIENTO");
 					final Long nivelLong = doc.getLong("NIVEL");
 					final int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
 					final Usuario usuario = new Usuario(nombre, apellidos, claveGuardada, email, nacimiento, nivel);
@@ -71,13 +71,13 @@ public class GestorUsuarios {
 			final String nombre = usuario.getNombre();
 			final String email = usuario.getEmail();
 			final String contraseña = usuario.getContraseña();
-			final Date fechaNacimiento = usuario.getFechaNacimiento();
+			final Timestamp fechaNacimiento = usuario.getFechaNacimiento();
 			
-			usuarioNuevo.put("APELLIDO", apellidos);
+			usuarioNuevo.put("APELLIDOS", apellidos);
 			usuarioNuevo.put("NOMBRE", nombre);
 			usuarioNuevo.put("EMAIL", email);
 			usuarioNuevo.put("CLAVE", contraseña);
-			usuarioNuevo.put("NACIMINETO", fechaNacimiento);
+			usuarioNuevo.put("NACIMIENTO", fechaNacimiento);
 			usuarioNuevo.put("NIVEL", 0);
 
 			nuevoId.set(usuarioNuevo);
@@ -100,7 +100,7 @@ public class GestorUsuarios {
 				final String clave = doc.getString("CLAVE");
 				final String email = doc.getString("EMAIL");
 				final String apellido = doc.getString("APELLIDOS");
-				final Date nacimiento = doc.getDate("NACIMIENTO");
+				Timestamp nacimiento = doc.getTimestamp("NACIMIENTO");
 				final Long nivelLong = doc.getLong("NIVEL");
 				final int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
 

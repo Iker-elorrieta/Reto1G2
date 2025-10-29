@@ -21,7 +21,7 @@ public class Login extends JFrame {
 	private JTextField txtEmail;
 	private JPasswordField txtContraseña;
 
-	public Login(final Controlador ctr) {
+	public Login(Controlador ctr) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1370, 800);
 		contentPane = new JPanel();
@@ -59,7 +59,7 @@ public class Login extends JFrame {
 
 		txtEmail.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusGained(final FocusEvent e) {
+			public void focusGained(FocusEvent e) {
 				if (txtEmail.getText().equals("Email")) {
 					txtEmail.setText("");
 					txtEmail.setForeground(Color.BLACK);
@@ -67,7 +67,7 @@ public class Login extends JFrame {
 			}
 
 			@Override
-			public void focusLost(final FocusEvent e) {
+			public void focusLost(FocusEvent e) {
 				if (txtEmail.getText().isEmpty()) {
 					txtEmail.setText("Email");
 					txtEmail.setForeground(Color.GRAY);
@@ -77,7 +77,7 @@ public class Login extends JFrame {
 
 		JButton btnNewButton = new JButton("INGRESAR");
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(final ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getPassword());
 
 				if (login) {
