@@ -13,7 +13,7 @@ import conexion.Conexion;
 
 public class GestorHistorico {
 
-    private final String historicoF = "HISTORICO";
+    private final String historicoF = "HISTORIAL";
     private final String fechaF = "FECHA";
     private final String nivelF = "NIVEL";
     private final String ratioF = "RATIOCOMPLETACION";

@@ -11,6 +11,27 @@ import com.google.cloud.firestore.QuerySnapshot;
 
 
 public class Backups {
+	
+	private final String historicoF = "HISTORIAL";
+    private final String fechaF = "FECHA";
+    private final String nivelF = "NIVEL";
+    private final String ratioF = "RATIOCOMPLETACION";
+    private final String tiempoF = "TIEMPO";
+    private final String tiempoEsperadoF = "TIEMPOESPERADO";
+    private final String userIDF = "USERID";
+    private final String workoutIDF = "WORKOUTID";
+    private final String workoutNombreF = "WORKOUTNOMBRE";
+    private final String workoutF = "WORKOUT";
+    private final String nombreF = "NOMBRE";
+    private final String videoF = "VIDEO";
+    private final String descripcionF = "DESCRIPCION";
+    private final String ejercicioF = "EJERCICIO";
+    private final String userF = "USERS";
+	private final String claveF = "CLAVE";
+	private final String apellidosF = "APELLIDOS";
+	private final String nacimientoF = "NACIMIENTO";
+	private final String emailF = "EMAIL";
+
     
 	private final Firestore db;
 
@@ -22,18 +43,18 @@ public class Backups {
 	    List<Map<String, Object>> listaUsuarios = new ArrayList<>();
 	    try {
 	        Firestore db = this.db;
-	        String nombreColeccion = "USERS";
+	        String nombreColeccion = userF;
 	        ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 	        QuerySnapshot documentos = future.get();
 
 	        for (QueryDocumentSnapshot doc : documentos) {
 	            Map<String, Object> usuario = new HashMap<>();
-	            usuario.put("NOMBRE", doc.getString("NOMBRE"));
+	            usuario.put(nombreF, doc.getString(nombreF));
 	            usuario.put("CLAVE", doc.getString("CLAVE"));
 	            usuario.put("EMAIL", doc.getString("EMAIL"));
 	            usuario.put("APELLIDOS", doc.getString("APELLIDOS"));
-	            usuario.put("NACIMIENTO", doc.getDate("NACIMIENTO"));
-	            usuario.put("NIVEL", doc.getLong("NIVEL"));
+	            usuario.put(nacimientoF, doc.getDate(nacimientoF));
+	            usuario.put(nivelF, doc.getLong(nivelF));
 	            listaUsuarios.add(usuario);
 	        }
 
@@ -51,14 +72,14 @@ public class Backups {
 	    List<Map<String, Object>> listaWorkouts = new ArrayList<>();
 	    try {
 	        Firestore db = this.db;
-	        String nombreColeccion = "WORKOUT";
+	        String nombreColeccion = workoutF;
 	        ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 	        QuerySnapshot documentos = future.get();
 
 	        for (QueryDocumentSnapshot doc : documentos) {
 	            Map<String, Object> workout = new HashMap<>();
-	            workout.put("NOMBRE", doc.getString("NOMBRE"));
-	            workout.put("NIVEL", doc.getLong("NIVEL"));
+	            workout.put(nombreF, doc.getString(nombreF));
+	            workout.put(nivelF, doc.getLong(nivelF));
 	            workout.put("VIDEO", doc.getString("VIDEO"));
 	            workout.put("DESCRIPCION", doc.getString("DESCRIPCION"));
 
@@ -68,7 +89,7 @@ public class Backups {
 
 	            for (QueryDocumentSnapshot ej : ejerciciosRef) {
 	                Map<String, String> ejercicio = new HashMap<>();
-	                ejercicio.put("NOMBRE", ej.getString("NOMBRE"));
+	                ejercicio.put(nombreF, ej.getString(nombreF));
 	                ejercicio.put("DESCRIPCION", ej.getString("DESCRIPCION"));
 	                ejercicios.add(ejercicio);
 	            }
@@ -91,7 +112,7 @@ public class Backups {
 	    Firestore db = null;
 	    try {
 	        db = this.db;
-	        String nombreColeccion = "HISTORIAL";
+	        String nombreColeccion = historicoF;
 	        ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 	        QuerySnapshot documentos = future.get();
 
@@ -99,11 +120,11 @@ public class Backups {
 	        	Map<String, Object> historico = new HashMap<>();
 
 	            historico.put("ID", doc.getId());
-	            historico.put("FECHA", doc.get("FECHA"));
-	            historico.put("NIVEL", doc.get("NIVEL"));
-	            historico.put("RATIO_COMPLETACION", doc.getDouble("RATIOCOMPLETACION"));
-	            historico.put("TIEMPO", doc.get("TIEMPO"));
-	            historico.put("TIEMPO_ESPERADO", doc.get("TIEMPOESPERADO"));
+	            historico.put(fechaF, doc.get(fechaF));
+	            historico.put(nivelF, doc.get(nivelF));
+	            historico.put(ratioF, doc.getDouble(ratioF));
+	            historico.put(tiempoF, doc.get(tiempoF));
+	            historico.put(tiempoEsperadoF, doc.get(tiempoEsperadoF));
 
 	            DocumentReference usuarioRef = (DocumentReference) doc.get("USERID");
 	            historico.put("USUARIO", usuarioRef);
