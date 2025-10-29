@@ -15,50 +15,55 @@ import conexion.Conexion;
 
 public class GestorWorkout {
 
-	public Conexion conexion = new Conexion();
+    private final String workoutF = "WORKOUT";
+    private final String nombreF = "NOMBRE";
+    private final String nivelF = "NIVEL";
+    private final String videoF = "VIDEO";
+    private final String descripcionF = "DESCRIPCION";
+    private final String ejercicioF = "EJERCICIO";
 
-	public ArrayList<Workouts> obtenerWorkouts(ArrayList<Workouts> listaWorkouts) {
+    public Conexion conexion = new Conexion();
 
-		try {
-			Firestore db = conexion.conectar();
-			final String nombreColeccionPrincipal = "WORKOUT";
-			ApiFuture<QuerySnapshot> future = db.collection(nombreColeccionPrincipal).get();
-			QuerySnapshot documentos = future.get();
+    public ArrayList<Workouts> obtenerWorkouts(ArrayList<Workouts> listaWorkouts) {
 
-			for (QueryDocumentSnapshot doc : documentos) {
-				final ArrayList<Ejercicios> ejercicios = new ArrayList<>();
+        try {
+            Firestore db = conexion.conectar();
+            String nombreColeccionPrincipal = workoutF;
+            ApiFuture<QuerySnapshot> future = db.collection(nombreColeccionPrincipal).get();
+            QuerySnapshot documentos = future.get();
 
-				final String nombre = doc.getString("NOMBRE");
-				final int nivelInt = doc.getLong("NIVEL").intValue();
-				final String video = doc.getString("VIDEO");
-				final String descripcion = doc.getString("DESCRIPCION");
+            for (QueryDocumentSnapshot doc : documentos) {
+                ArrayList<Ejercicios> ejercicios = new ArrayList<>();
 
-				DocumentReference ref = doc.getReference();
-				final List<QueryDocumentSnapshot> ejerciciosRef = ref.collection("EJERCICIO").get().get()
-						.getDocuments();
+                String nombre = doc.getString(nombreF);
+                Long nivelLong = doc.getLong(nivelF);
+                int nivelInt = (nivelLong != null) ? nivelLong.intValue() : 0;
+                String video = doc.getString(videoF);
+                String descripcion = doc.getString(descripcionF);
 
-				for (QueryDocumentSnapshot docs : ejerciciosRef) {
-					final String nombreEjer = docs.getString("NOMBRE");
-					final String descripcionEjer = docs.getString("DESCRIPCION");
+                DocumentReference ref = doc.getReference();
+                List<QueryDocumentSnapshot> ejerciciosRef = ref.collection(ejercicioF).get().get().getDocuments();
 
-					final Ejercicios ejer = new Ejercicios("", nombreEjer, descripcionEjer);
-					ejercicios.add(ejer);
-				}
+                for (QueryDocumentSnapshot docs : ejerciciosRef) {
+                    String nombreEjer = docs.getString(nombreF);
+                    String descripcionEjer = docs.getString(descripcionF);
 
-				final Workouts w = new Workouts(0, nivelInt, nombre, video, descripcion, ejercicios);
-				listaWorkouts.add(w);
-			}
+                    Ejercicios ejer = new Ejercicios("", nombreEjer, descripcionEjer);
+                    ejercicios.add(ejer);
+                }
 
-			try {
-				db.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+                Workouts w = new Workouts(0, nivelInt, nombre, video, descripcion, ejercicios);
+                listaWorkouts.add(w);
+            }
 
-		} catch (IOException | InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		}
+            db.close();
 
-		return listaWorkouts;
-	}
+        } catch (IOException | InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listaWorkouts;
+    }
 }

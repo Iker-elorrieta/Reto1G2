@@ -20,7 +20,7 @@ public class Inicio extends JFrame {
 	private ArrayList<Workouts> workouts = new ArrayList<>();
 	private DefaultTableModel modelo;
 
-	public Inicio(final Controlador ctr, final Usuario usuarioActual) {
+	public Inicio(Controlador ctr, Usuario usuarioActual) {
 
 		modelo = new DefaultTableModel(new String[] { "Workouts" }, 0) {
 			private static final long serialVersionUID = 1L;
@@ -153,9 +153,9 @@ public class Inicio extends JFrame {
 	public void actualizarWorkout(DefaultTableModel modelo, int nivel) {
 		modelo.setRowCount(0);
 
-		for (final Workouts workout : workouts) {
+		for (Workouts workout : workouts) {
 			if (workout.getNivel() == nivel) {
-				final Object[] fila = { workout.getNombre() };
+				Object[] fila = { workout.getNombre() };
 				modelo.addRow(fila);
 				table.setModel(modelo);
 			}

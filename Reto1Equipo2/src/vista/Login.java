@@ -35,13 +35,13 @@ public class Login extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		final ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
-		final Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
-		final ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+		ImageIcon iconoLogo = new ImageIcon("lib/logo.png");
+		Image imagenEscalada = iconoLogo.getImage().getScaledInstance(254, 203, Image.SCALE_SMOOTH);
+		ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
 
-		final ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
-		final Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
-		final ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
+		ImageIcon iconoFondo = new ImageIcon("lib/fondo.png");
+		Image imagenEscalada2 = iconoFondo.getImage().getScaledInstance(1354, 761, Image.SCALE_SMOOTH);
+		ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(531, 270, 293, 361);
@@ -141,7 +141,7 @@ public class Login extends JFrame {
 		panel_1.add(etiquetaFondo);
 
 		lblCrearCuenta.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(final MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				Registro frame = new Registro(ctr);
 				frame.setVisible(true);
 				dispose();

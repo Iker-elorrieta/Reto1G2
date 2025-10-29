@@ -20,7 +20,7 @@ public class Registro extends JFrame {
 	private JTextField txtFecha_nac;
 	private JPasswordField txtContra;
 
-	public Registro(final Controlador ctr) {
+	public Registro(Controlador ctr) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1370, 800);
@@ -119,7 +119,7 @@ public class Registro extends JFrame {
 
 		JButton btnNewButton = new JButton("REGISTRAR");
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(final ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				final String fechaStr = txtFecha_nac.getText();
 				final String nombre = txtNombre.getText();
 				final String apellidos = txtApellidos.getText();
@@ -138,13 +138,13 @@ public class Registro extends JFrame {
 						txtMail.setText("");
 					} else {
 						try {
-							final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 							sdf.setLenient(false);
-							final Date fechaNacimiento = sdf.parse(fechaStr);
+							Date fechaNacimiento = sdf.parse(fechaStr);
 							com.google.cloud.Timestamp fechaTimestamp = com.google.cloud.Timestamp.of(fechaNacimiento);
-							final SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
-							final int añoNacimiento = Integer.parseInt(sdfYear.format(fechaNacimiento));
-							final int añoActual = Integer.parseInt(sdfYear.format(new Date()));
+							SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
+							int añoNacimiento = Integer.parseInt(sdfYear.format(fechaNacimiento));
+							int añoActual = Integer.parseInt(sdfYear.format(new Date()));
 
 							if (añoNacimiento > añoActual) {
 								JOptionPane.showMessageDialog(null, "El año de nacimiento no puede ser mayor al actual",
@@ -152,7 +152,7 @@ public class Registro extends JFrame {
 								return;
 							}
 
-							final Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaTimestamp, 0);
+							Usuario usuario = new Usuario(nombre, apellidos, clave, email, fechaTimestamp, 0);
 							ctr.RegistrarUsuarioBDControlador(usuario);
 							JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
 							Login frame = new Login(ctr);
@@ -185,7 +185,7 @@ public class Registro extends JFrame {
 		lblVolver.setFont(new Font("Arial Black", Font.BOLD, 13));
 		lblVolver.setBounds(89, 460, 115, 22);
 		lblVolver.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(final MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				Login frame = new Login(ctr);
 				frame.setVisible(true);
 				dispose();

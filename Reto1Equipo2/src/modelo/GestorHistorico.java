@@ -13,45 +13,53 @@ import conexion.Conexion;
 
 public class GestorHistorico {
 
-	public Conexion conexion = new Conexion();
+    private final String historicoF = "HISTORICO";
+    private final String fechaF = "FECHA";
+    private final String nivelF = "NIVEL";
+    private final String ratioF = "RATIOCOMPLETACION";
+    private final String tiempoF = "TIEMPO";
+    private final String tiempoEsperadoF = "TIEMPOESPERADO";
+    private final String userIDF = "USERID";
+    private final String workoutIDF = "WORKOUTID";
+    private final String workoutNombreF = "WORKOUTNOMBRE";
 
-	public ArrayList<Historico> obtenerHistorico(ArrayList<Historico> listaHistorico) {
+    public Conexion conexion = new Conexion();
 
-		try {
-			Firestore db = conexion.conectar();
-			final String nombreColeccion = "HISTORICO";
-			ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
-			QuerySnapshot documentos = future.get();
+    public ArrayList<Historico> obtenerHistorico(ArrayList<Historico> listaHistorico) {
+        try {
+            Firestore db = conexion.conectar();
+            String nombreColeccion = historicoF;
+            ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
+            QuerySnapshot documentos = future.get();
 
-			for (QueryDocumentSnapshot doc : documentos) {
-				final String fecha = doc.getString("FECHA");
-				final Long nivelLong = doc.getLong("NIVEL");
-				final Long ratioLong = doc.getLong("RATIOCOMPLETACION");
-				final Long tiempoLong = doc.getLong("TIEMPO");
-				final Long esperadoLong = doc.getLong("TIEMPOESPERADO");
-				final String userID = doc.getString("USERID");
-				final String workoutID = doc.getString("WORKOUTID");
-				final String workoutNombre = doc.getString("WORKOUTNOMBRE");
+            for (QueryDocumentSnapshot doc : documentos) {
+                String fecha = doc.getString(fechaF);
+                Long nivelLong = doc.getLong(nivelF);
+                Long ratioLong = doc.getLong(ratioF);
+                Long tiempoLong = doc.getLong(tiempoF);
+                Long esperadoLong = doc.getLong(tiempoEsperadoF);
+                String userID = doc.getString(userIDF);
+                String workoutID = doc.getString(workoutIDF);
+                String workoutNombre = doc.getString(workoutNombreF);
 
-				final int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
-				final int ratiocompletacion = (ratioLong != null) ? ratioLong.intValue() : 0;
-				final int tiempo = (tiempoLong != null) ? tiempoLong.intValue() : 0;
-				final int tiempoesperado = (esperadoLong != null) ? esperadoLong.intValue() : 0;
+                int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
+                int ratiocompletacion = (ratioLong != null) ? ratioLong.intValue() : 0;
+                int tiempo = (tiempoLong != null) ? tiempoLong.intValue() : 0;
+                int tiempoesperado = (esperadoLong != null) ? esperadoLong.intValue() : 0;
 
-				final Historico h = new Historico(fecha, nivel, ratiocompletacion, tiempo, tiempoesperado, userID,
-						workoutID, workoutNombre);
-				listaHistorico.add(h);
-			}
+                Historico h = new Historico(fecha, nivel, ratiocompletacion, tiempo, tiempoesperado, userID, workoutID, workoutNombre);
+                listaHistorico.add(h);
+            }
 
-			db.close();
+            db.close();
 
-		} catch (IOException | InterruptedException | ExecutionException e) {
-			System.out.println("Error al obtener historial: " + e.getMessage());
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        } catch (IOException | InterruptedException | ExecutionException e) {
+            System.out.println("Error al obtener historial: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		return listaHistorico;
-	}
+        return listaHistorico;
+    }
 }

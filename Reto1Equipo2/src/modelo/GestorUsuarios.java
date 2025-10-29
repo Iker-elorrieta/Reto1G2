@@ -18,26 +18,34 @@ import conexion.Conexion;;
 
 public class GestorUsuarios {
 
+	private final String userF = "USERS";
+	private final String nombreF = "NOMBRE";
+	private final String claveF = "CLAVE";
+	private final String apellidosF = "APELLIDOS";
+	private final String nacimientoF = "NACIMIENTO";
+	private final String nivelF = "NIVEL";
+	private final String emailF = "EMAIL";
+	
 	public Conexion conexion = new Conexion();
 
 	public boolean login(String email, char[] cs) {
 		Firestore db = null;
 		try {
 			db = conexion.conectar();
-			final String nombreColeccion = "USERS";
-			final String claveIngresada = new String(cs);
+			String nombreColeccion = userF;
+			String claveIngresada = new String(cs);
 			ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).whereEqualTo("EMAIL", email).get();
 			QuerySnapshot documentos = future.get();
 
 			for (QueryDocumentSnapshot doc : documentos) {
-				final String claveGuardada = doc.getString("CLAVE");
+				String claveGuardada = doc.getString(claveF);
 				if (claveGuardada != null && claveGuardada.equals(claveIngresada)) {
-					final String nombre = doc.getString("NOMBRE");
-					final String apellidos = doc.getString("APELLIDOS");
-					final Timestamp nacimiento = doc.getTimestamp("NACIMIENTO");
-					final Long nivelLong = doc.getLong("NIVEL");
-					final int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
-					final Usuario usuario = new Usuario(nombre, apellidos, claveGuardada, email, nacimiento, nivel);
+					String nombre = doc.getString(nombreF);
+					String apellidos = doc.getString(apellidosF);
+					Timestamp nacimiento = doc.getTimestamp(nacimientoF);
+					Long nivelLong = doc.getLong(nivelF);
+					int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
+					Usuario usuario = new Usuario(nombre, apellidos, claveGuardada, email, nacimiento, nivel);
 
 					System.out.println("Login correcto: " + usuario.toString());
 					return true;
@@ -62,23 +70,23 @@ public class GestorUsuarios {
 	public void RegistrarUsuarioBD(Usuario usuario) {
 		try {
 			Firestore db = conexion.conectar();
-			CollectionReference users = db.collection("USERS");
+			CollectionReference users = db.collection(userF);
 			DocumentReference nuevoId = users.document();
 
-			final Map<String, Object> usuarioNuevo = new HashMap<>();
+			Map<String, Object> usuarioNuevo = new HashMap<>();
 			
-			final String apellidos = usuario.getApellidos();
-			final String nombre = usuario.getNombre();
-			final String email = usuario.getEmail();
-			final String contraseña = usuario.getContraseña();
-			final Timestamp fechaNacimiento = usuario.getFechaNacimiento();
+			String apellidos = usuario.getApellidos();
+			String nombre = usuario.getNombre();
+			String email = usuario.getEmail();
+			String contraseña = usuario.getContraseña();
+			Timestamp fechaNacimiento = usuario.getFechaNacimiento();
 			
-			usuarioNuevo.put("APELLIDOS", apellidos);
-			usuarioNuevo.put("NOMBRE", nombre);
-			usuarioNuevo.put("EMAIL", email);
-			usuarioNuevo.put("CLAVE", contraseña);
-			usuarioNuevo.put("NACIMIENTO", fechaNacimiento);
-			usuarioNuevo.put("NIVEL", 0);
+			usuarioNuevo.put(apellidosF, apellidos);
+			usuarioNuevo.put(nombreF, nombre);
+			usuarioNuevo.put(emailF, email);
+			usuarioNuevo.put(claveF, contraseña);
+			usuarioNuevo.put(nacimientoF, fechaNacimiento);
+			usuarioNuevo.put(nivelF, 0);
 
 			nuevoId.set(usuarioNuevo);
 			db.close();
@@ -91,20 +99,20 @@ public class GestorUsuarios {
 	public ArrayList<Usuario> obtenerUsuarios(ArrayList<Usuario> listaUsuarios) {
 		try {
 			Firestore db = conexion.conectar();
-			final String nombreColeccion = "USERS";
+			String nombreColeccion = userF;
 			ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 			QuerySnapshot documentos = future.get();
 
 			for (QueryDocumentSnapshot doc : documentos) {
-				final String nombre = doc.getString("NOMBRE");
-				final String clave = doc.getString("CLAVE");
-				final String email = doc.getString("EMAIL");
-				final String apellido = doc.getString("APELLIDOS");
-				Timestamp nacimiento = doc.getTimestamp("NACIMIENTO");
-				final Long nivelLong = doc.getLong("NIVEL");
-				final int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
+				String nombre = doc.getString(nombreF);
+				String clave = doc.getString(claveF);
+				String email = doc.getString(emailF);
+				String apellido = doc.getString(apellidosF);
+				Timestamp nacimiento = doc.getTimestamp(nacimientoF);
+				Long nivelLong = doc.getLong(nivelF);
+				int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
 
-				final Usuario usu = new Usuario(nombre, apellido, clave, email, nacimiento, nivel);
+				Usuario usu = new Usuario(nombre, apellido, clave, email, nacimiento, nivel);
 				listaUsuarios.add(usu);
 			}
 
@@ -124,11 +132,11 @@ public class GestorUsuarios {
 	public boolean verificarEmail(String email) {
 		try {
 			Firestore db = conexion.conectar();
-			final String nombreColeccion = "USERS";
+			String nombreColeccion = userF;
 			ApiFuture<QuerySnapshot> future = db.collection(nombreColeccion).get();
 			QuerySnapshot documentos = future.get();
 			for (QueryDocumentSnapshot doc : documentos) {
-				final String emailVerificar = doc.getString("EMAIL");
+				String emailVerificar = doc.getString(emailF);
 				if (email.equals(emailVerificar)) {
 					return true;
 				}
