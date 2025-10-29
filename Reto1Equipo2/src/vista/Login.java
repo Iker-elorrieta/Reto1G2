@@ -78,7 +78,7 @@ public class Login extends JFrame {
 		JButton btnNewButton = new JButton("INGRESAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent e) {
-				final boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getPassword());
+				boolean login = ctr.LoginUsuarios(txtEmail.getText(), txtContraseña.getPassword());
 
 				if (login) {
 					iniciarBackups();

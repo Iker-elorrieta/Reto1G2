@@ -15,7 +15,7 @@ public class GestorHistorico {
 
 	public Conexion conexion = new Conexion();
 
-	public ArrayList<Historico> obtenerHistorico(final ArrayList<Historico> listaHistorico) {
+	public ArrayList<Historico> obtenerHistorico(ArrayList<Historico> listaHistorico) {
 
 		try {
 			Firestore db = conexion.conectar();

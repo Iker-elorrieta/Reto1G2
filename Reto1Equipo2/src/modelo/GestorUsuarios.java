@@ -20,7 +20,7 @@ public class GestorUsuarios {
 
 	public Conexion conexion = new Conexion();
 
-	public boolean login(final String email, final char[] cs) {
+	public boolean login(String email, char[] cs) {
 		Firestore db = null;
 		try {
 			db = conexion.conectar();
@@ -59,7 +59,7 @@ public class GestorUsuarios {
 		return false;
 	}
 
-	public void RegistrarUsuarioBD(final Usuario usuario) {
+	public void RegistrarUsuarioBD(Usuario usuario) {
 		try {
 			Firestore db = conexion.conectar();
 			CollectionReference users = db.collection("USERS");
@@ -88,7 +88,7 @@ public class GestorUsuarios {
 		}
 	}
 
-	public ArrayList<Usuario> obtenerUsuarios(final ArrayList<Usuario> listaUsuarios) {
+	public ArrayList<Usuario> obtenerUsuarios(ArrayList<Usuario> listaUsuarios) {
 		try {
 			Firestore db = conexion.conectar();
 			final String nombreColeccion = "USERS";
@@ -121,7 +121,7 @@ public class GestorUsuarios {
 		return listaUsuarios;
 	}
 
-	public boolean verificarEmail(final String email) {
+	public boolean verificarEmail(String email) {
 		try {
 			Firestore db = conexion.conectar();
 			final String nombreColeccion = "USERS";

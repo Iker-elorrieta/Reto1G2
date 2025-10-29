@@ -17,7 +17,7 @@ public class GestorWorkout {
 
 	public Conexion conexion = new Conexion();
 
-	public ArrayList<Workouts> obtenerWorkouts(final ArrayList<Workouts> listaWorkouts) {
+	public ArrayList<Workouts> obtenerWorkouts(ArrayList<Workouts> listaWorkouts) {
 
 		try {
 			Firestore db = conexion.conectar();
