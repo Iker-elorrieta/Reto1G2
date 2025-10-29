@@ -133,7 +133,12 @@ public class GestorUsuarios {
 					return true;
 				}
 			}
-
+			try {
+				db.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (IOException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
