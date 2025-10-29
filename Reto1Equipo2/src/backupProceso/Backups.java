@@ -32,7 +32,7 @@ public class Backups {
 	            usuario.put("CLAVE", doc.getString("CLAVE"));
 	            usuario.put("EMAIL", doc.getString("EMAIL"));
 	            usuario.put("APELLIDOS", doc.getString("APELLIDOS"));
-	            usuario.put("NACIMIENTO", doc.getString("NACIMIENTO"));
+	            usuario.put("NACIMIENTO", doc.getDate("NACIMIENTO"));
 	            usuario.put("NIVEL", doc.getLong("NIVEL"));
 	            listaUsuarios.add(usuario);
 	        }
