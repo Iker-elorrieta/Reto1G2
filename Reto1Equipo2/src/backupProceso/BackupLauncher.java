@@ -13,8 +13,8 @@ public class BackupLauncher {
         Firestore db = null;
 
         try {
-            String projectID = "reto1grupo2";
-            String nombreJSON = "lib/gimnasio.json";
+            final String projectID = "reto1grupo2";
+            final String nombreJSON = "lib/gimnasio.json";
 
             FileInputStream serviceAccount = new FileInputStream(nombreJSON);
             FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()

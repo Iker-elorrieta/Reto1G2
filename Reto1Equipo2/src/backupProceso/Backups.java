@@ -31,6 +31,7 @@ public class Backups {
 	private final String apellidosF = "APELLIDOS";
 	private final String nacimientoF = "NACIMIENTO";
 	private final String emailF = "EMAIL";
+	private final String idF = "ID";
 
     
 	private final Firestore db;
@@ -50,9 +51,9 @@ public class Backups {
 	        for (QueryDocumentSnapshot doc : documentos) {
 	            Map<String, Object> usuario = new HashMap<>();
 	            usuario.put(nombreF, doc.getString(nombreF));
-	            usuario.put("CLAVE", doc.getString("CLAVE"));
-	            usuario.put("EMAIL", doc.getString("EMAIL"));
-	            usuario.put("APELLIDOS", doc.getString("APELLIDOS"));
+	            usuario.put(claveF, doc.getString(claveF));
+	            usuario.put(emailF, doc.getString(emailF));
+	            usuario.put(apellidosF, doc.getString(apellidosF));
 	            usuario.put(nacimientoF, doc.getDate(nacimientoF));
 	            usuario.put(nivelF, doc.getLong(nivelF));
 	            listaUsuarios.add(usuario);
@@ -61,7 +62,6 @@ public class Backups {
 	    } catch (InterruptedException | ExecutionException e) {
 	        e.printStackTrace();
 	    } catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    return listaUsuarios;
@@ -80,28 +80,27 @@ public class Backups {
 	            Map<String, Object> workout = new HashMap<>();
 	            workout.put(nombreF, doc.getString(nombreF));
 	            workout.put(nivelF, doc.getLong(nivelF));
-	            workout.put("VIDEO", doc.getString("VIDEO"));
-	            workout.put("DESCRIPCION", doc.getString("DESCRIPCION"));
+	            workout.put(videoF, doc.getString(videoF));
+	            workout.put(descripcionF, doc.getString(descripcionF));
 
 	            List<Map<String, String>> ejercicios = new ArrayList<>();
 	            List<QueryDocumentSnapshot> ejerciciosRef = doc.getReference()
-	                .collection("EJERCICIO").get().get().getDocuments();
+	                .collection(ejercicioF).get().get().getDocuments();
 
 	            for (QueryDocumentSnapshot ej : ejerciciosRef) {
 	                Map<String, String> ejercicio = new HashMap<>();
 	                ejercicio.put(nombreF, ej.getString(nombreF));
-	                ejercicio.put("DESCRIPCION", ej.getString("DESCRIPCION"));
+	                ejercicio.put(descripcionF, ej.getString(descripcionF));
 	                ejercicios.add(ejercicio);
 	            }
 
-	            workout.put("EJERCICIOS", ejercicios);
+	            workout.put(ejercicioF, ejercicios);
 	            listaWorkouts.add(workout);
 	        }
 
 	    } catch (InterruptedException | ExecutionException e) {
 	        e.printStackTrace();
 	    } catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    return listaWorkouts;
@@ -119,21 +118,21 @@ public class Backups {
 	        for (QueryDocumentSnapshot doc : documentos) {
 	        	Map<String, Object> historico = new HashMap<>();
 
-	            historico.put("ID", doc.getId());
+	            historico.put(idF, doc.getId());
 	            historico.put(fechaF, doc.get(fechaF));
 	            historico.put(nivelF, doc.get(nivelF));
 	            historico.put(ratioF, doc.getDouble(ratioF));
 	            historico.put(tiempoF, doc.get(tiempoF));
 	            historico.put(tiempoEsperadoF, doc.get(tiempoEsperadoF));
 
-	            DocumentReference usuarioRef = (DocumentReference) doc.get("USERID");
-	            historico.put("USUARIO", usuarioRef);
+	            DocumentReference usuarioRef = (DocumentReference) doc.get(userIDF);
+	            historico.put(userIDF, usuarioRef);
 
-	            DocumentReference workoutRef = (DocumentReference) doc.get("WORKOUTID");
-	            historico.put("WORKOUT", workoutRef);
+	            DocumentReference workoutRef = (DocumentReference) doc.get(workoutIDF);
+	            historico.put(workoutIDF, workoutRef);
 
-	            DocumentReference workoutNombre = (DocumentReference) doc.get("WORKOUTNOMBRE");
-                historico.put("WORKOUTNOMBRE", workoutNombre);
+	            DocumentReference workoutNombre = (DocumentReference) doc.get(workoutNombreF);
+                historico.put(workoutNombreF, workoutNombre);
                 
 	            
 	            listaHistorico.add(historico);

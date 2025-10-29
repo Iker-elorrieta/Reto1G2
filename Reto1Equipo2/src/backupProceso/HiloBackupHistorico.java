@@ -19,6 +19,19 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 
 public class HiloBackupHistorico implements Runnable {
+	
+	private final String historialF = "HISTORIAL";
+	private final String fechaF = "FECHA";
+	private final String nivelF = "NIVEL";
+	private final String ratioF = "RATIOCOMPLETACION";
+	private final String tiempoF = "TIEMPO";
+	private final String tiempoEsperadoF = "TIEMPOESPERADO";
+	private final String userIDF = "USERID";
+	private final String workoutIDF = "WORKOUTID";
+	private final String workoutNombreF = "WORKOUTNOMBRE";
+	private final String nombre = "NOMBRE";
+	private final String idF = "ID";
+	
 
     private List<Map<String, Object>> historial;
 
@@ -32,68 +45,68 @@ public class HiloBackupHistorico implements Runnable {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.newDocument();
 
-            Element rootElement = doc.createElement("historico");
+            Element rootElement = doc.createElement(historialF);
             doc.appendChild(rootElement);
 
             for (Map<String, Object> h : historial) {
-                Element registro = doc.createElement("registro");
+                Element registro = doc.createElement("REGISTRO");
 
                 // ID del documento
-                Element idDoc = doc.createElement("id_documento");
-                idDoc.appendChild(doc.createTextNode(String.valueOf(h.get("ID"))));
+                Element idDoc = doc.createElement(idF);
+                idDoc.appendChild(doc.createTextNode(String.valueOf(h.get(idF))));
                 registro.appendChild(idDoc);
 
                 // Fecha
-                Element fecha = doc.createElement("fecha");
-                fecha.appendChild(doc.createTextNode(String.valueOf(h.get("FECHA"))));
+                Element fecha = doc.createElement(fechaF);
+                fecha.appendChild(doc.createTextNode(String.valueOf(h.get(fechaF))));
                 registro.appendChild(fecha);
 
                 // Nivel
-                Element nivel = doc.createElement("nivel");
-                nivel.appendChild(doc.createTextNode(String.valueOf(h.get("NIVEL"))));
+                Element nivel = doc.createElement(nivelF);
+                nivel.appendChild(doc.createTextNode(String.valueOf(h.get(nivelF))));
                 registro.appendChild(nivel);
 
                 // Ratio de completación
-                Element ratio = doc.createElement("ratio_complecion");
-                ratio.appendChild(doc.createTextNode(String.valueOf(h.get("RATIO_COMPLETACION"))));
+                Element ratio = doc.createElement(ratioF);
+                ratio.appendChild(doc.createTextNode(String.valueOf(h.get(ratioF))));
                 registro.appendChild(ratio);
 
                 // Tiempo
-                Element tiempo = doc.createElement("tiempo");
-                tiempo.appendChild(doc.createTextNode(String.valueOf(h.get("TIEMPO"))));
+                Element tiempo = doc.createElement(tiempoF);
+                tiempo.appendChild(doc.createTextNode(String.valueOf(h.get(tiempoF))));
                 registro.appendChild(tiempo);
 
                 // Tiempo esperado
-                Element tiempoEsperado = doc.createElement("tiempo_esperado");
-                tiempoEsperado.appendChild(doc.createTextNode(String.valueOf(h.get("TIEMPO_ESPERADO"))));
+                Element tiempoEsperado = doc.createElement(tiempoEsperadoF);
+                tiempoEsperado.appendChild(doc.createTextNode(String.valueOf(h.get(tiempoEsperadoF))));
                 registro.appendChild(tiempoEsperado);
 
                 // ID del usuario
-                DocumentReference usuarioRef = (DocumentReference) h.get("USUARIO");
-                Element idUsuario = doc.createElement("id_usuario");
+                DocumentReference usuarioRef = (DocumentReference) h.get(userIDF);
+                Element idUsuario = doc.createElement(userIDF);
                 idUsuario.appendChild(doc.createTextNode(usuarioRef != null ? usuarioRef.getId() : "desconocido"));
                 registro.appendChild(idUsuario);
 
                 // ID del workout
-                DocumentReference workoutRef = (DocumentReference) h.get("WORKOUT");
-                Element idWorkout = doc.createElement("workout_id");
+                DocumentReference workoutRef = (DocumentReference) h.get(workoutIDF);
+                Element idWorkout = doc.createElement(workoutIDF);
                 idWorkout.appendChild(doc.createTextNode(workoutRef != null ? workoutRef.getId() : "desconocido"));
                 registro.appendChild(idWorkout);
 
                 // Nombre del workout desde referencia
                 String workoutNombreStr = "Desconocido";
-                DocumentReference workoutNombreRef = (DocumentReference) h.get("WORKOUTNOMBRE");
+                DocumentReference workoutNombreRef = (DocumentReference) h.get(workoutNombreF);
                 if (workoutNombreRef != null) {
                     try {
                         DocumentSnapshot workoutDoc = workoutNombreRef.get().get();
-                        if (workoutDoc.exists() && workoutDoc.contains("NOMBRE")) {
-                            workoutNombreStr = workoutDoc.getString("NOMBRE");
+                        if (workoutDoc.exists() && workoutDoc.contains(nombre)) {
+                            workoutNombreStr = workoutDoc.getString(nombre);
                         }
                     } catch (Exception e) {
                         System.out.println("Error al obtener nombre del workout: " + e.getMessage());
                     }
                 }
-                Element workoutNombre = doc.createElement("workout_nombre");
+                Element workoutNombre = doc.createElement(workoutNombreF);
                 workoutNombre.appendChild(doc.createTextNode(workoutNombreStr));
                 registro.appendChild(workoutNombre);
 
