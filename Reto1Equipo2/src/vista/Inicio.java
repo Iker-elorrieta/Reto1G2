@@ -143,7 +143,7 @@ public class Inicio extends JFrame {
 							.findFirst().orElse(null);
 
 					if (seleccionado != null) {
-						actualizarEjercicios(PanelEjercicios, seleccionado);
+						actualizarEjercicios(PanelEjercicios, seleccionado, ctr, usuarioActual);
 					}
 				}
 			}
@@ -162,7 +162,7 @@ public class Inicio extends JFrame {
 		}
 	}
 
-	public void actualizarEjercicios(JPanel PanelEjercicios, Workouts seleccionado) {
+	public void actualizarEjercicios(JPanel PanelEjercicios, Workouts seleccionado, Controlador ctr, Usuario usuarioActual) {
 		PanelEjercicios.removeAll();
 		PanelEjercicios.setLayout(null);
 
@@ -208,24 +208,54 @@ public class Inicio extends JFrame {
 		y += 140;
 
 		for (Ejercicios ejercicio : seleccionado.getEjercicios()) {
-			JPanel panelEjer = new JPanel();
-			panelEjer.setLayout(null);
-			panelEjer.setBackground(new Color(60, 60, 60));
-			panelEjer.setBounds(20, y, 980, 60);
+		    JPanel panelEjer = new JPanel();
+		    panelEjer.setLayout(null);
+		    panelEjer.setBackground(new Color(60, 60, 60));
+		    panelEjer.setBounds(20, y, 980, 60);
 
-			JLabel lblEjerNombre = new JLabel("Ejercicio: " + ejercicio.getNombre());
-			lblEjerNombre.setBounds(10, 5, 400, 20);
-			lblEjerNombre.setForeground(Color.WHITE);
-			panelEjer.add(lblEjerNombre);
+		    JLabel lblEjerNombre = new JLabel("Ejercicio: " + ejercicio.getNombre());
+		    lblEjerNombre.setBounds(10, 5, 400, 20);
+		    lblEjerNombre.setForeground(Color.WHITE);
+		    panelEjer.add(lblEjerNombre);
 
-			JLabel lblEjerDesc = new JLabel("Descripción: " + ejercicio.getDescripcion());
-			lblEjerDesc.setBounds(10, 25, 900, 20);
-			lblEjerDesc.setForeground(Color.LIGHT_GRAY);
-			panelEjer.add(lblEjerDesc);
+		    JLabel lblEjerDesc = new JLabel("Descripción: " + ejercicio.getDescripcion());
+		    lblEjerDesc.setBounds(10, 25, 900, 20);
+		    lblEjerDesc.setForeground(Color.LIGHT_GRAY);
+		    panelEjer.add(lblEjerDesc);
 
-			PanelEjercicios.add(panelEjer);
-			y += 70;
+		    panelEjer.addMouseListener(new MouseAdapter() {
+		        @Override
+		        public void mouseClicked(MouseEvent e) {
+		        	if(ejercicio.getSeries().size() == 0 || ejercicio.getSeries() == null) {
+		        		JOptionPane.showMessageDialog(null, "No hay Series dentro de este ejercicio");
+		        		if (ejercicio.getSeries() == null || ejercicio.getSeries().isEmpty()) {
+		        		    JOptionPane.showMessageDialog(null, "No hay Series dentro de este ejercicio");
+
+		        		    if (modelo != null) {
+		        		        modelo.setRowCount(0);
+
+		        		        for (Workouts w : ctr.DevolverWorkouts()) {
+		        		            if (w.getNivel() == seleccionado.getNivel()) {
+		        		                modelo.addRow(new Object[]{w.getNombre()});
+		        		            }
+		        		        }
+
+		        		        table.setModel(modelo);
+		        		    }
+		        		}
+
+		        	}else {
+			            Ejercicio pantallaEjercicio = new Ejercicio(ejercicio, usuarioActual, ctr);
+			            pantallaEjercicio.setVisible(true);
+			            dispose();
+		        	}
+		        }
+		    });
+
+		    PanelEjercicios.add(panelEjer);
+		    y += 70;
 		}
+
 
 		PanelEjercicios.revalidate();
 		PanelEjercicios.repaint();

@@ -21,11 +21,14 @@ public class GestorWorkout {
     private final String videoF = "VIDEO";
     private final String descripcionF = "DESCRIPCION";
     private final String ejercicioF = "EJERCICIO";
-
+    private final String serieF = "SERIE";
+    private final String descansoF = "DESCANSO";
+    private final String duracionF = "DURACION";
+    private final String repeticionF = "REPETICIONES";
+    
     public Conexion conexion = new Conexion();
 
     public ArrayList<Workouts> obtenerWorkouts(ArrayList<Workouts> listaWorkouts) {
-
         try {
             Firestore db = conexion.conectar();
             String nombreColeccionPrincipal = workoutF;
@@ -45,10 +48,24 @@ public class GestorWorkout {
                 List<QueryDocumentSnapshot> ejerciciosRef = ref.collection(ejercicioF).get().get().getDocuments();
 
                 for (QueryDocumentSnapshot docs : ejerciciosRef) {
+                    String idEjer = docs.getId();
                     String nombreEjer = docs.getString(nombreF);
                     String descripcionEjer = docs.getString(descripcionF);
 
-                    Ejercicios ejer = new Ejercicios("", nombreEjer, descripcionEjer);
+                    List<QueryDocumentSnapshot> seriesRef = docs.getReference().collection(serieF).get().get().getDocuments();
+                    ArrayList<Series> series = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot docs2 : seriesRef) {
+                        int duracionSerie = Integer.parseInt(docs2.getLong(duracionF).toString());
+                        int descansoSerie = Integer.parseInt(docs2.getLong(descansoF).toString());
+                        int repeticionesSerie = Integer.parseInt(docs2.getLong(repeticionF).toString());
+
+                        Series serie = new Series(duracionSerie, descansoSerie, repeticionesSerie);
+                        series.add(serie);
+                    }
+
+                    Ejercicios ejer = new Ejercicios(idEjer, nombreEjer, descripcionEjer);
+                    ejer.setSeries(series);
                     ejercicios.add(ejer);
                 }
 
@@ -66,4 +83,5 @@ public class GestorWorkout {
 
         return listaWorkouts;
     }
+
 }

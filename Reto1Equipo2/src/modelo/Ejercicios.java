@@ -45,8 +45,13 @@ public class Ejercicios implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Ejercicios [id=" + id + ", nombre=" + nombre + "]";
+	    return "\n===== Ejercicio =====\n" +
+	           "ID:           " + id + "\n" +
+	           "Nombre:       " + nombre + "\n" +
+	           "Descripción:  " + descripcion + "\n" +
+	           "Series:       " + (series != null ? series.size() : 0) + " definidas\n";
 	}
+
 
 }
 
