@@ -25,6 +25,7 @@ public class GestorUsuarios {
 	private final String nacimientoF = "NACIMIENTO";
 	private final String nivelF = "NIVEL";
 	private final String emailF = "EMAIL";
+	private final String rolF = "ROL";
 	
 	public Conexion conexion = new Conexion();
 
@@ -87,7 +88,7 @@ public class GestorUsuarios {
 			usuarioNuevo.put(claveF, contraseña);
 			usuarioNuevo.put(nacimientoF, fechaNacimiento);
 			usuarioNuevo.put(nivelF, 0);
-
+			usuarioNuevo.put(rolF, "Cliente");
 			nuevoId.set(usuarioNuevo);
 			db.close();
 
