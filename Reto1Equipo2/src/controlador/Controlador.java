@@ -31,7 +31,7 @@ public class Controlador {
 	
 	public ArrayList<Workouts> DevolverWorkouts(){
 		listaWorkout = gestorWorkout.obtenerWorkouts(listaWorkout);
-		return listaWorkout;
+		return new ArrayList<>(gestorWorkout.obtenerWorkouts(new ArrayList<>()));//devuelve un arraylist limpio para evitar que se dupliquen workouts
 	}
 
 	public void RegistrarUsuarioBDControlador(Usuario usuario) {

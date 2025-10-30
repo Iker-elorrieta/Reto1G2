@@ -151,15 +151,16 @@ public class Inicio extends JFrame {
 	}
 
 	public void actualizarWorkout(DefaultTableModel modelo, int nivel) {
-		modelo.setRowCount(0);
+	    modelo.setRowCount(0);
 
-		for (Workouts workout : workouts) {
-			if (workout.getNivel() == nivel) {
-				Object[] fila = { workout.getNombre() };
-				modelo.addRow(fila);
-				table.setModel(modelo);
-			}
-		}
+	    for (Workouts workout : workouts) {
+	        if (workout.getNivel() == nivel) {
+	            Object[] fila = { workout.getNombre() };
+	            modelo.addRow(fila);
+	        }
+	    }
+
+	    table.setModel(modelo);
 	}
 
 	public void actualizarEjercicios(JPanel PanelEjercicios, Workouts seleccionado, Controlador ctr, Usuario usuarioActual) {
@@ -230,18 +231,6 @@ public class Inicio extends JFrame {
 		        		JOptionPane.showMessageDialog(null, "No hay Series dentro de este ejercicio");
 		        		if (ejercicio.getSeries() == null || ejercicio.getSeries().isEmpty()) {
 		        		    JOptionPane.showMessageDialog(null, "No hay Series dentro de este ejercicio");
-
-		        		    if (modelo != null) {
-		        		        modelo.setRowCount(0);
-
-		        		        for (Workouts w : ctr.DevolverWorkouts()) {
-		        		            if (w.getNivel() == seleccionado.getNivel()) {
-		        		                modelo.addRow(new Object[]{w.getNombre()});
-		        		            }
-		        		        }
-
-		        		        table.setModel(modelo);
-		        		    }
 		        		}
 
 		        	}else {

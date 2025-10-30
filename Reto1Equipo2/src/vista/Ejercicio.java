@@ -28,13 +28,18 @@ public class Ejercicio extends JFrame {
 	private HiloTemporizador hiloTiempo;
 	private HiloTemporizador hiloDescanso;
 	private HiloCronometro hiloCrono;
+	private String estadoEjercicio = "inactivo";
+	// almacena tiempo restante cuando se pausa el temporizador principal
+	private int tiempoRestante = 0;
+	private int SerieActual = 0;
+	private Series serieActual;
+	private ArrayList<Series> series;
+	private int serie = 1;
 
 	public Ejercicio(Ejercicios ejercicio, Usuario usuarioActual, Controlador ctr) {
 
-		int SerieActual = 0;
-
-		ArrayList<Series> series = ejercicio.getSeries();
-		Series serieActual = series.get(SerieActual);
+		series = ejercicio.getSeries();
+		serieActual = series.getFirst();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1370, 800);
@@ -74,51 +79,110 @@ public class Ejercicio extends JFrame {
 		lblDescanso.setBounds(358, 494, 669, 40);
 		contentPane.add(lblDescanso);
 
-		JLabel lblNewLabel = new JLabel("Series Restantes: " + SerieActual);
+		JLabel lblNewLabel = new JLabel("Serie : " + SerieActual);
 		lblNewLabel.setBounds(10, 150, 250, 14);
 		contentPane.add(lblNewLabel);
 
 		JButton btnParar = new JButton("Iniciar");
-		btnParar.setBounds(565, 727, 89, 23);
-		contentPane.add(btnParar);
-
+		btnParar.setBounds(546, 727, 120, 23);
+		contentPane.add(btnParar);		
+		
 		btnParar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (btnParar.getText().equals("Iniciar")) {
-					hiloCrono = new HiloCronometro();
-					hiloTiempo = new HiloTemporizador(serieActual.getDuracion());
-					hiloDescanso = new HiloTemporizador(serieActual.getDescanso());
+		    public void actionPerformed(ActionEvent e) {
+		        if (estadoEjercicio.equals("inactivo")) {
+		            // Iniciar ejercicio
+		            hiloTiempo = new HiloTemporizador(serieActual.getDuracion());
+		            hiloTiempo.start();
 
-					hiloCrono.start();
-					hiloTiempo.start();
+		            hiloCrono = new HiloCronometro();
+		            hiloCrono.start();
 
-					btnParar.setText("Parar");
-				} else {
-					if (lblDuracion.getText().equals("0")) {
-						hiloDescanso = new HiloTemporizador(serieActual.getDescanso());
-						hiloDescanso.start();
-					}
-					if (hiloTiempo != null)
-						hiloTiempo.detener();
-					if (hiloCrono != null)
-						hiloCrono.detener();
+		            btnParar.setText("Parar");
+		            estadoEjercicio = "activo";
+		        } else if (estadoEjercicio.equals("activo")) {
+		            // Si el temporizador del ejercicio todavía tiene tiempo, entonces solo pausarlo
+		            if (hiloTiempo != null && hiloTiempo.getDuracion() > 0) {
+		                // guardar tiempo restante y detener el hilo
+		                tiempoRestante = hiloTiempo.getDuracion();
+		                hiloTiempo.detener();
 
-					btnParar.setText("Iniciar");
-				}
-			}
+		                btnParar.setText("Reanudar");
+		                estadoEjercicio = "pausado";
+		            } else {
+		                // Si el tiempo ya llegó a 0, iniciar descanso
+		                if (hiloTiempo != null) {
+		                    hiloTiempo.detener();
+		                }
+
+		                hiloDescanso = new HiloTemporizador(serieActual.getDescanso());
+		                hiloDescanso.start();
+
+		                btnParar.setText("Reanudar");
+		                estadoEjercicio = "descanso";
+		            }
+		        } else if (estadoEjercicio.equals("descanso") || estadoEjercicio.equals("pausado")) {
+		            // Reanudar ejercicio: si venimos de descanso, usar la duracion completa;
+		            // si venimos de pausa, usar el tiempo restante guardado
+		            if (estadoEjercicio.equals("descanso")) {
+		                if (hiloDescanso != null) {
+		                    hiloDescanso.detener();
+		                }
+
+		                hiloTiempo = new HiloTemporizador(serieActual.getDuracion());
+		                hiloTiempo.start();
+		            } else { // pausa
+		                // usar tiempoRestante si está disponible, sino reiniciar
+		            	int dur;
+		            	if (tiempoRestante > 0) {
+		            	    dur = tiempoRestante;
+		            	} else {
+		            	    dur = serieActual.getDuracion();
+		            	}
+		            	hiloTiempo = new HiloTemporizador(dur);
+		                hiloTiempo.start();
+		                
+
+		            btnParar.setText("Parar");
+		            estadoEjercicio = "activo";
+		        }
+		            serie++;
+		            if (serie >= serieActual.getRepeticiones()) {
+		                // finalizar ejercicio
+		                if (hiloTiempo != null) hiloTiempo.detener();
+		                if (hiloCrono != null) hiloCrono.detener();
+		                btnParar.setEnabled(false);
+		                btnParar.setText("Completado");
+		                estadoEjercicio = "finalizado";
+		                return;
+		            }
+
+		            // avanzar a la siguiente serie
+		            lblNewLabel.setText("Serie : " + serie);
+		            tiempoRestante = 0;
+	            }
+		    }
 		});
 
 		Timer timer = new Timer(200, e -> {
-			if (hiloCrono != null)
-				lblDuracion.setText("Duracion: " + hiloCrono.getSegundos());
-			if (hiloTiempo != null)
-				lblCrono.setText(hiloTiempo.getDuracion() + "");
-			if (hiloDescanso != null)
-				lblDescanso.setText(hiloDescanso.getDuracion() + "");
+		    if (hiloCrono != null)
+		        lblDuracion.setText("Duración: " + formatoReloj(hiloCrono.getSegundos()));
+		    if (hiloTiempo != null)
+		        lblCrono.setText(formatoReloj(hiloTiempo.getDuracion()));
+		    if (hiloDescanso != null)
+		        lblDescanso.setText(formatoReloj(hiloDescanso.getDuracion()));
 		});
 		timer.start();
 
 		System.out.println(ejercicio);
+		
 
 	}
+	
+	private String formatoReloj(int segundosTotales) {
+	    int horas = segundosTotales / 3600;
+	    int minutos = (segundosTotales % 3600) / 60;
+	    int segundos = segundosTotales % 60;
+	    return String.format("%02d:%02d:%02d", horas, minutos, segundos);// % indica que es un marcador de formato, 02 indica que debe tener al menos 2 dígitos, d indica que es un número entero
+	}
+	
 }
