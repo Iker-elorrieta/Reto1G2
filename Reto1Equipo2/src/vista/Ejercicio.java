@@ -64,7 +64,7 @@ public class Ejercicio extends JFrame {
 			frame1.setVisible(true);
 			dispose();
 		});
-		btnSalir.setBounds(603, 698, 222, 40);
+		btnSalir.setBounds(583, 698, 258, 40);
 		contentPane.add(btnSalir);
 
 		JLabel lblDuracion = new JLabel("Duracion:");
@@ -85,18 +85,29 @@ public class Ejercicio extends JFrame {
 		lblNewLabel.setBounds(25, 174, 250, 14);
 		contentPane.add(lblNewLabel);
 
-		JButton btnParar = new JButton("");
-		btnParar.setBackground(new Color(118, 249, 85));
-		btnParar.setForeground(new Color(0, 128, 0));
-		btnParar.setBounds(603, 542, 222, 93);
-		contentPane.add(btnParar);		
+		JButton btnInicio = new JButton("");
+		btnInicio.setBackground(new Color(118, 249, 85));
+		btnInicio.setForeground(new Color(0, 128, 0));
+		btnInicio.setBounds(676, 542, 149, 93);
+		contentPane.add(btnInicio);		
 		
-		btnParar.addActionListener(new ActionListener() {
+		btnInicio.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	if(estadoEjercicio.equals("inactivo")) {
-		    		btnParar.setBackground(Color.orange);
+		    		btnInicio.setBackground(Color.orange);
 		    		hiloCronoTotal = new HiloCronometro();
 		            hiloCronoTotal.start();
+		            estadoEjercicio = "activo";
+		            hiloTiempo = new HiloTemporizador(serieActual.getDuracion());
+		            hiloTiempo.start();
+		            
+	            	
+
+		           /* if(estadoEjercicio.equals("descanso")) {
+		            	hiloDescanso = new HiloTemporizador(serieActual.getDescanso());
+		            	hiloDescanso.start();
+		            }*/
+		            
 		    	}
 		        /*if (estadoEjercicio.equals("inactivo")) {
 		            // Iniciar ejercicio
@@ -172,22 +183,51 @@ public class Ejercicio extends JFrame {
 	            }*/
 		    }
 		});
-
-		Timer timer = new Timer(200, e -> {
-		    if (hiloCronoTotal != null)
-		        lblDuracion.setText("Duración: " + formatoReloj(hiloCronoTotal.getSegundos()));
-		    if (hiloTiempo != null)
-		        lblCrono.setText(formatoReloj(hiloTiempo.getDuracion()));
-		    if (hiloDescanso != null)
-		        lblDescanso.setText(formatoReloj(hiloDescanso.getDuracion()));
-		});
-		timer.start();
-
-		System.out.println(ejercicio);
+		
+		JButton btnParar = new JButton("");
+        btnParar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        	}
+        });
+        btnParar.setBounds(583, 542, 83, 93);
+        contentPane.add(btnParar);
 		
 
+		Timer timer = new Timer(200, e -> {
+	        
+	        if (hiloCronoTotal != null) {
+	            lblDuracion.setText("Duración: " + formatoReloj(hiloCronoTotal.getSegundos()));
+	        }
+	        if (hiloTiempo != null) {
+	            lblCrono.setText(formatoReloj(hiloTiempo.getDuracion()));
+	        }
+	        if (hiloDescanso != null) {
+	            lblDescanso.setText(formatoReloj(hiloDescanso.getDuracion())); 
+	        }
+	        
+	        if (estadoEjercicio.equals("activo") && hiloTiempo.getDuracion() == 0) {
+	            estadoEjercicio = "descanso";
+	            hiloDescanso = new HiloTemporizador(serieActual.getDescanso());
+	            hiloDescanso.start();
+	            
+	            hiloTiempo = null; 
+	        }
+	        
+	        if (estadoEjercicio.equals("descanso") && hiloDescanso.getDuracion() == 0) {
+	            estadoEjercicio = "inactivo";
+	            hiloDescanso = null;
+	            
+	           
+	        }
+	        
+	    });
+	    timer.start();
+
+	    System.out.println(ejercicio);
+
 	}
-	
+
 	private String formatoReloj(int segundosTotales) {
 	    int horas = segundosTotales / 3600;
 	    int minutos = (segundosTotales % 3600) / 60;
