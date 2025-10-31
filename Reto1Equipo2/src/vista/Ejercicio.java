@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Color;
 
 public class Ejercicio extends JFrame {
 
@@ -27,7 +28,7 @@ public class Ejercicio extends JFrame {
 
 	private HiloTemporizador hiloTiempo;
 	private HiloTemporizador hiloDescanso;
-	private HiloCronometro hiloCrono;
+	private HiloCronometro hiloCronoTotal;
 	private String estadoEjercicio = "inactivo";
 	// almacena tiempo restante cuando se pausa el temporizador principal
 	private int tiempoRestante = 0;
@@ -57,43 +58,51 @@ public class Ejercicio extends JFrame {
 		contentPane.add(lblDescripcion);
 
 		JButton btnSalir = new JButton("Salir");
+		btnSalir.setBackground(new Color(255, 79, 83));
 		btnSalir.addActionListener(e -> {
 			Inicio frame1 = new Inicio(ctr, usuarioActual);
 			frame1.setVisible(true);
 			dispose();
 		});
-		btnSalir.setBounds(695, 727, 89, 23);
+		btnSalir.setBounds(603, 698, 222, 40);
 		contentPane.add(btnSalir);
 
 		JLabel lblDuracion = new JLabel("Duracion:");
-		lblDuracion.setBounds(10, 116, 250, 23);
+		lblDuracion.setBounds(25, 140, 250, 23);
 		contentPane.add(lblDuracion);
 
 		JLabel lblCrono = new JLabel("0:00:00", SwingConstants.CENTER);
 		lblCrono.setFont(new Font("Tahoma", Font.PLAIN, 80));
-		lblCrono.setBounds(358, 319, 669, 164);
+		lblCrono.setBounds(358, 249, 669, 164);
 		contentPane.add(lblCrono);
 
 		JLabel lblDescanso = new JLabel("0:00:00", SwingConstants.CENTER);
 		lblDescanso.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		lblDescanso.setBounds(358, 494, 669, 40);
+		lblDescanso.setBounds(358, 442, 669, 40);
 		contentPane.add(lblDescanso);
 
 		JLabel lblNewLabel = new JLabel("Serie : " + SerieActual);
-		lblNewLabel.setBounds(10, 150, 250, 14);
+		lblNewLabel.setBounds(25, 174, 250, 14);
 		contentPane.add(lblNewLabel);
 
-		JButton btnParar = new JButton("Iniciar");
-		btnParar.setBounds(546, 727, 120, 23);
+		JButton btnParar = new JButton("");
+		btnParar.setBackground(new Color(118, 249, 85));
+		btnParar.setForeground(new Color(0, 128, 0));
+		btnParar.setBounds(603, 542, 222, 93);
 		contentPane.add(btnParar);		
 		
 		btnParar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        if (estadoEjercicio.equals("inactivo")) {
+		    	if(estadoEjercicio.equals("inactivo")) {
+		    		btnParar.setBackground(Color.orange);
+		    		hiloCronoTotal = new HiloCronometro();
+		            hiloCronoTotal.start();
+		    	}
+		        /*if (estadoEjercicio.equals("inactivo")) {
 		            // Iniciar ejercicio
 		            hiloTiempo = new HiloTemporizador(serieActual.getDuracion());
 		            hiloTiempo.start();
-
+		            btnParar.setBackground(Color.orange);
 		            hiloCrono = new HiloCronometro();
 		            hiloCrono.start();
 
@@ -105,6 +114,7 @@ public class Ejercicio extends JFrame {
 		                // guardar tiempo restante y detener el hilo
 		                tiempoRestante = hiloTiempo.getDuracion();
 		                hiloTiempo.detener();
+			            btnParar.setBackground(Color.GREEN);
 
 		                btnParar.setText("Reanudar");
 		                estadoEjercicio = "pausado";
@@ -159,13 +169,13 @@ public class Ejercicio extends JFrame {
 		            // avanzar a la siguiente serie
 		            lblNewLabel.setText("Serie : " + serie);
 		            tiempoRestante = 0;
-	            }
+	            }*/
 		    }
 		});
 
 		Timer timer = new Timer(200, e -> {
-		    if (hiloCrono != null)
-		        lblDuracion.setText("Duración: " + formatoReloj(hiloCrono.getSegundos()));
+		    if (hiloCronoTotal != null)
+		        lblDuracion.setText("Duración: " + formatoReloj(hiloCronoTotal.getSegundos()));
 		    if (hiloTiempo != null)
 		        lblCrono.setText(formatoReloj(hiloTiempo.getDuracion()));
 		    if (hiloDescanso != null)
@@ -184,5 +194,4 @@ public class Ejercicio extends JFrame {
 	    int segundos = segundosTotales % 60;
 	    return String.format("%02d:%02d:%02d", horas, minutos, segundos);// % indica que es un marcador de formato, 02 indica que debe tener al menos 2 dígitos, d indica que es un número entero
 	}
-	
 }
