@@ -17,10 +17,16 @@ public class Controlador {
 	public ArrayList<Workouts> listaWorkout = new ArrayList<Workouts>();
 	public ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 	public ArrayList<Historico> listaHistoricos = new ArrayList<Historico>();
+	public ArrayList<Historico> listaHistoricos2 = new ArrayList<Historico>();
 	
 	
 	public ArrayList<Historico> DevolverHistorico(){
 		listaHistoricos = gestorHistorico.obtenerHistorico(listaHistoricos);
+		return listaHistoricos;
+	}
+	
+	public ArrayList<Historico> DevolverHistorico2(){
+		listaHistoricos = gestorHistorico.obtenerHistorico2(listaHistoricos2);
 		return listaHistoricos;
 	}
 	

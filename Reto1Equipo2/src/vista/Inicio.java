@@ -87,6 +87,18 @@ public class Inicio extends JFrame {
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
+		
+		JButton btnHistorial = new JButton("Ver Historial");
+		btnHistorial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				 VentanaHistorial pantallaHistorico = new VentanaHistorial(usuarioActual, ctr);
+                 pantallaHistorico.setVisible(true);
+                dispose();
+			}
+		});
+		btnHistorial.setBounds(10, 11, 122, 29);
+		PanelWorkouts.add(btnHistorial);
 
 		JPanel PanelUsuario = new JPanel();
 		PanelUsuario.setBackground(Color.DARK_GRAY);
