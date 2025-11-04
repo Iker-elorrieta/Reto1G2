@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Workouts implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private String id;
 	private int nivel;
 	private String nombre;
 	private String videoURL;
@@ -26,10 +26,10 @@ public class Workouts implements Serializable {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public int getNivel() {
@@ -51,7 +51,7 @@ public class Workouts implements Serializable {
 		this.videoURL = videoURL;
 	}
 	
-	public Workouts(int id, int nivel, String nombre, String videoURL, String descripcion, ArrayList <Ejercicios> ejercicios) {
+	public Workouts(String id, int nivel, String nombre, String videoURL, String descripcion, ArrayList <Ejercicios> ejercicios) {
 		super();
 		this.id = id;
 		this.nivel = nivel;

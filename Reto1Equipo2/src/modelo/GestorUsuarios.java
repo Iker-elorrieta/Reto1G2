@@ -114,6 +114,7 @@ public class GestorUsuarios {
 				int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
 
 				Usuario usu = new Usuario(nombre, apellido, clave, email, nacimiento, nivel);
+				usu.setId(doc.getId());
 				listaUsuarios.add(usu);
 			}
 

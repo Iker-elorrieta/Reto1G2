@@ -45,21 +45,24 @@ public class VentanaHistorial extends JFrame {
         String[] columnas = {
         	    "Fecha", "Nivel", "Ratio", "Tiempo", "Tiempo Esperado", "Usuario", "Workout Nombre", "Porcentaje de completado"
         	};
-        String[][] datos = new String[historico.size()][8];
+        ArrayList<String[]> filas = new ArrayList<>();
 
-        for (int i = 0; i < historico.size(); i++) {
-        	
-            Historico h = historico.get(i);
-            if(h.getUsuario().getEmail().equals(usuarioActual.getEmail())) {
-            datos[i][0] = h.getFecha().toString(); 
-            datos[i][1] = String.valueOf(h.getNivel());
-            datos[i][2] = String.valueOf(h.getRatiocompletacion());
-            datos[i][3] = String.valueOf(h.getTiempo());
-            datos[i][4] = String.valueOf(h.getTiempoesperado());
-            datos[i][5] = h.getUsuario().getNombre();
-            datos[i][6] = h.getWorkout().getNombre();
+        for (Historico h : historico) {
+            if (h.getUsuario().getEmail().equals(usuarioActual.getEmail())) {
+                String[] fila = new String[8];
+                fila[0] = h.getFecha().toString();
+                fila[1] = String.valueOf(h.getNivel());
+                fila[2] = String.valueOf(h.getRatiocompletacion());
+                fila[3] = String.valueOf(h.getTiempo());
+                fila[4] = String.valueOf(h.getTiempoesperado());
+                fila[5] = h.getUsuario().getNombre();
+                fila[6] = h.getWorkout().getNombre();
+                fila[7] = h.getTiempoesperado() > 0 ? (h.getTiempo() * 100 / h.getTiempoesperado()) + "%" : "0%";
+                filas.add(fila);
             }
         }
+
+        String[][] datos = filas.toArray(new String[0][8]);
         
         DefaultTableModel modelo = new DefaultTableModel(datos, columnas) {
             @Override

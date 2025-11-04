@@ -65,5 +65,14 @@ public class Controlador {
 		boolean existe = gestorUsuarios.verificarEmail(email);
 		return existe;
 	}
+
+	public void guardarHistorico(Historico historico) {
+		try {
+			gestorHistorico.guardarHistorico(historico);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 }

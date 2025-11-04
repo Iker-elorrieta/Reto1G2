@@ -246,7 +246,7 @@ public class Inicio extends JFrame {
 		        		}
 
 		        	}else {
-			            Ejercicio pantallaEjercicio = new Ejercicio(ejercicio, usuarioActual, ctr);
+		        		Ejercicio pantallaEjercicio = new Ejercicio(ejercicio, usuarioActual, ctr, seleccionado);
 			            pantallaEjercicio.setVisible(true);
 			            dispose();
 		        	}

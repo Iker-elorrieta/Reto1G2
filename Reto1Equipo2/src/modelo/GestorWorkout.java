@@ -38,6 +38,7 @@ public class GestorWorkout {
             for (QueryDocumentSnapshot doc : documentos) {
                 ArrayList<Ejercicios> ejercicios = new ArrayList<>();
 
+                String workoutId = doc.getId();
                 String nombre = doc.getString(nombreF);
                 Long nivelLong = doc.getLong(nivelF);
                 int nivelInt = (nivelLong != null) ? nivelLong.intValue() : 0;
@@ -56,9 +57,13 @@ public class GestorWorkout {
                     ArrayList<Series> series = new ArrayList<>();
 
                     for (QueryDocumentSnapshot docs2 : seriesRef) {
-                        int duracionSerie = Integer.parseInt(docs2.getLong(duracionF).toString());
-                        int descansoSerie = Integer.parseInt(docs2.getLong(descansoF).toString());
-                        int repeticionesSerie = Integer.parseInt(docs2.getLong(repeticionF).toString());
+                        Long duracionL = docs2.getLong(duracionF);
+                        Long descansoL = docs2.getLong(descansoF);
+                        Long repeticionesL = docs2.getLong(repeticionF);
+
+                        int duracionSerie = (duracionL != null) ? duracionL.intValue() : 0;
+                        int descansoSerie = (descansoL != null) ? descansoL.intValue() : 0;
+                        int repeticionesSerie = (repeticionesL != null) ? repeticionesL.intValue() : 0;
 
                         Series serie = new Series(duracionSerie, descansoSerie, repeticionesSerie);
                         series.add(serie);
@@ -66,10 +71,11 @@ public class GestorWorkout {
 
                     Ejercicios ejer = new Ejercicios(idEjer, nombreEjer, descripcionEjer);
                     ejer.setSeries(series);
+                    ejer.calcularTiempoEsperado(); // ✅ si tienes este método
                     ejercicios.add(ejer);
                 }
 
-                Workouts w = new Workouts(0, nivelInt, nombre, video, descripcion, ejercicios);
+                Workouts w = new Workouts(workoutId, nivelInt, nombre, video, descripcion, ejercicios);
                 listaWorkouts.add(w);
             }
 
