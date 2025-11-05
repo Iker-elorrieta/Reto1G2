@@ -2,6 +2,7 @@ package controlador;
 
 import java.util.ArrayList;
 
+import modelo.GestorBackups;
 import modelo.GestorHistorico;
 import modelo.GestorUsuarios;
 import modelo.GestorWorkout;
@@ -10,17 +11,29 @@ import modelo.Usuario;
 import modelo.Workouts;
 
 public class Controlador {
-
+	
+	public GestorBackups gestorBackups = new GestorBackups();
 	public GestorWorkout gestorWorkout = new GestorWorkout();
 	public GestorUsuarios gestorUsuarios = new GestorUsuarios();
 	public GestorHistorico gestorHistorico = new GestorHistorico();
 	public ArrayList<Workouts> listaWorkout = new ArrayList<Workouts>();
 	public ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 	public ArrayList<Historico> listaHistoricos = new ArrayList<Historico>();
+	public ArrayList<Historico> listaHistoricos2 = new ArrayList<Historico>();
 	
 	
 	public ArrayList<Historico> DevolverHistorico(){
 		listaHistoricos = gestorHistorico.obtenerHistorico(listaHistoricos);
+		return listaHistoricos;
+	}
+	
+	public ArrayList<Historico> DevolverHistorico2(){
+		listaHistoricos = gestorHistorico.obtenerHistorico2(listaHistoricos2);
+		return listaHistoricos;
+	}
+	
+	public ArrayList<Historico> cargarHistorial(){
+		listaHistoricos = gestorBackups.cargarHistorico(listaHistoricos);
 		return listaHistoricos;
 	}
 	
@@ -29,9 +42,19 @@ public class Controlador {
 		return listaUsuarios;
 	}
 	
+	public ArrayList<Usuario> cargarUsuarios(){
+		listaUsuarios = gestorBackups.cargarUsuario(listaUsuarios);
+		return listaUsuarios;
+	}
+	
+	public ArrayList<Workouts> cargarWorkouts(){
+		listaWorkout = gestorBackups.cargarWorkout(listaWorkout);
+		return listaWorkout;
+	}
+	
 	public ArrayList<Workouts> DevolverWorkouts(){
 		listaWorkout = gestorWorkout.obtenerWorkouts(listaWorkout);
-		return listaWorkout;
+		return new ArrayList<>(gestorWorkout.obtenerWorkouts(new ArrayList<>()));//devuelve un arraylist limpio para evitar que se dupliquen workouts
 	}
 
 	public void RegistrarUsuarioBDControlador(Usuario usuario) {
@@ -48,7 +71,7 @@ public class Controlador {
 			
 			if(usu.getEmail().equals(email)){
 				return usu;
-
+				
 			}
 			
 		}
@@ -58,6 +81,15 @@ public class Controlador {
 	public boolean verificarEmail(String email) {
 		boolean existe = gestorUsuarios.verificarEmail(email);
 		return existe;
+	}
+
+	public void guardarHistorico(Historico historico) {
+		try {
+			gestorHistorico.guardarHistorico(historico);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

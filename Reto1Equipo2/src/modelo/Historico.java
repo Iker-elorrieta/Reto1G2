@@ -2,11 +2,13 @@ package modelo;
 
 import java.io.Serializable;
 
+import com.google.cloud.Timestamp;
+
 
 public class Historico implements Serializable {
 	
     private static final long serialVersionUID = 1L;
-	private String fecha;
+	private Timestamp fecha;
 	private int nivel;
 	private int ratiocompletacion;
 	private int tiempo;
@@ -14,11 +16,25 @@ public class Historico implements Serializable {
 	private String userID;
 	private String workoutID;
 	private String workoutNombre;
+	private Usuario usuario;
+	private Workouts workout;
 	
-	public String getFecha() {
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	public Workouts getWorkout() {
+		return workout;
+	}
+	public void setWorkout(Workouts workout) {
+		this.workout = workout;
+	}
+	public Timestamp getFecha() {
 		return fecha;
 	}
-	public void setFecha(String fecha) {
+	public void setFecha(Timestamp fecha) {
 		this.fecha = fecha;
 	}
 	public int getNivel() {
@@ -63,7 +79,7 @@ public class Historico implements Serializable {
 	public void setWorkoutNombre(String workoutNombre) {
 		this.workoutNombre = workoutNombre;
 	}
-	public Historico(String fecha, int nivel, int ratiocompletacion, int tiempo, int tiempoesperado, String userID,
+	public Historico(Timestamp fecha, int nivel, int ratiocompletacion, int tiempo, int tiempoesperado, String userID,
 			String workoutID, String workoutNombre) {
 		this.fecha = fecha;
 		this.nivel = nivel;
@@ -81,6 +97,6 @@ public class Historico implements Serializable {
 				+ ", tiempo=" + tiempo + ", tiempoesperado=" + tiempoesperado + ", userID=" + userID + ", workoutID="
 				+ workoutID + ", workoutNombre=" + workoutNombre + "]";
 	}
-		
 
+		
 }

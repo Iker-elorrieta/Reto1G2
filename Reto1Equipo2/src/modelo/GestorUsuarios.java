@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +15,7 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 
-import conexion.Conexion;;
+import conexion.Conexion;
 
 public class GestorUsuarios {
 
@@ -53,9 +54,14 @@ public class GestorUsuarios {
 				}
 			}
 
+		} catch(UnknownHostException uh) {
+			
 		} catch (IOException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
-		} finally {
+			
+		} 
+		
+		finally {
 			if (db != null) {
 				try {
 					db.close();
@@ -114,6 +120,7 @@ public class GestorUsuarios {
 				int nivel = (nivelLong != null) ? nivelLong.intValue() : 0;
 
 				Usuario usu = new Usuario(nombre, apellido, clave, email, nacimiento, nivel);
+				usu.setId(doc.getId());
 				listaUsuarios.add(usu);
 			}
 

@@ -21,11 +21,14 @@ public class GestorWorkout {
     private final String videoF = "VIDEO";
     private final String descripcionF = "DESCRIPCION";
     private final String ejercicioF = "EJERCICIO";
-
+    private final String serieF = "SERIE";
+    private final String descansoF = "DESCANSO";
+    private final String duracionF = "DURACION";
+    private final String repeticionF = "REPETICIONES";
+    
     public Conexion conexion = new Conexion();
 
     public ArrayList<Workouts> obtenerWorkouts(ArrayList<Workouts> listaWorkouts) {
-
         try {
             Firestore db = conexion.conectar();
             String nombreColeccionPrincipal = workoutF;
@@ -35,6 +38,7 @@ public class GestorWorkout {
             for (QueryDocumentSnapshot doc : documentos) {
                 ArrayList<Ejercicios> ejercicios = new ArrayList<>();
 
+                String workoutId = doc.getId();
                 String nombre = doc.getString(nombreF);
                 Long nivelLong = doc.getLong(nivelF);
                 int nivelInt = (nivelLong != null) ? nivelLong.intValue() : 0;
@@ -45,14 +49,33 @@ public class GestorWorkout {
                 List<QueryDocumentSnapshot> ejerciciosRef = ref.collection(ejercicioF).get().get().getDocuments();
 
                 for (QueryDocumentSnapshot docs : ejerciciosRef) {
+                    String idEjer = docs.getId();
                     String nombreEjer = docs.getString(nombreF);
                     String descripcionEjer = docs.getString(descripcionF);
 
-                    Ejercicios ejer = new Ejercicios("", nombreEjer, descripcionEjer);
+                    List<QueryDocumentSnapshot> seriesRef = docs.getReference().collection(serieF).get().get().getDocuments();
+                    ArrayList<Series> series = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot docs2 : seriesRef) {
+                        Long duracionL = docs2.getLong(duracionF);
+                        Long descansoL = docs2.getLong(descansoF);
+                        Long repeticionesL = docs2.getLong(repeticionF);
+
+                        int duracionSerie = (duracionL != null) ? duracionL.intValue() : 0;
+                        int descansoSerie = (descansoL != null) ? descansoL.intValue() : 0;
+                        int repeticionesSerie = (repeticionesL != null) ? repeticionesL.intValue() : 0;
+
+                        Series serie = new Series(duracionSerie, descansoSerie, repeticionesSerie);
+                        series.add(serie);
+                    }
+
+                    Ejercicios ejer = new Ejercicios(idEjer, nombreEjer, descripcionEjer);
+                    ejer.setSeries(series);
+                    ejer.calcularTiempoEsperado(); // ✅ si tienes este método
                     ejercicios.add(ejer);
                 }
 
-                Workouts w = new Workouts(0, nivelInt, nombre, video, descripcion, ejercicios);
+                Workouts w = new Workouts(workoutId, nivelInt, nombre, video, descripcion, ejercicios);
                 listaWorkouts.add(w);
             }
 
