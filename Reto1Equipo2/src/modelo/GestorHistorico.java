@@ -28,7 +28,6 @@ public class GestorHistorico {
 	private final String userIDF = "USERID";
 	private final String workoutIDF = "WORKOUTID";
 	private final String workoutNombreF = "WORKOUTNOMBRE";
-	private final String NombreF = "NOMBRE";
 
 	public Conexion conexion = new Conexion();
 

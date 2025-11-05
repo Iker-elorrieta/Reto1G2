@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controlador.Controlador;
-import modelo.Ejercicios;
 import modelo.Historico;
 import modelo.Usuario;
 import javax.swing.JScrollPane;

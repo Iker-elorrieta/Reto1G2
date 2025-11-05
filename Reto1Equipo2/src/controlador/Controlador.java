@@ -2,6 +2,7 @@ package controlador;
 
 import java.util.ArrayList;
 
+import modelo.GestorBackups;
 import modelo.GestorHistorico;
 import modelo.GestorUsuarios;
 import modelo.GestorWorkout;
@@ -10,7 +11,8 @@ import modelo.Usuario;
 import modelo.Workouts;
 
 public class Controlador {
-
+	
+	public GestorBackups gestorBackups = new GestorBackups();
 	public GestorWorkout gestorWorkout = new GestorWorkout();
 	public GestorUsuarios gestorUsuarios = new GestorUsuarios();
 	public GestorHistorico gestorHistorico = new GestorHistorico();
@@ -30,9 +32,24 @@ public class Controlador {
 		return listaHistoricos;
 	}
 	
+	public ArrayList<Historico> cargarHistorial(){
+		listaHistoricos = gestorBackups.cargarHistorico(listaHistoricos);
+		return listaHistoricos;
+	}
+	
 	public ArrayList<Usuario> DevolverUsuarios(){
 		listaUsuarios = gestorUsuarios.obtenerUsuarios(listaUsuarios);
 		return listaUsuarios;
+	}
+	
+	public ArrayList<Usuario> cargarUsuarios(){
+		listaUsuarios = gestorBackups.cargarUsuario(listaUsuarios);
+		return listaUsuarios;
+	}
+	
+	public ArrayList<Workouts> cargarWorkouts(){
+		listaWorkout = gestorBackups.cargarWorkout(listaWorkout);
+		return listaWorkout;
 	}
 	
 	public ArrayList<Workouts> DevolverWorkouts(){
@@ -54,7 +71,7 @@ public class Controlador {
 			
 			if(usu.getEmail().equals(email)){
 				return usu;
-
+				
 			}
 			
 		}

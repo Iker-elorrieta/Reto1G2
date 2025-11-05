@@ -92,8 +92,8 @@ public class Inicio extends JFrame {
 		btnHistorial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				 VentanaHistorial pantallaHistorico = new VentanaHistorial(usuarioActual, ctr);
-                 pantallaHistorico.setVisible(true);
+				VentanaHistorial pantallaHistorico = new VentanaHistorial(usuarioActual, ctr);
+                pantallaHistorico.setVisible(true);
                 dispose();
 			}
 		});
